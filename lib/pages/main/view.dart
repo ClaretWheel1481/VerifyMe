@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:verifyme/pages/scanner/view.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -13,9 +15,39 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: RefreshIndicator(
+        displacement: 50,
+        onRefresh: _refresh,
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: 180.0,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
+                collapseMode: CollapseMode.parallax,
+                title: Text(widget.title),
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {
+          setState(() {
+            Get.to(
+              () => const Scanner(),
+              transition: Transition.cupertino,
+            );
+          })
+        },
+        tooltip: 'Add',
+        child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(const Duration(seconds: 2));
   }
 }
