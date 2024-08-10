@@ -42,8 +42,14 @@ class TOTPFormPage extends StatelessWidget {
                 totpController.addTOTP(accountName, secret);
                 Get.back();
               },
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.primary),
+                foregroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.onSecondary),
+              ),
               child: const Text('Confirm'),
-            ),
+            )
           ],
         ),
       ),

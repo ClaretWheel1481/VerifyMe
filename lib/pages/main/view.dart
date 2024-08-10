@@ -21,41 +21,53 @@ class _MainAppState extends State<MainApp> {
       body: RefreshIndicator(
         displacement: 50,
         onRefresh: _refresh,
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              expandedHeight: 180.0,
-              pinned: true,
-              flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
-                collapseMode: CollapseMode.parallax,
-                title: Text(widget.title),
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 180.0,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
+                  collapseMode: CollapseMode.parallax,
+                  title: Text(widget.title),
+                ),
               ),
-            ),
-            Obx(() => SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      final accountName =
-                          totpController.totpList[index]['accountName']!;
-                      final secret = totpController.totpList[index]['secret']!;
-                      final totp = totpController.generateTOTP(secret);
-                      return ListTile(
-                        title: Text(
-                          totp,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(accountName),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => _showDeleteDialog(context, index),
-                        ),
-                      );
-                    },
-                    childCount: totpController.totpList.length,
-                  ),
-                )),
-          ],
+            ];
+          },
+          body: Obx(() {
+            if (totpController.totpList.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Press the bottom to add the first data",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: totpController.totpList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final accountName =
+                      totpController.totpList[index]['accountName']!;
+                  final secret = totpController.totpList[index]['secret']!;
+                  final totp = totpController.generateTOTP(secret);
+                  return ListTile(
+                    title: Text(
+                      totp,
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(accountName),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => _showDeleteDialog(context, index),
+                    ),
+                  );
+                },
+              );
+            }
+          }),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -83,20 +95,20 @@ class _MainAppState extends State<MainApp> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Delete'),
-          content: Text('Are you sure you want to delete this TOTP?'),
+          title: const Text('Confirm Delete'),
+          content: const Text('Are you sure you want to delete this TOTP?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 totpController.deleteTOTP(index);
-                Navigator.of(context).pop();
+                Get.back();
               },
             ),
           ],
