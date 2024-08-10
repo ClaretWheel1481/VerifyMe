@@ -21,53 +21,56 @@ class _MainAppState extends State<MainApp> {
       body: RefreshIndicator(
         displacement: 50,
         onRefresh: _refresh,
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 180.0,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
-                  collapseMode: CollapseMode.parallax,
-                  title: Text(widget.title),
-                ),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: 180.0,
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
+                collapseMode: CollapseMode.parallax,
+                title: Text(widget.title),
               ),
-            ];
-          },
-          body: Obx(() {
-            if (totpController.totpList.isEmpty) {
-              return const Center(
-                child: Text(
-                  "Press the bottom to add the first data",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                  textAlign: TextAlign.center,
-                ),
-              );
-            } else {
-              return ListView.builder(
-                itemCount: totpController.totpList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final accountName =
-                      totpController.totpList[index]['accountName']!;
-                  final secret = totpController.totpList[index]['secret']!;
-                  final totp = totpController.generateTOTP(secret);
-                  return ListTile(
-                    title: Text(
-                      totp,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Obx(() {
+              if (totpController.totpList.isEmpty) {
+                return const SliverFillRemaining(
+                  child: Center(
+                    child: Text(
+                      "Press button to add the first data.",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                      textAlign: TextAlign.center,
                     ),
-                    subtitle: Text(accountName),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => _showDeleteDialog(context, index),
-                    ),
-                  );
-                },
-              );
-            }
-          }),
+                  ),
+                );
+              } else {
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final accountName =
+                          totpController.totpList[index]['accountName']!;
+                      final secret = totpController.totpList[index]['secret']!;
+                      final totp = totpController.generateTOTP(secret);
+                      return ListTile(
+                        title: Text(
+                          totp,
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(accountName),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => _showDeleteDialog(context, index),
+                        ),
+                      );
+                    },
+                    childCount: totpController.totpList.length,
+                  ),
+                );
+              }
+            }),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
