@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
+import 'package:verifyme/pages/totpform/view.dart';
 import 'controller.dart';
 
 class Scanner extends StatefulWidget {
@@ -27,15 +28,12 @@ class _ScannerState extends State<Scanner> {
                 final barcode = barcodeCapture.barcodes.first;
                 if (barcode.rawValue != null) {
                   qrCodeController.setQRCode(barcode.rawValue!);
+                  Get.back();
+                  Get.to(() => TOTPFormPage(totpUrl: barcode.rawValue!));
                 }
               },
             ),
           ),
-          // 二维码扫描结果显示
-          Obx(() => Text(
-                'Result: ${qrCodeController.qrCode.value}',
-                style: TextStyle(fontSize: 20),
-              )),
         ],
       ),
     );

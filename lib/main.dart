@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:verifyme/pages/main/view.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/scanner/view.dart';
 
 void main() {
   runApp(const MyApp());

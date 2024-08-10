@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/scanner/view.dart';
+import 'package:verifyme/pages/totpform/controller.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -12,6 +13,8 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  final TOTPController totpController = Get.put(TOTPController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +32,25 @@ class _MainAppState extends State<MainApp> {
                 title: Text(widget.title),
               ),
             ),
+            Obx(() => SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      final accountName =
+                          totpController.totpList[index]['accountName']!;
+                      final secret = totpController.totpList[index]['secret']!;
+                      final totp = totpController.generateTOTP(secret);
+                      return ListTile(
+                        title: Text(
+                          '$totp',
+                          style: const TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(accountName),
+                      );
+                    },
+                    childCount: totpController.totpList.length,
+                  ),
+                )),
           ],
         ),
       ),
@@ -48,6 +70,7 @@ class _MainAppState extends State<MainApp> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() {});
   }
 }
