@@ -41,11 +41,15 @@ class _MainAppState extends State<MainApp> {
                       final totp = totpController.generateTOTP(secret);
                       return ListTile(
                         title: Text(
-                          '$totp',
+                          totp,
                           style: const TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(accountName),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _showDeleteDialog(context, index),
+                        ),
                       );
                     },
                     childCount: totpController.totpList.length,
@@ -72,5 +76,32 @@ class _MainAppState extends State<MainApp> {
   Future<void> _refresh() async {
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() {});
+  }
+
+  void _showDeleteDialog(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Delete'),
+          content: Text('Are you sure you want to delete this TOTP?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                totpController.deleteTOTP(index);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
