@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'controller.dart';
+import '../utils/totp/controller.dart';
 
 class TOTPFormPage extends StatelessWidget {
   final String totpUrl;
@@ -39,7 +39,7 @@ class TOTPFormPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                totpController.addTOTP(accountName, secret);
+                totpController.addTOTP(accountName, secret, "SHA-1");
                 Get.back();
               },
               style: ButtonStyle(

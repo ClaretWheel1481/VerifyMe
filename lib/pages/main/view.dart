@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/scanner/view.dart';
-import 'package:verifyme/pages/totpform/controller.dart';
+import 'package:verifyme/pages/utils/totp/controller.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -51,17 +51,42 @@ class _MainAppState extends State<MainApp> {
                       final accountName =
                           totpController.totpList[index]['accountName']!;
                       final secret = totpController.totpList[index]['secret']!;
-                      final totp = totpController.generateTOTP(secret);
-                      return ListTile(
-                        title: Text(
-                          totp,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                      final algorithm =
+                          totpController.totpList[index]['algorithm']!;
+                      final totp =
+                          totpController.generateTOTP(secret, algorithm);
+                      return Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4.0,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
-                        subtitle: Text(accountName),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () => _showDeleteDialog(context, index),
+                        child: ListTile(
+                          leading: Obx(() {
+                            return CircularProgressIndicator(
+                              value: totpController.progress.value,
+                            );
+                          }),
+                          title: Text(
+                            totp,
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary),
+                          ),
+                          subtitle: Text(accountName),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => _showDeleteDialog(context, index),
+                          ),
                         ),
                       );
                     },

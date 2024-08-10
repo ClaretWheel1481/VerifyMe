@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/totpform/view.dart';
+import 'package:verifyme/pages/totpcheckform/view.dart';
+import 'package:verifyme/pages/totpinputform/view.dart';
 import 'controller.dart';
 
 class Scanner extends StatefulWidget {
@@ -20,9 +21,9 @@ class _ScannerState extends State<Scanner> {
       appBar: AppBar(
         title: const Text('QR Code Scanner'),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
+          SizedBox.expand(
             child: MobileScanner(
               onDetect: (barcodeCapture) {
                 final barcode = barcodeCapture.barcodes.first;
@@ -32,6 +33,23 @@ class _ScannerState extends State<Scanner> {
                   Get.to(() => TOTPFormPage(totpUrl: barcode.rawValue!));
                 }
               },
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () => {
+                  Get.back(),
+                  Get.to(
+                    () => TOTPInputForm(),
+                    transition: Transition.cupertino,
+                  )
+                },
+                child: const Text('Manual Input'),
+              ),
             ),
           ),
         ],
