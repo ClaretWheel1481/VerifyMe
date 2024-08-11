@@ -3,7 +3,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/totpcheckform/view.dart';
 import 'package:verifyme/pages/totpinputform/view.dart';
-import 'controller.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key});
@@ -13,8 +12,6 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> {
-  final QRCodeController qrCodeController = Get.put(QRCodeController());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +25,6 @@ class _ScannerState extends State<Scanner> {
               onDetect: (barcodeCapture) {
                 final barcode = barcodeCapture.barcodes.first;
                 if (barcode.rawValue != null) {
-                  qrCodeController.setQRCode(barcode.rawValue!);
                   Get.back();
                   Get.to(() => TOTPFormPage(totpUrl: barcode.rawValue!));
                 }

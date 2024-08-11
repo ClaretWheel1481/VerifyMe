@@ -1,3 +1,4 @@
+import 'package:base32/base32.dart';
 import 'package:get/get.dart';
 import 'package:otp/otp.dart';
 import 'dart:async';
@@ -25,23 +26,27 @@ class TOTPController extends GetxController {
     super.onClose();
   }
 
-  void addTOTP(String accountName, String secret, String algorithm) {
-    int index = totpList.indexWhere((element) => element['secret'] == secret);
-    if (index != -1) {
-      totpList[index] = {
-        'accountName': accountName,
-        'secret': secret,
-        'algorithm': algorithm
-      };
-    } else {
-      totpList.add({
-        'accountName': accountName,
-        'secret': secret,
-        'algorithm': algorithm
-      });
+  bool addTOTP(String accountName, String secret, String algorithm) {
+    if (_isValidBase32(secret)) {
+      int index = totpList.indexWhere((element) => element['secret'] == secret);
+      if (index != -1) {
+        totpList[index] = {
+          'accountName': accountName,
+          'secret': secret,
+          'algorithm': algorithm
+        };
+      } else {
+        totpList.add({
+          'accountName': accountName,
+          'secret': secret,
+          'algorithm': algorithm
+        });
+      }
+      saveTOTPList();
+      refreshTOTP();
+      return true;
     }
-    saveTOTPList();
-    refreshTOTP();
+    return false;
   }
 
   void deleteTOTP(int index) {
@@ -80,6 +85,15 @@ class TOTPController extends GetxController {
     if (storedList != null) {
       totpList.assignAll(
           storedList.map((e) => Map<String, String>.from(e)).toList());
+    }
+  }
+
+  bool _isValidBase32(String input) {
+    try {
+      base32.decode(input);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 

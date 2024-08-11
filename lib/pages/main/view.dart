@@ -59,7 +59,7 @@ class _MainAppState extends State<MainApp> {
                         margin: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 16.0),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onSecondary,
                           borderRadius: BorderRadius.circular(15.0),
                           boxShadow: const [
                             BoxShadow(
@@ -123,7 +123,7 @@ class _MainAppState extends State<MainApp> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Delete'),
+          title: const Text('Confirm'),
           content: const Text('Are you sure you want to delete this TOTP?'),
           actions: <Widget>[
             TextButton(

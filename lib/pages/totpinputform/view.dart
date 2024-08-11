@@ -21,18 +21,6 @@ class _TOTPInputFormState extends State<TOTPInputForm> {
     super.dispose();
   }
 
-  void _saveForm() {
-    if (_formKey.currentState!.validate()) {
-      final accountName = _accountNameController.text;
-      final secret = _secretController.text;
-      final algorithm = _selectedAlgorithm;
-
-      totpController.addTOTP(accountName, secret, algorithm);
-
-      Get.back();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,5 +86,38 @@ class _TOTPInputFormState extends State<TOTPInputForm> {
         ),
       ),
     );
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text(
+            'Failed to add TOTP. Please check the secret and try again.'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _saveForm() {
+    if (_formKey.currentState!.validate()) {
+      final accountName = _accountNameController.text;
+      final secret = _secretController.text;
+      final algorithm = _selectedAlgorithm;
+
+      if (totpController.addTOTP(accountName, secret, algorithm)) {
+        Get.back();
+      } else {
+        _showErrorDialog();
+      }
+    }
   }
 }
