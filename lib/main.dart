@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GetStorage box = GetStorage();
+    final String themeMode = box.read('themeMode') ?? 'system';
+
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
         ColorScheme lightColorScheme;
@@ -28,9 +31,15 @@ class MyApp extends StatelessWidget {
           darkColorScheme = ColorScheme.fromSwatch(
               primarySwatch: Colors.blue, brightness: Brightness.dark);
         }
+
         return GetMaterialApp(
           theme: ThemeData(colorScheme: lightColorScheme),
           darkTheme: ThemeData(colorScheme: darkColorScheme),
+          themeMode: themeMode == 'system'
+              ? ThemeMode.system
+              : themeMode == 'light'
+                  ? ThemeMode.light
+                  : ThemeMode.dark,
           home: const MainApp(title: "VerifyMe"),
         );
       },

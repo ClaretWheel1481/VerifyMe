@@ -35,7 +35,8 @@ class _TOTPInputFormState extends State<TOTPInputForm> {
             children: [
               TextFormField(
                 controller: _accountNameController,
-                decoration: const InputDecoration(labelText: 'Account Name'),
+                decoration: const InputDecoration(
+                    labelText: 'Account Name', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter an account name';
@@ -43,9 +44,11 @@ class _TOTPInputFormState extends State<TOTPInputForm> {
                   return null;
                 },
               ),
+              const SizedBox(height: 25),
               TextFormField(
                 controller: _secretController,
-                decoration: const InputDecoration(labelText: 'Secret'),
+                decoration: const InputDecoration(
+                    labelText: 'Secret', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a secret';
@@ -53,11 +56,11 @@ class _TOTPInputFormState extends State<TOTPInputForm> {
                   return null;
                 },
               ),
+              const SizedBox(height: 25),
               DropdownButtonFormField<String>(
                 value: _selectedAlgorithm,
                 decoration: const InputDecoration(
-                  labelText: 'Algorithm',
-                ),
+                    labelText: 'Algorithm', border: OutlineInputBorder()),
                 items: ['SHA-1', 'SHA-256', 'SHA-512']
                     .map((algorithm) => DropdownMenuItem(
                           value: algorithm,

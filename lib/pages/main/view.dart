@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/scanner/view.dart';
+import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/pages/utils/totp/controller.dart';
 
 class MainApp extends StatefulWidget {
@@ -31,6 +32,17 @@ class _MainAppState extends State<MainApp> {
                 collapseMode: CollapseMode.parallax,
                 title: Text(widget.title),
               ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    Get.to(
+                      () => const Settings(),
+                      transition: Transition.cupertino,
+                    );
+                  },
+                ),
+              ],
             ),
             Obx(() {
               if (totpController.totpList.isEmpty) {
@@ -57,7 +69,7 @@ class _MainAppState extends State<MainApp> {
                           totpController.generateTOTP(secret, algorithm);
                       return Container(
                         margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 16.0),
+                            vertical: 8.0, horizontal: 14.0),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.onSecondary,
                           borderRadius: BorderRadius.circular(15.0),
@@ -78,7 +90,7 @@ class _MainAppState extends State<MainApp> {
                           title: Text(
                             totp,
                             style: TextStyle(
-                                fontSize: 24,
+                                fontSize: 26,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary),
                           ),
