@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/utils/totp/controller.dart';
+import 'package:verifyme/utils/totp/controller.dart';
 
 class TOTPInputForm extends StatefulWidget {
+  const TOTPInputForm({super.key});
+
   @override
-  _TOTPInputFormState createState() => _TOTPInputFormState();
+  TOTPInputFormState createState() => TOTPInputFormState();
 }
 
-class _TOTPInputFormState extends State<TOTPInputForm> {
+class TOTPInputFormState extends State<TOTPInputForm> {
   final _formKey = GlobalKey<FormState>();
   final _accountNameController = TextEditingController();
   final _secretController = TextEditingController();

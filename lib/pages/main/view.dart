@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/scanner/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
-import 'package:verifyme/pages/utils/totp/controller.dart';
+import 'package:verifyme/utils/totp/controller.dart';
 import 'package:verifyme/pages/editform/view.dart'; // Import the edit form view
 
 class MainApp extends StatefulWidget {
@@ -37,9 +37,7 @@ class _MainAppState extends State<MainApp> {
                 IconButton(
                   icon: const Icon(Icons.settings),
                   onPressed: () {
-                    Get.to(
-                      () => const Settings(),
-                    );
+                    Get.to(() => const Settings());
                   },
                 ),
               ],
@@ -49,7 +47,7 @@ class _MainAppState extends State<MainApp> {
                 return const SliverFillRemaining(
                   child: Center(
                     child: Text(
-                      "Press button to add the first data.",
+                      "Press button to add the data",
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
@@ -103,9 +101,10 @@ class _MainAppState extends State<MainApp> {
                           title: Text(
                             totp,
                             style: TextStyle(
-                                fontSize: 27,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary),
+                              fontSize: 27,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           subtitle: Text(
                             accountName,
@@ -118,14 +117,12 @@ class _MainAppState extends State<MainApp> {
                               IconButton(
                                 icon: const Icon(Icons.edit),
                                 onPressed: () {
-                                  Get.to(
-                                    () => EditForm(
-                                      index: index,
-                                      accountName: accountName,
-                                      secret: secret,
-                                      algorithm: algorithm,
-                                    ),
-                                  );
+                                  Get.to(() => EditForm(
+                                        index: index,
+                                        accountName: accountName,
+                                        secret: secret,
+                                        algorithm: algorithm,
+                                      ));
                                 },
                               ),
                               IconButton(
@@ -147,13 +144,7 @@ class _MainAppState extends State<MainApp> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          setState(() {
-            Get.to(
-              () => const Scanner(),
-            );
-          })
-        },
+        onPressed: () => Get.to(() => const Scanner()),
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),

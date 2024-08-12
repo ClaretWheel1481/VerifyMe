@@ -36,11 +36,10 @@ class _ScannerState extends State<Scanner> {
             left: 0,
             right: 0,
             child: Center(
-              child: ElevatedButton(
-                onPressed: () => {Get.back(), Get.to(() => TOTPInputForm())},
-                child: const Text('Manual Input'),
-              ),
-            ),
+                child: ElevatedButton(
+              onPressed: () => Get.off(() => const TOTPInputForm()),
+              child: const Text('Manual Input'),
+            )),
           ),
         ],
       ),

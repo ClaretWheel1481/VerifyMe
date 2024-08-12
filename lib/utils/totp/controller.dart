@@ -15,10 +15,10 @@ class TOTPController extends GetxController {
   void onInit() {
     super.onInit();
     loadTOTPList();
-    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
-      updateProgress();
-      refreshTOTP();
-    });
+    if (totpList.isNotEmpty) {
+      startTimer();
+    }
+    updateProgress();
   }
 
   @override
@@ -42,6 +42,9 @@ class TOTPController extends GetxController {
           'secret': secret,
           'algorithm': algorithm
         });
+        if (totpList.length == 1) {
+          startTimer();
+        }
       }
       saveTOTPList();
       refreshTOTP();
@@ -53,6 +56,9 @@ class TOTPController extends GetxController {
   void deleteTOTP(int index) {
     totpList.removeAt(index);
     saveTOTPList();
+    if (totpList.isEmpty) {
+      stopTimer();
+    }
   }
 
   void refreshTOTP() {
@@ -102,5 +108,16 @@ class TOTPController extends GetxController {
     final seconds = DateTime.now().second;
     progress.value = 1 - (seconds % 30) / 30;
     remainingSeconds.value = 30 - (seconds % 30);
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
+      updateProgress();
+      refreshTOTP();
+    });
+  }
+
+  void stopTimer() {
+    timer?.cancel();
   }
 }

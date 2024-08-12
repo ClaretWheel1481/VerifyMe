@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/utils/totp/controller.dart';
+import 'package:verifyme/utils/totp/controller.dart';
 
 class EditForm extends StatefulWidget {
   const EditForm({
@@ -16,10 +16,10 @@ class EditForm extends StatefulWidget {
   final String algorithm;
 
   @override
-  _EditFormState createState() => _EditFormState();
+  EditFormState createState() => EditFormState();
 }
 
-class _EditFormState extends State<EditForm> {
+class EditFormState extends State<EditForm> {
   final TOTPController totpController = Get.put(TOTPController());
 
   @override

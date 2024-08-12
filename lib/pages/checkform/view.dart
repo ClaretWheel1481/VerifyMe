@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../utils/totp/controller.dart';
+import '../../utils/totp/controller.dart';
 
 class TOTPFormPage extends StatelessWidget {
   final String totpUrl;
   final TOTPController totpController = Get.put(TOTPController());
 
-  TOTPFormPage({required this.totpUrl});
+  TOTPFormPage({super.key, required this.totpUrl});
 
   @override
   Widget build(BuildContext context) {

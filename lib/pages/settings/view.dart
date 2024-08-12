@@ -6,10 +6,10 @@ class Settings extends StatefulWidget {
   const Settings({super.key});
 
   @override
-  _SettingsState createState() => _SettingsState();
+  SettingsState createState() => SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class SettingsState extends State<Settings> {
   final GetStorage _box = GetStorage();
   String _themeMode = 'system';
 
