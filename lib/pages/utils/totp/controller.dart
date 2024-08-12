@@ -9,6 +9,7 @@ class TOTPController extends GetxController {
   Timer? timer;
   final box = GetStorage();
   var progress = 0.0.obs;
+  var remainingSeconds = 30.obs;
 
   @override
   void onInit() {
@@ -100,5 +101,6 @@ class TOTPController extends GetxController {
   void updateProgress() {
     final seconds = DateTime.now().second;
     progress.value = 1 - (seconds % 30) / 30;
+    remainingSeconds.value = 30 - (seconds % 30);
   }
 }

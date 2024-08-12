@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:verifyme/pages/scanner/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/pages/utils/totp/controller.dart';
+import 'package:verifyme/pages/editform/view.dart'; // Import the edit form view
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -38,7 +39,6 @@ class _MainAppState extends State<MainApp> {
                   onPressed: () {
                     Get.to(
                       () => const Settings(),
-                      transition: Transition.cupertino,
                     );
                   },
                 ),
@@ -83,14 +83,27 @@ class _MainAppState extends State<MainApp> {
                         ),
                         child: ListTile(
                           leading: Obx(() {
-                            return CircularProgressIndicator(
-                              value: totpController.progress.value,
+                            return Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: totpController.progress.value,
+                                ),
+                                Text(
+                                  '${totpController.remainingSeconds.value}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ],
                             );
                           }),
                           title: Text(
                             totp,
                             style: TextStyle(
-                                fontSize: 26,
+                                fontSize: 27,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary),
                           ),
@@ -99,9 +112,28 @@ class _MainAppState extends State<MainApp> {
                             style: const TextStyle(fontSize: 13),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => _showDeleteDialog(context, index),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  Get.to(
+                                    () => EditForm(
+                                      index: index,
+                                      accountName: accountName,
+                                      secret: secret,
+                                      algorithm: algorithm,
+                                    ),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () =>
+                                    _showDeleteDialog(context, index),
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -119,7 +151,6 @@ class _MainAppState extends State<MainApp> {
           setState(() {
             Get.to(
               () => const Scanner(),
-              transition: Transition.cupertino,
             );
           })
         },

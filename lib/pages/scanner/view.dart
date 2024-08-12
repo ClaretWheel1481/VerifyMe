@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/totpcheckform/view.dart';
-import 'package:verifyme/pages/totpinputform/view.dart';
+import 'package:verifyme/pages/checkform/view.dart';
+import 'package:verifyme/pages/inputform/view.dart';
 
 class Scanner extends StatefulWidget {
   const Scanner({super.key});
@@ -37,13 +37,7 @@ class _ScannerState extends State<Scanner> {
             right: 0,
             child: Center(
               child: ElevatedButton(
-                onPressed: () => {
-                  Get.back(),
-                  Get.to(
-                    () => TOTPInputForm(),
-                    transition: Transition.cupertino,
-                  )
-                },
+                onPressed: () => {Get.back(), Get.to(() => TOTPInputForm())},
                 child: const Text('Manual Input'),
               ),
             ),
