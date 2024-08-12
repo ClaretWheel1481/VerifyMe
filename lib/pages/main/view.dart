@@ -94,7 +94,11 @@ class _MainAppState extends State<MainApp> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: Text(accountName),
+                          subtitle: Text(
+                            accountName,
+                            style: const TextStyle(fontSize: 13),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),
                             onPressed: () => _showDeleteDialog(context, index),

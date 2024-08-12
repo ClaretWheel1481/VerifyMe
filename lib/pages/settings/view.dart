@@ -48,7 +48,7 @@ class _SettingsState extends State<Settings> {
         title: const Text('Settings'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 15, bottom: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
