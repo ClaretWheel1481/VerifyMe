@@ -14,7 +14,8 @@ VerifyMe by ClaretWheel1481
 
 ## 截图
 <div class="half">
-<img src="./public/Screenshot.png" width=40%/>
+    <img src="./public/Screenshot_1.png" width=40%/>
+    <img src="./public/Screenshot_2.png" width=40%/>
 </div>
 
 ## 许可证

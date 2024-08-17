@@ -14,7 +14,8 @@ A simple TOTP Authenticator app, supporting QR code scanning and manual input.
 
 ## Screenshots
 <div class="half">
-<img src="./public/Screenshot.png" width=40%/>
+    <img src="./public/Screenshot_1.png" width=40%/>
+    <img src="./public/Screenshot_2.png" width=40%/>
 </div>
 
 ## License

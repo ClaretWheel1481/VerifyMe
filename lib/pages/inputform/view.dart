@@ -38,10 +38,10 @@ class TOTPInputFormState extends State<TOTPInputForm> {
               TextFormField(
                 controller: _accountNameController,
                 decoration: const InputDecoration(
-                    labelText: 'Account Name', border: OutlineInputBorder()),
+                    labelText: 'Name', border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter an account name';
+                    return 'Please enter an name';
                   }
                   return null;
                 },
