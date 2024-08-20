@@ -39,7 +39,8 @@ class TOTPFormPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                totpController.addTOTP(accountName, secret, "SHA-1");
+                totpController.addTOTP(
+                    accountName, secret.toUpperCase(), "SHA-1");
                 Get.back();
               },
               style: ButtonStyle(
