@@ -42,7 +42,7 @@ class EditFormState extends State<EditForm> {
             TextField(
               controller: accountNameController,
               decoration: const InputDecoration(
-                  labelText: 'Account Name', border: OutlineInputBorder()),
+                  labelText: 'Account', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 25),
             TextField(

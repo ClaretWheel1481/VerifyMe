@@ -29,7 +29,7 @@ class TOTPFormPage extends StatelessWidget {
               controller: controller,
               readOnly: true,
               decoration: const InputDecoration(
-                labelText: 'TOTP URL',
+                labelText: 'RESULT',
               ),
             ),
             const SizedBox(height: 20),
