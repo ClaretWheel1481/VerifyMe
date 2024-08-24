@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:verifyme/pages/settings/widgets.dart';
+import 'package:verifyme/utils/totp/file.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -33,14 +35,6 @@ class SettingsState extends State<Settings> {
     );
   }
 
-  AboutDialog _buildAboutDialog() {
-    return const AboutDialog(
-      applicationVersion: 'v1.0.0',
-      applicationName: 'VerifyMe',
-      applicationLegalese: "Copyright© 2024 Lance Huang",
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +48,7 @@ class SettingsState extends State<Settings> {
           children: [
             ExpansionTile(
               leading: const Icon(Icons.light_mode),
-              title: const Text(
-                'Theme',
-              ),
+              title: const Text('Theme'),
               children: [
                 ListTile(
                   leading: const Icon(Icons.brightness_auto),
@@ -85,13 +77,27 @@ class SettingsState extends State<Settings> {
               ],
             ),
             ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Export TOTP List'),
+              onTap: () {
+                exportTOTP();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.download),
+              title: const Text('Import from Json'),
+              onTap: () {
+                importTOTPList();
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return _buildAboutDialog();
+                    return buildAboutDialog();
                   },
                 );
               },
