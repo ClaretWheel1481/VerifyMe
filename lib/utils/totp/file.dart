@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:verifyme/utils/notify.dart';
 import 'controller.dart';
 
 final TOTPController totpController = Get.find();
@@ -12,7 +13,7 @@ Future<void> exportTOTP() async {
   if (await Permission.manageExternalStorage.request().isGranted) {
     exportTOTPList();
   } else {
-    Get.snackbar('Permission Denied',
+    showNotification('Permission Denied',
         'Storage permission is required to export TOTP list.');
   }
 }
@@ -24,9 +25,9 @@ Future<void> exportTOTPList() async {
     final file = File('${directory.path}/totp_list.json');
     final jsonString = jsonEncode(totpController.totpList);
     await file.writeAsString(jsonString);
-    Get.snackbar('Success', 'TOTP list exported to ${file.path}.');
+    showNotification('Success', 'Exported to ${file.path}');
   } catch (e) {
-    Get.snackbar('Error', 'Failed to export TOTP list.');
+    showNotification('Error', 'Failed to export TOTP list.');
   }
 }
 
@@ -46,11 +47,11 @@ Future<void> importTOTPList() async {
           .assignAll(jsonList.map((e) => Map<String, String>.from(e)).toList());
       totpController.saveTOTPList();
       totpController.onInit();
-      Get.snackbar('Success', 'TOTP list imported successfully');
+      showNotification('Success', 'TOTP imported successfully');
     } else {
-      Get.snackbar('Cancelled', 'File selection cancelled');
+      showNotification('Cancelled', 'File selection cancelled');
     }
   } catch (e) {
-    Get.snackbar('Error', 'Failed to import TOTP list');
+    showNotification('Error', 'Failed to import TOTP list');
   }
 }

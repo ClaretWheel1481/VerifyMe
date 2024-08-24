@@ -76,13 +76,14 @@ class SettingsState extends State<Settings> {
                 ),
               ],
             ),
-            ListTile(
-              leading: const Icon(Icons.download),
-              title: const Text('Export TOTP List'),
-              onTap: () {
-                exportTOTP();
-              },
-            ),
+            Obx(() => ListTile(
+                  enabled: totpController.totpList.isNotEmpty,
+                  leading: const Icon(Icons.upload),
+                  title: const Text('Export TOTP List'),
+                  onTap: () {
+                    exportTOTP();
+                  },
+                )),
             ListTile(
               leading: const Icon(Icons.download),
               title: const Text('Import from Json'),

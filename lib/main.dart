@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/pages/main/view.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:get/get.dart';
+import 'package:verifyme/utils/notify.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         }
 
         return GetMaterialApp(
+          scaffoldMessengerKey: scaffoldMessengerKey,
           theme: ThemeData(colorScheme: lightColorScheme),
           darkTheme: ThemeData(colorScheme: darkColorScheme),
           themeMode: themeMode == 'system'
