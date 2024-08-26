@@ -27,20 +27,23 @@ class TOTPController extends GetxController {
     super.onClose();
   }
 
-  bool addTOTP(String accountName, String secret, String algorithm) {
+  bool addTOTP(
+      String accountName, String secret, String algorithm, String length) {
     if (_isValidBase32(secret)) {
       int index = totpList.indexWhere((element) => element['secret'] == secret);
       if (index != -1) {
         totpList[index] = {
           'accountName': accountName,
           'secret': secret,
-          'algorithm': algorithm
+          'algorithm': algorithm,
+          'length': length
         };
       } else {
         totpList.add({
           'accountName': accountName,
           'secret': secret,
-          'algorithm': algorithm
+          'algorithm': algorithm,
+          'length': length
         });
         if (totpList.length == 1) {
           startTimer();
@@ -65,7 +68,7 @@ class TOTPController extends GetxController {
     totpList.refresh();
   }
 
-  String generateTOTP(String secret, String algorithm) {
+  String generateTOTP(String secret, String algorithm, String length) {
     Algorithm algo;
     switch (algorithm) {
       case 'SHA-256':
@@ -80,7 +83,10 @@ class TOTPController extends GetxController {
     }
     return OTP.generateTOTPCodeString(
         secret, DateTime.now().millisecondsSinceEpoch,
-        interval: 30, length: 6, algorithm: algo, isGoogle: true);
+        interval: 30,
+        length: int.parse(length),
+        algorithm: algo,
+        isGoogle: true);
   }
 
   void saveTOTPList() {

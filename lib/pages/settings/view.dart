@@ -92,11 +92,6 @@ class SettingsState extends State<Settings> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.cloud_download),
-              title: const Text('Import from Json(WebDAV)'),
-              onTap: () {},
-            ),
-            ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {

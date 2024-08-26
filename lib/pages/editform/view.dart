@@ -3,17 +3,16 @@ import 'package:get/get.dart';
 import 'package:verifyme/utils/totp/controller.dart';
 
 class EditForm extends StatefulWidget {
-  const EditForm({
-    super.key,
-    required this.index,
-    required this.accountName,
-    required this.secret,
-    required this.algorithm,
-  });
-  final int index;
+  const EditForm(
+      {super.key,
+      required this.accountName,
+      required this.secret,
+      required this.algorithm,
+      required this.length});
   final String accountName;
   final String secret;
   final String algorithm;
+  final String length;
 
   @override
   EditFormState createState() => EditFormState();
@@ -30,10 +29,12 @@ class EditFormState extends State<EditForm> {
         TextEditingController(text: widget.secret);
     final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
     String selectedAlgorithm = widget.algorithm;
+    final TextEditingController lengthController =
+        TextEditingController(text: widget.length);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit'),
+        title: const Text('Input/Edit'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,14 +66,20 @@ class EditFormState extends State<EditForm> {
               decoration: const InputDecoration(
                   labelText: 'Algorithm', border: OutlineInputBorder()),
             ),
+            const SizedBox(height: 25),
+            TextField(
+              controller: lengthController,
+              decoration: const InputDecoration(
+                  labelText: 'Length', border: OutlineInputBorder()),
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (totpController.addTOTP(
-                  accountNameController.text,
-                  secretController.text,
-                  selectedAlgorithm,
-                )) {
+                    accountNameController.text,
+                    secretController.text.replaceAll(" ", "").toUpperCase(),
+                    selectedAlgorithm,
+                    lengthController.text)) {
                   Get.back();
                 } else {
                   _showErrorDialog();

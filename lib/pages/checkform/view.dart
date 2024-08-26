@@ -5,7 +5,8 @@ import '../../utils/totp/controller.dart';
 class TOTPFormPage extends StatelessWidget {
   final String totpUrl;
   final TOTPController totpController = Get.put(TOTPController());
-
+  final TextEditingController lengthController =
+      TextEditingController(text: '6');
   TOTPFormPage({super.key, required this.totpUrl});
 
   @override
@@ -15,8 +16,11 @@ class TOTPFormPage extends StatelessWidget {
     final issuer = uri.queryParameters['issuer'] ?? '';
     final accountName = uri.pathSegments.last;
 
-    TextEditingController controller = TextEditingController(text: totpUrl);
+    final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(totpUrl);
+    final totp = totpMatch != null ? totpMatch.group(1) : '';
 
+    TextEditingController controller = TextEditingController(text: totpUrl);
+    String selectedAlgorithm = 'SHA-1';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Confirm TOTP'),
@@ -32,21 +36,63 @@ class TOTPFormPage extends StatelessWidget {
                 labelText: 'RESULT',
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 25),
+            Text('Mode: $totp'),
             Text('Issuer: $issuer'),
             Text('Account: $accountName'),
-            Text('Secret: $secret'),
-            const SizedBox(height: 20),
+            Text('Secret: ${secret.toUpperCase()}'),
+            const SizedBox(height: 25),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Options',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  DropdownButtonFormField<String>(
+                    value: selectedAlgorithm,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        selectedAlgorithm = newValue;
+                      }
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Algorithm', border: OutlineInputBorder()),
+                    dropdownColor: Theme.of(context).colorScheme.onSecondary,
+                    items: <String>['SHA-1', 'SHA-256', 'SHA-512']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 25),
+                  TextField(
+                    controller: lengthController,
+                    decoration: const InputDecoration(
+                        labelText: 'Length', border: OutlineInputBorder()),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
-                totpController.addTOTP(
-                    accountName, secret.toUpperCase(), "SHA-1");
+                totpController.addTOTP(accountName, secret.toUpperCase(),
+                    selectedAlgorithm, lengthController.text);
                 Get.back();
               },
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
+                backgroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.primary),
-                foregroundColor: WidgetStateProperty.all(
+                foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onSecondary),
               ),
               child: const Text('Confirm'),

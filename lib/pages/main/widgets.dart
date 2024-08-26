@@ -2,7 +2,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/checkform/view.dart';
-import 'package:verifyme/pages/inputform/view.dart';
+import 'package:verifyme/pages/editform/view.dart';
 
 class MainfloatButton extends StatelessWidget {
   const MainfloatButton({super.key});
@@ -33,7 +33,12 @@ class MainfloatButton extends StatelessWidget {
               Get.to(() => TOTPFormPage(totpUrl: result.rawContent));
             }
           } else if (value == 2) {
-            Get.to(() => const TOTPInputForm());
+            Get.to(() => const EditForm(
+                  accountName: "",
+                  secret: "",
+                  algorithm: "SHA-1",
+                  length: "6",
+                ));
           }
         },
         itemBuilder: (context) => [
