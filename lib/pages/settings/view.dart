@@ -85,13 +85,6 @@ class SettingsState extends State<Settings> {
                   },
                 )),
             ListTile(
-              leading: const Icon(Icons.download),
-              title: const Text('Import from Json(Local)'),
-              onTap: () {
-                importTOTPList();
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.info),
               title: const Text('About'),
               onTap: () {

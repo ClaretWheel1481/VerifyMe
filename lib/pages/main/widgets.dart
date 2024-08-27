@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/editform/view.dart';
+import 'package:verifyme/utils/totp/file.dart';
 
 class MainfloatButton extends StatelessWidget {
   const MainfloatButton({super.key});
@@ -24,7 +25,7 @@ class MainfloatButton extends StatelessWidget {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
         padding: const EdgeInsets.all(18.0),
-        offset: const Offset(0, -150),
+        offset: const Offset(0, -200),
         color: Theme.of(context).colorScheme.onSecondary,
         onSelected: (value) async {
           if (value == 1) {
@@ -39,6 +40,8 @@ class MainfloatButton extends StatelessWidget {
                   algorithm: "SHA-1",
                   length: "6",
                 ));
+          } else if (value == 3) {
+            importTOTPList();
           }
         },
         itemBuilder: (context) => [
@@ -46,7 +49,7 @@ class MainfloatButton extends StatelessWidget {
             value: 1,
             child: ListTile(
               leading: Icon(Icons.qr_code_scanner),
-              title: Text('Scan'),
+              title: Text('Scan QR Code'),
             ),
           ),
           const PopupMenuItem(
@@ -54,6 +57,13 @@ class MainfloatButton extends StatelessWidget {
             child: ListTile(
               leading: Icon(Icons.input),
               title: Text('Manual Input'),
+            ),
+          ),
+          const PopupMenuItem(
+            value: 3,
+            child: ListTile(
+              leading: Icon(Icons.download),
+              title: Text('Import from Json'),
             ),
           ),
         ],

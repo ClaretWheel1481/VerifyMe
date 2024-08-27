@@ -52,6 +52,17 @@ class EditFormState extends State<EditForm> {
                   labelText: 'Secret', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 25),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Options',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
             DropdownButtonFormField<String>(
               value: selectedAlgorithm,
               items: algorithms.map((String value) {
@@ -60,6 +71,7 @@ class EditFormState extends State<EditForm> {
                   child: Text(value),
                 );
               }).toList(),
+              dropdownColor: Theme.of(context).colorScheme.onSecondary,
               onChanged: (newValue) {
                 selectedAlgorithm = newValue!;
               },
