@@ -63,26 +63,35 @@ class EditFormState extends State<EditForm> {
               ),
             ),
             const SizedBox(height: 18),
-            DropdownButtonFormField<String>(
-              value: selectedAlgorithm,
-              items: algorithms.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              dropdownColor: Theme.of(context).colorScheme.onSecondary,
-              onChanged: (newValue) {
-                selectedAlgorithm = newValue!;
-              },
-              decoration: const InputDecoration(
-                  labelText: 'Algorithm', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 25),
-            TextField(
-              controller: lengthController,
-              decoration: const InputDecoration(
-                  labelText: 'Length', border: OutlineInputBorder()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: selectedAlgorithm,
+                    items: algorithms.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    dropdownColor: Theme.of(context).colorScheme.onSecondary,
+                    onChanged: (newValue) {
+                      selectedAlgorithm = newValue!;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Algorithm', border: OutlineInputBorder()),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextField(
+                    controller: lengthController,
+                    decoration: const InputDecoration(
+                        labelText: 'Length', border: OutlineInputBorder()),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -98,9 +107,9 @@ class EditFormState extends State<EditForm> {
                 }
               },
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
+                backgroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.primary),
-                foregroundColor: WidgetStateProperty.all(
+                foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onSecondary),
               ),
               child: const Text('Save'),

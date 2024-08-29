@@ -47,11 +47,11 @@ Future<void> importTOTPList() async {
           .assignAll(jsonList.map((e) => Map<String, String>.from(e)).toList());
       totpController.saveTOTPList();
       totpController.onInit();
-      showNotification('Success', 'TOTP imported successfully');
+      showNotification('Success', 'Imported successfully');
     } else {
       showNotification('Cancelled', 'File selection cancelled');
     }
   } catch (e) {
-    showNotification('Error', 'Failed to import TOTP list');
+    showNotification('Error', 'Failed to import list');
   }
 }

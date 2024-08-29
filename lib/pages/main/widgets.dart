@@ -67,7 +67,7 @@ class MainfloatButton extends StatelessWidget {
             ),
           ),
         ],
-        icon: const Icon(Icons.add),
+        icon: Icon(Icons.add, color: Theme.of(context).colorScheme.secondary),
       ),
     );
   }
