@@ -6,15 +6,15 @@ import 'package:get/get.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'controller.dart';
 
-final TOTPController totpController = Get.find();
+final GenerateController totpController = Get.find();
 
 // 申请权限
 Future<void> exportTOTP() async {
   if (await Permission.manageExternalStorage.request().isGranted) {
     exportTOTPList();
   } else {
-    showNotification('Permission Denied',
-        'Storage permission is required to export TOTP list.');
+    showNotification(
+        'Permission Denied', 'Storage permission is required to export TOTP');
   }
 }
 
@@ -27,7 +27,7 @@ Future<void> exportTOTPList() async {
     await file.writeAsString(jsonString);
     showNotification('Success', 'Exported to ${file.path}');
   } catch (e) {
-    showNotification('Error', 'Failed to export TOTP list.');
+    showNotification('Error', 'Failed to export TOTP');
   }
 }
 
@@ -45,7 +45,7 @@ Future<void> importTOTPList() async {
       final List<dynamic> jsonList = jsonDecode(jsonString);
       totpController.totpList
           .assignAll(jsonList.map((e) => Map<String, String>.from(e)).toList());
-      totpController.saveTOTPList();
+      totpController.saveList();
       totpController.onInit();
       showNotification('Success', 'Imported successfully');
     } else {

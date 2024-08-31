@@ -4,7 +4,7 @@ import 'package:otp/otp.dart';
 import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 
-class TOTPController extends GetxController {
+class GenerateController extends GetxController {
   var totpList = <Map<String, String>>[].obs;
   Timer? timer;
   final box = GetStorage();
@@ -14,7 +14,7 @@ class TOTPController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadTOTPList();
+    loadList();
     if (totpList.isNotEmpty) {
       startTimer();
     }
@@ -27,8 +27,8 @@ class TOTPController extends GetxController {
     super.onClose();
   }
 
-  bool addTOTP(
-      String accountName, String secret, String algorithm, String length) {
+  bool add(String accountName, String secret, String algorithm, String length,
+      String mode) {
     if (_isValidBase32(secret)) {
       int index = totpList.indexWhere((element) => element['secret'] == secret);
       if (index != -1) {
@@ -36,39 +36,41 @@ class TOTPController extends GetxController {
           'accountName': accountName,
           'secret': secret,
           'algorithm': algorithm,
-          'length': length
+          'length': length,
+          'mode': mode
         };
       } else {
         totpList.add({
           'accountName': accountName,
           'secret': secret,
           'algorithm': algorithm,
-          'length': length
+          'length': length,
+          'mode': mode
         });
         if (totpList.length == 1) {
           startTimer();
         }
       }
-      saveTOTPList();
-      refreshTOTP();
+      saveList();
+      refreshList();
       return true;
     }
     return false;
   }
 
-  void deleteTOTP(int index) {
+  void delete(int index) {
     totpList.removeAt(index);
-    saveTOTPList();
+    saveList();
     if (totpList.isEmpty) {
       stopTimer();
     }
   }
 
-  void refreshTOTP() {
+  void refreshList() {
     totpList.refresh();
   }
 
-  String generateTOTP(String secret, String algorithm, String length) {
+  String generate(String secret, String algorithm, String length, String mode) {
     Algorithm algo;
     switch (algorithm) {
       case 'SHA-256':
@@ -81,6 +83,17 @@ class TOTPController extends GetxController {
       default:
         algo = Algorithm.SHA1;
     }
+    // if (mode == "TOTP") {
+    //   return OTP.generateTOTPCodeString(
+    //       secret, DateTime.now().millisecondsSinceEpoch,
+    //       interval: 30,
+    //       length: int.parse(length),
+    //       algorithm: algo,
+    //       isGoogle: true);
+    // }
+    // return OTP.generateHOTPCodeString(
+    //     secret, DateTime.now().millisecondsSinceEpoch,
+    //     algorithm: algo, isGoogle: true, length: int.parse(length));
     return OTP.generateTOTPCodeString(
         secret, DateTime.now().millisecondsSinceEpoch,
         interval: 30,
@@ -89,11 +102,11 @@ class TOTPController extends GetxController {
         isGoogle: true);
   }
 
-  void saveTOTPList() {
+  void saveList() {
     box.write('totpList', totpList.toList());
   }
 
-  void loadTOTPList() {
+  void loadList() {
     List<dynamic>? storedList = box.read('totpList');
     if (storedList != null) {
       totpList.assignAll(
@@ -119,7 +132,7 @@ class TOTPController extends GetxController {
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       updateProgress();
-      refreshTOTP();
+      refreshList();
     });
   }
 

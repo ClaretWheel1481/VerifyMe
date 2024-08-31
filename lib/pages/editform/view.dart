@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/utils/totp/controller.dart';
+import 'package:verifyme/utils/generate/controller.dart';
 
 class EditForm extends StatefulWidget {
   const EditForm(
@@ -8,18 +8,20 @@ class EditForm extends StatefulWidget {
       required this.accountName,
       required this.secret,
       required this.algorithm,
-      required this.length});
+      required this.length,
+      required this.mode});
   final String accountName;
   final String secret;
   final String algorithm;
   final String length;
+  final String mode;
 
   @override
   EditFormState createState() => EditFormState();
 }
 
 class EditFormState extends State<EditForm> {
-  final TOTPController totpController = Get.put(TOTPController());
+  final GenerateController totpController = Get.put(GenerateController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class EditFormState extends State<EditForm> {
     final TextEditingController secretController =
         TextEditingController(text: widget.secret);
     final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
+    final List<String> modes = ["TOTP", "HOTP"];
     String selectedAlgorithm = widget.algorithm;
+    String selectedMode = widget.mode;
     final TextEditingController lengthController =
         TextEditingController(text: widget.length);
 
@@ -40,6 +44,22 @@ class EditFormState extends State<EditForm> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            DropdownButtonFormField<String>(
+              value: selectedMode,
+              items: modes.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              dropdownColor: Theme.of(context).colorScheme.onSecondary,
+              onChanged: (newValue) {
+                selectedMode = newValue!;
+              },
+              decoration: const InputDecoration(
+                  labelText: 'Mode', border: OutlineInputBorder()),
+            ),
+            const SizedBox(height: 25),
             TextField(
               controller: accountNameController,
               decoration: const InputDecoration(
@@ -96,11 +116,12 @@ class EditFormState extends State<EditForm> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (totpController.addTOTP(
+                if (totpController.add(
                     accountNameController.text,
                     secretController.text.replaceAll(" ", "").toUpperCase(),
                     selectedAlgorithm,
-                    lengthController.text)) {
+                    lengthController.text,
+                    selectedMode)) {
                   Get.back();
                 } else {
                   _showErrorDialog();

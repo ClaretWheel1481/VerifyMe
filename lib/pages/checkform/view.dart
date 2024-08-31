@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../utils/totp/controller.dart';
+import '../../utils/generate/controller.dart';
 
 class TOTPFormPage extends StatelessWidget {
   final String totpUrl;
-  final TOTPController totpController = Get.put(TOTPController());
+  final GenerateController totpController = Get.put(GenerateController());
   final TextEditingController lengthController =
       TextEditingController(text: '6');
   TOTPFormPage({super.key, required this.totpUrl});
@@ -17,7 +17,7 @@ class TOTPFormPage extends StatelessWidget {
     final accountName = uri.pathSegments.last;
 
     final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(totpUrl);
-    final totp = totpMatch != null ? totpMatch.group(1) : '';
+    final mode = totpMatch != null ? totpMatch.group(1) : '';
 
     TextEditingController controller = TextEditingController(text: totpUrl);
     String selectedAlgorithm = 'SHA-1';
@@ -37,7 +37,7 @@ class TOTPFormPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 25),
-            Text('Mode: $totp'),
+            Text('Mode: $mode'),
             Text('Issuer: $issuer'),
             Text('Account: $accountName'),
             Text('Secret: ${secret.toUpperCase()}'),
@@ -85,8 +85,8 @@ class TOTPFormPage extends StatelessWidget {
             const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
-                totpController.addTOTP(accountName, secret.toUpperCase(),
-                    selectedAlgorithm, lengthController.text);
+                totpController.add(accountName, secret.toUpperCase(),
+                    selectedAlgorithm, lengthController.text, "TOTP");
                 Get.back();
               },
               style: ButtonStyle(

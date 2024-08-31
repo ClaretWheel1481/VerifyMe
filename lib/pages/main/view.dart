@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/main/widgets.dart';
 import 'package:verifyme/pages/settings/view.dart';
-import 'package:verifyme/utils/totp/controller.dart';
+import 'package:verifyme/utils/generate/controller.dart';
 import 'package:verifyme/pages/editform/view.dart';
 
 class MainApp extends StatefulWidget {
@@ -15,7 +15,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final TOTPController totpController = Get.put(TOTPController());
+  final GenerateController controller = Get.put(GenerateController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _MainAppState extends State<MainApp> {
             ],
           ),
           Obx(() {
-            if (totpController.totpList.isEmpty) {
+            if (controller.totpList.isEmpty) {
               return const SliverFillRemaining(
                 child: Center(
                   child: Text(
@@ -55,13 +55,13 @@ class _MainAppState extends State<MainApp> {
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
                     final accountName =
-                        totpController.totpList[index]['accountName']!;
-                    final secret = totpController.totpList[index]['secret']!;
-                    final algorithm =
-                        totpController.totpList[index]['algorithm']!;
-                    final length = totpController.totpList[index]['length']!;
-                    final totp =
-                        totpController.generateTOTP(secret, algorithm, length);
+                        controller.totpList[index]['accountName']!;
+                    final secret = controller.totpList[index]['secret']!;
+                    final algorithm = controller.totpList[index]['algorithm']!;
+                    final length = controller.totpList[index]['length']!;
+                    final mode = controller.totpList[index]['mode']!;
+                    final code =
+                        controller.generate(secret, algorithm, length, mode);
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 14.0),
@@ -82,10 +82,10 @@ class _MainAppState extends State<MainApp> {
                             alignment: Alignment.center,
                             children: [
                               CircularProgressIndicator(
-                                value: totpController.progress.value,
+                                value: controller.progress.value,
                               ),
                               Text(
-                                '${totpController.remainingSeconds.value}',
+                                '${controller.remainingSeconds.value}',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).colorScheme.primary,
@@ -95,7 +95,7 @@ class _MainAppState extends State<MainApp> {
                           );
                         }),
                         title: Text(
-                          totp,
+                          code,
                           style: TextStyle(
                             fontSize: 27,
                             fontWeight: FontWeight.bold,
@@ -118,6 +118,7 @@ class _MainAppState extends State<MainApp> {
                                       secret: secret,
                                       algorithm: algorithm,
                                       length: length.toString(),
+                                      mode: "TOTP",
                                     ));
                               },
                             ),
@@ -131,7 +132,7 @@ class _MainAppState extends State<MainApp> {
                       ),
                     );
                   },
-                  childCount: totpController.totpList.length,
+                  childCount: controller.totpList.length,
                 ),
               );
             }
@@ -159,7 +160,7 @@ class _MainAppState extends State<MainApp> {
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                totpController.deleteTOTP(index);
+                controller.delete(index);
                 Get.back();
               },
             ),

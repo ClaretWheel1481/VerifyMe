@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/pages/settings/widgets.dart';
-import 'package:verifyme/utils/totp/file.dart';
+import 'package:verifyme/utils/generate/file.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

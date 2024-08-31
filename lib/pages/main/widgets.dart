@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/editform/view.dart';
-import 'package:verifyme/utils/totp/file.dart';
+import 'package:verifyme/utils/generate/file.dart';
 
 class MainfloatButton extends StatelessWidget {
   const MainfloatButton({super.key});
@@ -39,6 +39,7 @@ class MainfloatButton extends StatelessWidget {
                   secret: "",
                   algorithm: "SHA-1",
                   length: "6",
+                  mode: "TOTP",
                 ));
           } else if (value == 3) {
             importTOTPList();
