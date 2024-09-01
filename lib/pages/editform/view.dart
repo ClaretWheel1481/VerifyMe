@@ -30,7 +30,7 @@ class EditFormState extends State<EditForm> {
     final TextEditingController secretController =
         TextEditingController(text: widget.secret);
     final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
-    final List<String> modes = ["TOTP", "HOTP(unsupported)"];
+    final List<String> modes = ["TOTP", "HOTP"];
     String selectedAlgorithm = widget.algorithm;
     String selectedMode = widget.mode;
     final TextEditingController lengthController =

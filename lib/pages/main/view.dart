@@ -60,8 +60,10 @@ class _MainAppState extends State<MainApp> {
                     final algorithm = controller.totpList[index]['algorithm']!;
                     final length = controller.totpList[index]['length']!;
                     final mode = controller.totpList[index]['mode']!;
-                    final code =
-                        controller.generate(secret, algorithm, length, mode);
+                    final code = mode == "TOTP"
+                        ? controller.generate(secret, algorithm, length, mode)
+                        : controller.generate(secret, algorithm, length, mode,
+                            counter: index);
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 14.0),
@@ -77,23 +79,27 @@ class _MainAppState extends State<MainApp> {
                         ],
                       ),
                       child: ListTile(
-                        leading: Obx(() {
-                          return Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              CircularProgressIndicator(
-                                value: controller.progress.value,
-                              ),
-                              Text(
-                                '${controller.remainingSeconds.value}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
+                        leading: mode == "TOTP"
+                            ? Obx(() {
+                                return Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      value: controller.progress.value,
+                                    ),
+                                    Text(
+                                      '${controller.remainingSeconds.value}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              })
+                            : const Icon(Icons.lock),
                         title: Text(
                           code,
                           style: TextStyle(

@@ -70,7 +70,8 @@ class GenerateController extends GetxController {
     totpList.refresh();
   }
 
-  String generate(String secret, String algorithm, String length, String mode) {
+  String generate(String secret, String algorithm, String length, String mode,
+      {int? counter}) {
     Algorithm algo;
     switch (algorithm) {
       case 'SHA-256':
@@ -83,23 +84,16 @@ class GenerateController extends GetxController {
       default:
         algo = Algorithm.SHA1;
     }
-    // if (mode == "TOTP") {
-    //   return OTP.generateTOTPCodeString(
-    //       secret, DateTime.now().millisecondsSinceEpoch,
-    //       interval: 30,
-    //       length: int.parse(length),
-    //       algorithm: algo,
-    //       isGoogle: true);
-    // }
-    // return OTP.generateHOTPCodeString(
-    //     secret, DateTime.now().millisecondsSinceEpoch,
-    //     algorithm: algo, isGoogle: true, length: int.parse(length));
-    return OTP.generateTOTPCodeString(
-        secret, DateTime.now().millisecondsSinceEpoch,
-        interval: 30,
-        length: int.parse(length),
-        algorithm: algo,
-        isGoogle: true);
+    if (mode == "TOTP") {
+      return OTP.generateTOTPCodeString(
+          secret, DateTime.now().millisecondsSinceEpoch,
+          interval: 30,
+          length: int.parse(length),
+          algorithm: algo,
+          isGoogle: true);
+    }
+    return OTP.generateHOTPCodeString(secret, counter ?? 0,
+        algorithm: algo, isGoogle: true, length: int.parse(length));
   }
 
   void saveList() {
