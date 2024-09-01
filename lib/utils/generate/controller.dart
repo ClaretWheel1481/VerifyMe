@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:get_storage/get_storage.dart';
 
 class GenerateController extends GetxController {
-  var totpList = <Map<String, String>>[].obs;
+  var totpList = <Map<String, dynamic>>[].obs;
   Timer? timer;
   final box = GetStorage();
   var progress = 0.0.obs;
@@ -37,7 +37,8 @@ class GenerateController extends GetxController {
           'secret': secret,
           'algorithm': algorithm,
           'length': length,
-          'mode': mode
+          'mode': mode,
+          'counter': totpList[index]['counter'] ?? 0
         };
       } else {
         totpList.add({
@@ -45,7 +46,8 @@ class GenerateController extends GetxController {
           'secret': secret,
           'algorithm': algorithm,
           'length': length,
-          'mode': mode
+          'mode': mode,
+          'counter': 0
         });
         if (totpList.length == 1) {
           startTimer();
@@ -104,7 +106,7 @@ class GenerateController extends GetxController {
     List<dynamic>? storedList = box.read('totpList');
     if (storedList != null) {
       totpList.assignAll(
-          storedList.map((e) => Map<String, String>.from(e)).toList());
+          storedList.map((e) => Map<String, dynamic>.from(e)).toList());
     }
   }
 

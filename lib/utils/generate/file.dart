@@ -65,8 +65,9 @@ Future<void> importList() async {
       File file = File(result.files.single.path!);
       final jsonString = await file.readAsString();
       final List<dynamic> jsonList = jsonDecode(jsonString);
-      totpController.totpList
-          .assignAll(jsonList.map((e) => Map<String, String>.from(e)).toList());
+      totpController.totpList.assignAll(
+        jsonList.map((e) => Map<String, dynamic>.from(e)).toList(),
+      );
       totpController.saveList();
       totpController.onInit();
       showNotification('Success', 'Imported successfully');
@@ -74,6 +75,6 @@ Future<void> importList() async {
       showNotification('Cancelled', 'File selection cancelled');
     }
   } catch (e) {
-    showNotification('Error', 'Failed to import list');
+    showNotification('Error', 'Failed to import');
   }
 }

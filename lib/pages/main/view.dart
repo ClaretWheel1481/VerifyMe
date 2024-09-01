@@ -60,10 +60,11 @@ class _MainAppState extends State<MainApp> {
                     final algorithm = controller.totpList[index]['algorithm']!;
                     final length = controller.totpList[index]['length']!;
                     final mode = controller.totpList[index]['mode']!;
+                    final counter = controller.totpList[index]['counter'] ?? 0;
                     final code = mode == "TOTP"
                         ? controller.generate(secret, algorithm, length, mode)
                         : controller.generate(secret, algorithm, length, mode,
-                            counter: index);
+                            counter: counter);
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 14.0),
@@ -116,6 +117,15 @@ class _MainAppState extends State<MainApp> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            if (mode == "HOTP")
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  controller.totpList[index]['counter']++;
+                                  controller.saveList();
+                                  controller.refreshList();
+                                },
+                              ),
                             IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () {
