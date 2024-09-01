@@ -5,23 +5,34 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'controller.dart';
+import 'package:path_provider/path_provider.dart';
 
 final GenerateController totpController = Get.find();
 
 // 申请权限
-Future<void> exportTOTP() async {
-  if (await Permission.manageExternalStorage.request().isGranted) {
-    exportTOTPList();
+Future<void> export() async {
+  if (await _requestPermission()) {
+    exportList();
   } else {
     showNotification(
-        'Permission Denied', 'Storage permission is required to export TOTP');
+        'Permission Denied', 'Storage permission is required to export');
   }
 }
 
+// 请求权限
+Future<bool> _requestPermission() async {
+  if (Platform.isAndroid) {
+    return await Permission.manageExternalStorage.request().isGranted;
+  } else if (Platform.isIOS) {
+    return await Permission.storage.request().isGranted;
+  }
+  return false;
+}
+
 // 导出TotpList
-Future<void> exportTOTPList() async {
+Future<void> exportList() async {
   try {
-    final directory = Directory('/storage/emulated/0/Download');
+    final directory = await _getDirectory();
     final file = File('${directory.path}/totp_list.json');
     final jsonString = jsonEncode(totpController.totpList);
     await file.writeAsString(jsonString);
@@ -31,8 +42,18 @@ Future<void> exportTOTPList() async {
   }
 }
 
-// 导入TotpList
-Future<void> importTOTPList() async {
+// 获取目录
+Future<Directory> _getDirectory() async {
+  if (Platform.isAndroid) {
+    return Directory('/storage/emulated/0/Download');
+  } else if (Platform.isIOS) {
+    return await getApplicationDocumentsDirectory();
+  }
+  throw UnsupportedError('Unsupported platform');
+}
+
+// 导入List
+Future<void> importList() async {
   try {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,

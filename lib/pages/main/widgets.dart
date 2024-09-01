@@ -42,7 +42,7 @@ class MainfloatButton extends StatelessWidget {
                   mode: "TOTP",
                 ));
           } else if (value == 3) {
-            importTOTPList();
+            importList();
           }
         },
         itemBuilder: (context) => [

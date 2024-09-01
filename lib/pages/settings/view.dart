@@ -81,7 +81,7 @@ class SettingsState extends State<Settings> {
                   leading: const Icon(Icons.upload),
                   title: const Text('Export TOTP'),
                   onTap: () {
-                    exportTOTP();
+                    export();
                   },
                 )),
             ListTile(
