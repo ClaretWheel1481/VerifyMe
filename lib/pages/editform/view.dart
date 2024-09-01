@@ -21,7 +21,7 @@ class EditForm extends StatefulWidget {
 }
 
 class EditFormState extends State<EditForm> {
-  final GenerateController totpController = Get.put(GenerateController());
+  final GenerateController gController = Get.put(GenerateController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class EditFormState extends State<EditForm> {
     final TextEditingController secretController =
         TextEditingController(text: widget.secret);
     final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
-    final List<String> modes = ["TOTP", "HOTP"];
+    final List<String> modes = ["TOTP", "HOTP(unsupported)"];
     String selectedAlgorithm = widget.algorithm;
     String selectedMode = widget.mode;
     final TextEditingController lengthController =
@@ -116,7 +116,7 @@ class EditFormState extends State<EditForm> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (totpController.add(
+                if (gController.add(
                     accountNameController.text,
                     secretController.text.replaceAll(" ", "").toUpperCase(),
                     selectedAlgorithm,
@@ -147,7 +147,7 @@ class EditFormState extends State<EditForm> {
       builder: (ctx) => AlertDialog(
         title: const Text('Error'),
         content: const Text(
-            'Failed to add TOTP. Please check the secret and try again.'),
+            'Failed to add. Please check the parameters and try again.'),
         actions: <Widget>[
           TextButton(
             child: const Text('OK'),

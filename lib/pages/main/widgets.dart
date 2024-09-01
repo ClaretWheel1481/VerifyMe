@@ -31,7 +31,7 @@ class MainfloatButton extends StatelessWidget {
           if (value == 1) {
             var result = await BarcodeScanner.scan();
             if (result.rawContent.isNotEmpty) {
-              Get.to(() => TOTPFormPage(totpUrl: result.rawContent));
+              Get.to(() => CheckFormPage(resultUrl: result.rawContent));
             }
           } else if (value == 2) {
             Get.to(() => const EditForm(

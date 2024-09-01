@@ -79,7 +79,7 @@ class SettingsState extends State<Settings> {
             Obx(() => ListTile(
                   enabled: totpController.totpList.isNotEmpty,
                   leading: const Icon(Icons.upload),
-                  title: const Text('Export TOTP'),
+                  title: const Text('Export Data'),
                   onTap: () {
                     export();
                   },

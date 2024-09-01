@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../utils/generate/controller.dart';
 
-class TOTPFormPage extends StatelessWidget {
-  final String totpUrl;
-  final GenerateController totpController = Get.put(GenerateController());
+class CheckFormPage extends StatelessWidget {
+  final String resultUrl;
+  final GenerateController gController = Get.put(GenerateController());
   final TextEditingController lengthController =
       TextEditingController(text: '6');
-  TOTPFormPage({super.key, required this.totpUrl});
+  CheckFormPage({super.key, required this.resultUrl});
 
   @override
   Widget build(BuildContext context) {
-    final uri = Uri.parse(totpUrl);
+    final uri = Uri.parse(resultUrl);
     final secret = uri.queryParameters['secret'] ?? '';
     final issuer = uri.queryParameters['issuer'] ?? '';
     final accountName = uri.pathSegments.last;
 
-    final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(totpUrl);
+    final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(resultUrl);
     final mode = totpMatch != null ? totpMatch.group(1) : '';
 
-    TextEditingController controller = TextEditingController(text: totpUrl);
+    TextEditingController controller = TextEditingController(text: resultUrl);
     String selectedAlgorithm = 'SHA-1';
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Confirm TOTP'),
+        title: const Text('Confirm'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -85,8 +85,12 @@ class TOTPFormPage extends StatelessWidget {
             const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
-                totpController.add(accountName, secret.toUpperCase(),
-                    selectedAlgorithm, lengthController.text, "TOTP");
+                gController.add(
+                    accountName,
+                    secret.toUpperCase(),
+                    selectedAlgorithm,
+                    lengthController.text,
+                    mode.toString().toUpperCase());
                 Get.back();
               },
               style: ButtonStyle(

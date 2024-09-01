@@ -118,7 +118,7 @@ class _MainAppState extends State<MainApp> {
                                       secret: secret,
                                       algorithm: algorithm,
                                       length: length.toString(),
-                                      mode: "TOTP",
+                                      mode: mode,
                                     ));
                               },
                             ),
@@ -149,7 +149,7 @@ class _MainAppState extends State<MainApp> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm'),
-          content: const Text('Are you sure you want to delete this TOTP?'),
+          content: const Text('Are you sure you want to delete this data?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),

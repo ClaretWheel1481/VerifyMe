@@ -49,5 +49,7 @@
 	<string>We need access to your photo library to save exported files.</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to your documents folder to save exported files.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>

@@ -38,7 +38,7 @@ Future<void> exportList() async {
     await file.writeAsString(jsonString);
     showNotification('Success', 'Exported to ${file.path}');
   } catch (e) {
-    showNotification('Error', 'Failed to export TOTP');
+    showNotification('Error', 'Failed to export data');
   }
 }
 
@@ -49,6 +49,7 @@ Future<Directory> _getDirectory() async {
   } else if (Platform.isIOS) {
     return await getApplicationDocumentsDirectory();
   }
+  showNotification('Error', 'Unsupported platform');
   throw UnsupportedError('Unsupported platform');
 }
 
