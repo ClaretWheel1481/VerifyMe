@@ -39,120 +39,106 @@ class _MainAppState extends State<MainApp> {
               ),
             ],
           ),
-          Obx(() {
-            if (controller.totpList.isEmpty) {
-              return const SliverFillRemaining(
-                child: Center(
-                  child: Text(
-                    "Press button to add the data",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
-            } else {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    final accountName =
-                        controller.totpList[index]['accountName']!;
-                    final secret = controller.totpList[index]['secret']!;
-                    final algorithm = controller.totpList[index]['algorithm']!;
-                    final length = controller.totpList[index]['length']!;
-                    final mode = controller.totpList[index]['mode']!;
-                    final counter = controller.totpList[index]['counter'] ?? 0;
-                    final code = mode == "TOTP"
-                        ? controller.generate(secret, algorithm, length, mode)
-                        : controller.generate(secret, algorithm, length, mode,
-                            counter: counter);
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 14.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4.0,
-                            offset: Offset(0, 2),
+          Obx(
+            () => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final accountName =
+                      controller.totpList[index]['accountName']!;
+                  final secret = controller.totpList[index]['secret']!;
+                  final algorithm = controller.totpList[index]['algorithm']!;
+                  final length = controller.totpList[index]['length']!;
+                  final mode = controller.totpList[index]['mode']!;
+                  final counter = controller.totpList[index]['counter'] ?? 0;
+                  final code = mode == "TOTP"
+                      ? controller.generate(secret, algorithm, length, mode)
+                      : controller.generate(secret, algorithm, length, mode,
+                          counter: counter);
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 14.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4.0,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: ListTile(
+                      leading: mode == "TOTP"
+                          ? Obx(() {
+                              return Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  CircularProgressIndicator(
+                                    value: controller.progress.value,
+                                  ),
+                                  Text(
+                                    '${controller.remainingSeconds.value}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            })
+                          : const Icon(Icons.lock),
+                      title: Text(
+                        code,
+                        style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      subtitle: Text(
+                        accountName,
+                        style: const TextStyle(fontSize: 13),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (mode == "HOTP")
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                controller.totpList[index]['counter']++;
+                                controller.saveList();
+                                controller.refreshList();
+                              },
+                            ),
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              Get.to(() => EditForm(
+                                    accountName: accountName,
+                                    secret: secret,
+                                    algorithm: algorithm,
+                                    length: length.toString(),
+                                    mode: mode,
+                                  ));
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => _showDeleteDialog(context, index),
                           ),
                         ],
                       ),
-                      child: ListTile(
-                        leading: mode == "TOTP"
-                            ? Obx(() {
-                                return Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    CircularProgressIndicator(
-                                      value: controller.progress.value,
-                                    ),
-                                    Text(
-                                      '${controller.remainingSeconds.value}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              })
-                            : const Icon(Icons.lock),
-                        title: Text(
-                          code,
-                          style: TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        subtitle: Text(
-                          accountName,
-                          style: const TextStyle(fontSize: 13),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (mode == "HOTP")
-                              IconButton(
-                                icon: const Icon(Icons.add),
-                                onPressed: () {
-                                  controller.totpList[index]['counter']++;
-                                  controller.saveList();
-                                  controller.refreshList();
-                                },
-                              ),
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                Get.to(() => EditForm(
-                                      accountName: accountName,
-                                      secret: secret,
-                                      algorithm: algorithm,
-                                      length: length.toString(),
-                                      mode: mode,
-                                    ));
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () =>
-                                  _showDeleteDialog(context, index),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  childCount: controller.totpList.length,
-                ),
-              );
-            }
-          }),
+                    ),
+                  );
+                },
+                childCount: controller.totpList.length,
+              ),
+            ),
+          ),
         ],
       ),
       floatingActionButton: const MainfloatButton(),

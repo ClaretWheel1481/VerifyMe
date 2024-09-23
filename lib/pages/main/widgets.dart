@@ -16,7 +16,7 @@ class MainfloatButton extends StatelessWidget {
           boxShadow: const [
             BoxShadow(
               color: Colors.black12,
-              blurRadius: 4.0,
+              blurRadius: 14.0,
               offset: Offset(0, 2),
             ),
           ],
