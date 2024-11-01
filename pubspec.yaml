@@ -22,6 +22,7 @@ dependencies:
   barcode_scan2:
   permission_handler:
   file_picker:
+  flutter_i18n:
   
 dev_dependencies:
   flutter_test:

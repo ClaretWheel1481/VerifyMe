@@ -116,6 +116,11 @@ class EditFormState extends State<EditForm> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                if (accountNameController.text.isEmpty ||
+                    secretController.text.isEmpty) {
+                  _showErrorDialog();
+                  return;
+                }
                 if (gController.add(
                     accountNameController.text,
                     secretController.text.replaceAll(" ", "").toUpperCase(),
@@ -125,6 +130,7 @@ class EditFormState extends State<EditForm> {
                   Get.back();
                 } else {
                   _showErrorDialog();
+                  return;
                 }
               },
               style: ButtonStyle(
