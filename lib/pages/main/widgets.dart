@@ -40,6 +40,7 @@ class MainfloatButton extends StatelessWidget {
                   algorithm: "SHA-1",
                   length: "6",
                   mode: "TOTP",
+                  isEdit: false,
                 ));
           } else if (value == 3) {
             importList();

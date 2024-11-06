@@ -56,8 +56,9 @@ class GenerateController extends GetxController {
       saveList();
       refreshList();
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   void delete(int index) {

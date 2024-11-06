@@ -123,6 +123,7 @@ class _MainAppState extends State<MainApp> {
                                     algorithm: algorithm,
                                     length: length.toString(),
                                     mode: mode,
+                                    isEdit: true,
                                   ));
                             },
                           ),

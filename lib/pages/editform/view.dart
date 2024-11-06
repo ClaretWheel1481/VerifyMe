@@ -9,12 +9,14 @@ class EditForm extends StatefulWidget {
       required this.secret,
       required this.algorithm,
       required this.length,
-      required this.mode});
+      required this.mode,
+      required this.isEdit});
   final String accountName;
   final String secret;
   final String algorithm;
   final String length;
   final String mode;
+  final bool isEdit;
 
   @override
   EditFormState createState() => EditFormState();
@@ -38,7 +40,7 @@ class EditFormState extends State<EditForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Input/Edit'),
+        title: widget.isEdit ? const Text("Edit") : const Text("Input"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
