@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/pages/main/view.dart';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -34,6 +35,15 @@ class MyApp extends StatelessWidget {
         }
 
         return GetMaterialApp(
+          localizationsDelegates: [
+            FlutterI18nDelegate(
+                translationLoader: FileTranslationLoader(
+                    useCountryCode: true, basePath: 'assets/locales'),
+                missingTranslationHandler: (key, locale) {
+                  print(
+                      "--- Missing Key: $key, languageCode: ${locale!.languageCode}");
+                }),
+          ],
           scaffoldMessengerKey: scaffoldMessengerKey,
           theme: ThemeData(colorScheme: lightColorScheme),
           darkTheme: ThemeData(colorScheme: darkColorScheme),

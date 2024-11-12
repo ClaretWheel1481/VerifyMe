@@ -13,14 +13,8 @@ class MainfloatButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onSecondary,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 14.0,
-              offset: Offset(0, 2),
-            ),
-          ],
-          shape: BoxShape.circle),
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
       child: PopupMenuButton<int>(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
