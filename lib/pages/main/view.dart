@@ -125,17 +125,19 @@ class _MainAppState extends State<MainApp> {
                                   })
                                 : const Icon(Icons.lock),
                             title: Text(
+                              accountName,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            subtitle: Text(
                               code,
                               style: TextStyle(
                                 fontSize: 27,
-                                fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
-                            ),
-                            subtitle: Text(
-                              accountName,
-                              style: const TextStyle(fontSize: 13),
-                              overflow: TextOverflow.ellipsis,
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
