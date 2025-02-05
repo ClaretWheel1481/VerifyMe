@@ -58,8 +58,16 @@ jobs:
           ln -sf ./build/ios/iphoneos Payload
           zip -r9 app.ipa Payload/runner.app
 
+      - name: Rename IPA
+        run: |
+          version_name=$(yq e .version pubspec.yaml | cut -d "+" -f 1)
+          for file in app.ipa; do
+            new_file_name="build/VerifyMe-${version_name}.ipa"
+            mv "$file" "$new_file_name"
+          done
+
       - name: Upload IPA
         uses: actions/upload-artifact@v4.6.0
         with:
-          name: ios-ipa
-          path: build/*.ipa
+          name: VerifyMe-iOS
+          path: build/VerifyMe-*.ipa
