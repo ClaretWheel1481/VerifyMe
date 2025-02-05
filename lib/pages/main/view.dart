@@ -145,20 +145,21 @@ class _MainAppState extends State<MainApp> {
                                         );
                                       })
                                     : Container(
-                                        margin: EdgeInsets.all(5),
+                                        margin: EdgeInsets.all(6),
                                         child: const Icon(Icons.lock),
                                       ),
                                 title: Text(
                                   accountName,
                                   style: const TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 subtitle: Text(
                                   code,
                                   style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color: Theme.of(context)
                                         .colorScheme
