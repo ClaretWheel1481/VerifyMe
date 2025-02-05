@@ -77,6 +77,7 @@ class CheckFormPage extends StatelessWidget {
                     decoration: InputDecoration(
                         labelText: FlutterI18n.translate(context, "algorithm"),
                         border: OutlineInputBorder()),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     dropdownColor: Theme.of(context).colorScheme.onSecondary,
                     items: <String>['SHA-1', 'SHA-256', 'SHA-512']
                         .map<DropdownMenuItem<String>>((String value) {
