@@ -23,8 +23,10 @@ class CheckFormPage extends StatelessWidget {
     String selectedAlgorithm = 'SHA-1';
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Confirm'),
-      ),
+          title: Align(
+        alignment: Alignment.centerLeft,
+        child: const Text("Confirm"),
+      )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

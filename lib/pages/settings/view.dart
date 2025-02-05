@@ -54,8 +54,10 @@ class SettingsState extends State<Settings> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+          title: Align(
+        alignment: Alignment.centerLeft,
+        child: const Text("Settings"),
+      )),
       body: Padding(
         padding: const EdgeInsets.only(top: 15, bottom: 15),
         child: Column(

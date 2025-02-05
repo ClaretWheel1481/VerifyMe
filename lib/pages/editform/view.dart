@@ -40,7 +40,15 @@ class EditFormState extends State<EditForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: widget.isEdit ? const Text("Edit") : const Text("Input"),
+        title: widget.isEdit
+            ? Align(
+                alignment: Alignment.centerLeft,
+                child: const Text("Edit"),
+              )
+            : Align(
+                alignment: Alignment.centerLeft,
+                child: const Text("Input"),
+              ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
