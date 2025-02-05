@@ -52,6 +52,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Update Podfile deployment target
+        run: |
+          sed -i '' 's/platform :ios, .*$/platform :ios, '12.0'/g' ios/Podfile
+          flutter pub get
+
       - name: Build iOS (No Code Signing)
         run: flutter build ios --no-codesign
 
