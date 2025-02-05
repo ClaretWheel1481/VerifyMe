@@ -52,6 +52,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Ensure CocoaPods dependencies are installed
+        run: |
+          cd ios
+          pod install
+          cd ..
+
       - name: Update Podfile deployment target
         run: |
           sed -i '' 's/platform :ios, .*$/platform :ios, '12.0'/g' ios/Podfile
