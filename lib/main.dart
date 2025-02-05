@@ -29,9 +29,10 @@ class MyApp extends StatelessWidget {
           lightColorScheme = lightDynamic.harmonized();
           darkColorScheme = darkDynamic.harmonized();
         } else {
-          lightColorScheme = ColorScheme.fromSwatch(primarySwatch: Colors.blue);
+          lightColorScheme =
+              ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue);
           darkColorScheme = ColorScheme.fromSwatch(
-              primarySwatch: Colors.blue, brightness: Brightness.dark);
+              primarySwatch: Colors.lightBlue, brightness: Brightness.dark);
         }
 
         return GetMaterialApp(

@@ -24,10 +24,12 @@ class MainfloatButton extends StatelessWidget {
         ],
       ),
       child: PopupMenuButton<int>(
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
         padding: const EdgeInsets.all(18.0),
         offset: const Offset(0, -200),
+        shadowColor: Colors.black38,
+        elevation: 10,
         color: Theme.of(context).colorScheme.onSecondary,
         onSelected: (value) async {
           if (value == 1) {
