@@ -55,13 +55,14 @@ jobs:
       - name: Build iOS (No Code Signing)
         run: flutter build ios --no-codesign
 
-      - name: Archive iOS app
+      - name: Archive iOS app (Disable Signing)
         run: |
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -sdk iphoneos \
             -configuration Release \
             -archivePath build/ios/archive.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
             archive
 
       - name: Export IPA
