@@ -59,7 +59,10 @@ class _MainAppState extends State<MainApp> {
                   flexibleSpace: FlexibleSpaceBar(
                     titlePadding: const EdgeInsets.only(left: 10, bottom: 15),
                     collapseMode: CollapseMode.pin,
-                    title: Text(widget.title),
+                    title: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(widget.title),
+                    ),
                   ),
                   actions: [
                     IconButton(
