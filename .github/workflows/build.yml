@@ -62,4 +62,4 @@ jobs:
         uses: actions/upload-artifact@v4.6.0
         with:
           name: ios-ipa
-          path: build/ios/*.ipa
+          path: build/*.ipa
