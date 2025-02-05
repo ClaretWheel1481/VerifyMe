@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.18.0
         with:
           flutter-version: '3.27.3'
           channel: stable
@@ -30,7 +30,7 @@ jobs:
         run: flutter build apk
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: android-apk
           path: build/app/outputs/flutter-apk/*.apk
@@ -41,10 +41,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.18.0
         with:
           flutter-version: '3.27.3'
           channel: stable
@@ -52,17 +52,27 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build IPA
+      - name: Build iOS (No Code Signing)
         run: flutter build ios --no-codesign
 
-      - name: Archive IPA
+      - name: Archive iOS app
         run: |
-          mkdir -p build/ios/archive
-          cd build/ios/archive
-          zip -r app-release.ipa ../iphoneos
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath build/ios/archive.xcarchive \
+            archive
+
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive.xcarchive \
+            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportPath build/ios/output
 
       - name: Upload IPA
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: ios-ipa
-          path: build/ios/archive/app-release.ipa
+          path: build/ios/output/*.ipa
