@@ -144,7 +144,10 @@ class _MainAppState extends State<MainApp> {
                                           ],
                                         );
                                       })
-                                    : const Icon(Icons.lock),
+                                    : Container(
+                                        margin: EdgeInsets.all(5),
+                                        child: const Icon(Icons.lock),
+                                      ),
                                 title: Text(
                                   accountName,
                                   style: const TextStyle(
