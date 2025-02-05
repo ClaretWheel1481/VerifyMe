@@ -32,7 +32,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4.6.0
         with:
-          name: android-apk
+          name: VerifyMe-Android
           path: build/app/outputs/flutter-apk/*.apk
 
   build_ios:
