@@ -4,6 +4,6 @@ AboutDialog buildAboutDialog() {
   return const AboutDialog(
     applicationVersion: 'v1.0.0',
     applicationName: 'VerifyMe',
-    applicationLegalese: "Copyright© 2024 Lance Huang",
+    applicationLegalese: "Copyright© 2025 Lance Huang",
   );
 }

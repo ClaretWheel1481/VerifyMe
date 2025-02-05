@@ -57,7 +57,7 @@ class _MainAppState extends State<MainApp> {
                   expandedHeight: 200.0,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: const EdgeInsets.only(left: 10, bottom: 15),
+                    titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
                     collapseMode: CollapseMode.pin,
                     title: Align(
                       alignment: Alignment.bottomLeft,
