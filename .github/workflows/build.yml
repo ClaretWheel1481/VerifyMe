@@ -55,16 +55,8 @@ jobs:
       - name: Build iOS (No Code Signing)
         run: |
           flutter build ios --release --no-codesign
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -sdk iphoneos \
-            -derivedDataPath build/ios
-          cd build/ios/Build/Products/Release-iphoneos
-          xcrun bitcode_strip Runner.app/Frameworks/Flutter.framework/Flutter -r -o Runner.app/Frameworks/Flutter.framework/Flutter
-          mkdir Payload
-          mv Runner.app Payload/
-          zip -r9 app.ipa Payload
+          ln -sf ./build/ios/iphoneos Payload
+          zip -r9 app.ipa Payload/runner.app
 
       - name: Rename IPA
         run: |
