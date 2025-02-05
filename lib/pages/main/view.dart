@@ -89,90 +89,104 @@ class _MainAppState extends State<MainApp> {
                                 secret, algorithm, length, mode,
                                 counter: counter);
                         return Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 14.0),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.onSecondary,
-                            borderRadius: BorderRadius.circular(15.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 4.0,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: ListTile(
-                            leading: mode == "TOTP"
-                                ? Obx(() {
-                                    return Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        CircularProgressIndicator(
-                                          value: controller.progress.value,
-                                        ),
-                                        Text(
-                                          '${controller.remainingSeconds.value}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  })
-                                : const Icon(Icons.lock),
-                            title: Text(
-                              accountName,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            subtitle: Text(
-                              code,
-                              style: TextStyle(
-                                fontSize: 27,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (mode == "HOTP")
-                                  IconButton(
-                                    icon: const Icon(Icons.add),
-                                    onPressed: () {
-                                      controller.totpList[index]['counter']++;
-                                      controller.saveList();
-                                      controller.refreshList();
-                                    },
-                                  ),
-                                IconButton(
-                                  icon: const Icon(Icons.edit),
-                                  onPressed: () {
-                                    Get.to(() => EditForm(
-                                          accountName: accountName,
-                                          secret: secret,
-                                          algorithm: algorithm,
-                                          length: length.toString(),
-                                          mode: mode,
-                                          isEdit: true,
-                                        ));
-                                  },
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () =>
-                                      _showDeleteDialog(context, index),
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 14.0),
+                            padding: const EdgeInsets.only(top: 2.0),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4.0,
+                                  offset: Offset(0, 2),
                                 ),
                               ],
                             ),
-                          ),
-                        );
+                            child: GestureDetector(
+                              onTap: () {
+                                Clipboard.setData(ClipboardData(text: code));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                        'Code has been copied to the clipboard'),
+                                    duration: const Duration(seconds: 1),
+                                  ),
+                                );
+                              },
+                              child: ListTile(
+                                leading: mode == "TOTP"
+                                    ? Obx(() {
+                                        return Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            CircularProgressIndicator(
+                                              value: controller.progress.value,
+                                            ),
+                                            Text(
+                                              '${controller.remainingSeconds.value}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      })
+                                    : const Icon(Icons.lock),
+                                title: Text(
+                                  accountName,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                subtitle: Text(
+                                  code,
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (mode == "HOTP")
+                                      IconButton(
+                                        icon: const Icon(Icons.add),
+                                        onPressed: () {
+                                          controller.totpList[index]
+                                              ['counter']++;
+                                          controller.saveList();
+                                          controller.refreshList();
+                                        },
+                                      ),
+                                    IconButton(
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () {
+                                        Get.to(() => EditForm(
+                                              accountName: accountName,
+                                              secret: secret,
+                                              algorithm: algorithm,
+                                              length: length.toString(),
+                                              mode: mode,
+                                              isEdit: true,
+                                            ));
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete),
+                                      onPressed: () =>
+                                          _showDeleteDialog(context, index),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ));
                       },
                       childCount: controller.totpList.length,
                     ),
@@ -188,7 +202,7 @@ class _MainAppState extends State<MainApp> {
                         color: Theme.of(context)
                             .colorScheme
                             .onSecondary
-                            .withOpacity(0.3),
+                            .withValues(alpha: 0.3),
                       ),
                     )
                   : const SizedBox.shrink();

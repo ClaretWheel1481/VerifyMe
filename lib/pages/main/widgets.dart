@@ -12,9 +12,17 @@ class MainfloatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSecondary,
-          shape: BoxShape.rectangle,
-          borderRadius: const BorderRadius.all(Radius.circular(15))),
+        color: Theme.of(context).colorScheme.onSecondary,
+        shape: BoxShape.rectangle,
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 4.0,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: PopupMenuButton<int>(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(15))),
