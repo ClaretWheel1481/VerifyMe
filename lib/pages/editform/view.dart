@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/utils/generate/controller.dart';
 
 class EditForm extends StatefulWidget {
@@ -23,7 +25,20 @@ class EditForm extends StatefulWidget {
 }
 
 class EditFormState extends State<EditForm> {
+  final GetStorage _box = GetStorage();
   final GenerateController gController = Get.put(GenerateController());
+  String _languageCode = 'en';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 翻译页面
+    _languageCode = _box.read('languageCode') ?? 'en';
+    Future.delayed(Duration.zero, () async {
+      await FlutterI18n.refresh(context, Locale(_languageCode));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +58,11 @@ class EditFormState extends State<EditForm> {
         title: widget.isEdit
             ? Align(
                 alignment: Alignment.centerLeft,
-                child: const Text("Edit"),
+                child: Text(FlutterI18n.translate(context, "edit")),
               )
             : Align(
                 alignment: Alignment.centerLeft,
-                child: const Text("Input"),
+                child: Text(FlutterI18n.translate(context, "input")),
               ),
       ),
       body: Padding(
@@ -66,26 +81,29 @@ class EditFormState extends State<EditForm> {
               onChanged: (newValue) {
                 selectedMode = newValue!;
               },
-              decoration: const InputDecoration(
-                  labelText: 'Mode', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                  labelText: FlutterI18n.translate(context, "mode"),
+                  border: OutlineInputBorder()),
             ),
             const SizedBox(height: 25),
             TextField(
               controller: accountNameController,
-              decoration: const InputDecoration(
-                  labelText: 'Account', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                  labelText: FlutterI18n.translate(context, "account"),
+                  border: OutlineInputBorder()),
             ),
             const SizedBox(height: 25),
             TextField(
               controller: secretController,
-              decoration: const InputDecoration(
-                  labelText: 'Secret', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                  labelText: FlutterI18n.translate(context, "secret"),
+                  border: OutlineInputBorder()),
             ),
             const SizedBox(height: 25),
-            const Align(
+            Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Options',
+                FlutterI18n.translate(context, "options"),
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 14,
@@ -110,16 +128,18 @@ class EditFormState extends State<EditForm> {
                     onChanged: (newValue) {
                       selectedAlgorithm = newValue!;
                     },
-                    decoration: const InputDecoration(
-                        labelText: 'Algorithm', border: OutlineInputBorder()),
+                    decoration: InputDecoration(
+                        labelText: FlutterI18n.translate(context, "algorithm"),
+                        border: OutlineInputBorder()),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextField(
                     controller: lengthController,
-                    decoration: const InputDecoration(
-                        labelText: 'Length', border: OutlineInputBorder()),
+                    decoration: InputDecoration(
+                        labelText: FlutterI18n.translate(context, "length"),
+                        border: OutlineInputBorder()),
                   ),
                 ),
               ],
@@ -150,7 +170,7 @@ class EditFormState extends State<EditForm> {
                 foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onPrimary),
               ),
-              child: const Text('Save'),
+              child: Text(FlutterI18n.translate(context, "save")),
             ),
           ],
         ),
@@ -162,12 +182,11 @@ class EditFormState extends State<EditForm> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Error'),
-        content: const Text(
-            'Failed to add. Please check the parameters and try again.'),
+        title: Text(FlutterI18n.translate(context, "error")),
+        content: Text(FlutterI18n.translate(context, "failed_to_add")),
         actions: <Widget>[
           TextButton(
-            child: const Text('OK'),
+            child: Text(FlutterI18n.translate(context, "ok")),
             onPressed: () {
               Get.back();
             },

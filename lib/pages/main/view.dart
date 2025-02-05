@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
-
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
-import 'package:verifyme/pages/main/widgets.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/utils/generate/controller.dart';
 import 'package:verifyme/pages/editform/view.dart';
+import 'package:verifyme/utils/notify.dart';
+import 'package:file_picker/file_picker.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -18,13 +24,24 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  final GetStorage _box = GetStorage();
   final GenerateController controller = Get.put(GenerateController());
+  final GenerateController totpController = Get.find();
   final FocusNode _focusNode = FocusNode();
   final _isBlurred = false.obs;
+
+  String _languageCode = 'en';
 
   @override
   void initState() {
     super.initState();
+
+    // 翻译页面
+    _languageCode = _box.read('languageCode') ?? 'en';
+    Future.delayed(Duration.zero, () async {
+      await FlutterI18n.refresh(context, Locale(_languageCode));
+    });
+
     // 检测App是否最小化
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.paused" ||
@@ -39,6 +56,33 @@ class _MainAppState extends State<MainApp> {
       }
       return null;
     });
+  }
+
+  // 导入List
+  Future<void> importList() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        final jsonString = await file.readAsString();
+        final List<dynamic> jsonList = jsonDecode(jsonString);
+        totpController.totpList.assignAll(
+          jsonList.map((e) => Map<String, dynamic>.from(e)).toList(),
+        );
+        totpController.saveList();
+        totpController.onInit();
+        showNotification(FlutterI18n.translate(context, "import_successfully"));
+      } else {
+        showNotification(
+            FlutterI18n.translate(context, "file_selection_cancelled"));
+      }
+    } catch (e) {
+      showNotification(FlutterI18n.translate(context, "failed_to_import"));
+    }
   }
 
   @override
@@ -112,13 +156,8 @@ class _MainAppState extends State<MainApp> {
                             child: GestureDetector(
                               onTap: () {
                                 Clipboard.setData(ClipboardData(text: code));
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        'Code has been copied to the clipboard'),
-                                    duration: const Duration(seconds: 1),
-                                  ),
-                                );
+                                showNotification(FlutterI18n.translate(
+                                    context, "code_has_been_copied"));
                               },
                               child: ListTile(
                                 leading: mode == "TOTP"
@@ -224,7 +263,80 @@ class _MainAppState extends State<MainApp> {
           ],
         ),
       ),
-      floatingActionButton: const MainfloatButton(),
+      floatingActionButton: _isBlurred.value
+          ? null
+          : Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                shape: BoxShape.rectangle,
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: PopupMenuButton<int>(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                padding: const EdgeInsets.all(18.0),
+                offset: const Offset(0, -200),
+                shadowColor: Colors.black38,
+                elevation: 10,
+                color: Theme.of(context).colorScheme.secondaryContainer,
+                onSelected: (value) async {
+                  if (value == 1) {
+                    var result = await BarcodeScanner.scan();
+                    if (result.rawContent.isNotEmpty && mounted) {
+                      Get.to(() => CheckFormPage(resultUrl: result.rawContent));
+                    }
+                  } else if (value == 2) {
+                    if (mounted) {
+                      Get.to(() => const EditForm(
+                            accountName: "",
+                            secret: "",
+                            algorithm: "SHA-1",
+                            length: "6",
+                            mode: "TOTP",
+                            isEdit: false,
+                          ));
+                    }
+                  } else if (value == 3) {
+                    importList();
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 1,
+                    child: ListTile(
+                      leading: Icon(Icons.qr_code_scanner),
+                      title:
+                          Text(FlutterI18n.translate(context, "scan_qr_code")),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 2,
+                    child: ListTile(
+                      leading: Icon(Icons.input),
+                      title: Text(
+                          FlutterI18n.translate(context, "enter_manually")),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 3,
+                    child: ListTile(
+                      leading: Icon(Icons.download),
+                      title:
+                          Text(FlutterI18n.translate(context, "import_json")),
+                    ),
+                  ),
+                ],
+                icon: Icon(Icons.add,
+                    color: Theme.of(context).colorScheme.onSecondaryContainer),
+              ),
+            ),
     );
   }
 
@@ -233,21 +345,27 @@ class _MainAppState extends State<MainApp> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm'),
-          content: const Text('Are you sure you want to delete this data?'),
+          title: Text(FlutterI18n.translate(context, "confirm")),
+          content: Text(FlutterI18n.translate(context, "are_you_sure")),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel'),
+              child: Text(FlutterI18n.translate(context, "cancel")),
               onPressed: () {
                 Get.back();
               },
             ),
-            TextButton(
-              child: const Text('Delete'),
+            ElevatedButton(
               onPressed: () {
                 controller.delete(index);
                 Get.back();
               },
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                    Theme.of(context).colorScheme.primary),
+                foregroundColor: WidgetStatePropertyAll(
+                    Theme.of(context).colorScheme.onPrimary),
+              ),
+              child: Text(FlutterI18n.translate(context, "delete")),
             ),
           ],
         );

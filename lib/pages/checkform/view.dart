@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../utils/generate/controller.dart';
 
 class CheckFormPage extends StatelessWidget {
@@ -8,9 +10,16 @@ class CheckFormPage extends StatelessWidget {
   final TextEditingController lengthController =
       TextEditingController(text: '6');
   CheckFormPage({super.key, required this.resultUrl});
+  final GetStorage _box = GetStorage();
 
   @override
   Widget build(BuildContext context) {
+    String _languageCode = _box.read('languageCode') ?? 'en';
+
+    Future.delayed(Duration.zero, () async {
+      await FlutterI18n.refresh(context, Locale(_languageCode));
+    });
+
     final uri = Uri.parse(resultUrl);
     final secret = uri.queryParameters['secret'] ?? '';
     final issuer = uri.queryParameters['issuer'] ?? '';
@@ -25,7 +34,7 @@ class CheckFormPage extends StatelessWidget {
       appBar: AppBar(
           title: Align(
         alignment: Alignment.centerLeft,
-        child: const Text("Confirm"),
+        child: Text(FlutterI18n.translate(context, "confirm")),
       )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,23 +43,24 @@ class CheckFormPage extends StatelessWidget {
             TextField(
               controller: controller,
               readOnly: true,
-              decoration: const InputDecoration(
-                labelText: 'RESULT',
+              decoration: InputDecoration(
+                labelText: FlutterI18n.translate(context, "result"),
               ),
             ),
             const SizedBox(height: 25),
-            Text('Mode: $mode'),
-            Text('Issuer: $issuer'),
-            Text('Account: $accountName'),
-            Text('Secret: ${secret.toUpperCase()}'),
+            Text('${FlutterI18n.translate(context, "mode")}: $mode'),
+            Text('${FlutterI18n.translate(context, "issuer")}: $issuer'),
+            Text('${FlutterI18n.translate(context, "account")}: $accountName'),
+            Text(
+                '${FlutterI18n.translate(context, "secret")}: ${secret.toUpperCase()}'),
             const SizedBox(height: 25),
             Align(
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Options',
+                  Text(
+                    FlutterI18n.translate(context, "options"),
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -64,8 +74,9 @@ class CheckFormPage extends StatelessWidget {
                         selectedAlgorithm = newValue;
                       }
                     },
-                    decoration: const InputDecoration(
-                        labelText: 'Algorithm', border: OutlineInputBorder()),
+                    decoration: InputDecoration(
+                        labelText: FlutterI18n.translate(context, "algorithm"),
+                        border: OutlineInputBorder()),
                     dropdownColor: Theme.of(context).colorScheme.onSecondary,
                     items: <String>['SHA-1', 'SHA-256', 'SHA-512']
                         .map<DropdownMenuItem<String>>((String value) {
@@ -78,8 +89,9 @@ class CheckFormPage extends StatelessWidget {
                   const SizedBox(height: 25),
                   TextField(
                     controller: lengthController,
-                    decoration: const InputDecoration(
-                        labelText: 'Length', border: OutlineInputBorder()),
+                    decoration: InputDecoration(
+                        labelText: FlutterI18n.translate(context, "length"),
+                        border: OutlineInputBorder()),
                   ),
                 ],
               ),
@@ -101,7 +113,7 @@ class CheckFormPage extends StatelessWidget {
                 foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onSecondary),
               ),
-              child: const Text('Confirm'),
+              child: Text(FlutterI18n.translate(context, "confirm")),
             )
           ],
         ),

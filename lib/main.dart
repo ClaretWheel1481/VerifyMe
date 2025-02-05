@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     final GetStorage box = GetStorage();
     final String themeMode = box.read('themeMode') ?? 'system';
     final bool monetStatus = box.read('monetStatus') ?? true;
+    final String languageCode = box.read('languageCode') ?? 'en';
 
     if (Platform.isIOS || !monetStatus) {
       final lightColorScheme = ColorScheme.fromSeed(
@@ -33,13 +34,14 @@ class MyApp extends StatelessWidget {
       );
 
       return GetMaterialApp(
+        locale: Locale(languageCode),
+        fallbackLocale: const Locale('en'),
         localizationsDelegates: [
           FlutterI18nDelegate(
               translationLoader: FileTranslationLoader(
                   useCountryCode: true, basePath: 'assets/locales'),
               missingTranslationHandler: (key, locale) {
-                print(
-                    "--- Missing Key: $key, languageCode: ${locale!.languageCode}");
+                showNotification("i18n loading error");
               }),
         ],
         scaffoldMessengerKey: scaffoldMessengerKey,
@@ -69,13 +71,14 @@ class MyApp extends StatelessWidget {
           }
 
           return GetMaterialApp(
+            locale: Locale(languageCode),
+            fallbackLocale: const Locale('en'),
             localizationsDelegates: [
               FlutterI18nDelegate(
                   translationLoader: FileTranslationLoader(
                       useCountryCode: true, basePath: 'assets/locales'),
                   missingTranslationHandler: (key, locale) {
-                    print(
-                        "--- Missing Key: $key, languageCode: ${locale!.languageCode}");
+                    showNotification("i18n loading error");
                   }),
             ],
             scaffoldMessengerKey: scaffoldMessengerKey,
