@@ -2,11 +2,19 @@ name: Build Flutter APK & IPA
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+    paths:
+      - '**/*'
+      - '!README.md'
+      - '!README_CN.md'
+      - 'public/**'
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+    paths:
+      - '**/*'
+      - '!README.md'
+      - '!README_CN.md'
+      - 'public/**'
 
 jobs:
   build_android:
