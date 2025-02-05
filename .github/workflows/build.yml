@@ -52,59 +52,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Ensure CocoaPods dependencies are installed
-        run: |
-          cd ios
-          pod install
-          cd ..
-
-      - name: Update Podfile deployment target
-        run: |
-          sed -i '' 's/platform :ios, .*$/platform :ios, '12.0'/g' ios/Podfile
-          flutter pub get
-
-      - name: Fix DKImagePickerController Deployment Target
-        run: |
-          find ios/Pods -name "*.podspec" -exec sed -i '' 's/9.0/12.0/g' {} +
-          pod install --project-directory=ios
-
       - name: Build iOS (No Code Signing)
-        run: flutter build ios --no-codesign
-
-      - name: Create ExportOptions.plist (No Signing)
         run: |
-          cat > ios/ExportOptions.plist <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-              <dict>
-                  <key>method</key>
-                  <string>development</string>
-                  <key>teamID</key>
-                  <string></string>
-                  <key>signingStyle</key>
-                  <string>automatic</string>
-              </dict>
-          </plist>
-          EOF
-
-      - name: Archive iOS app
-        run: |
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath build/ios/archive.xcarchive \
-            archive
-
-      - name: Export IPA
-        run: |
-          xcodebuild -exportArchive \
-            -archivePath build/ios/archive.xcarchive \
-            -exportOptionsPlist ios/ExportOptions.plist \
-            -exportPath build/ios/ipa
+          flutter build ios --release --no-codesign
+          ln -sf ./build/ios/iphoneos Payload
+          zip -r9 app.ipa Payload/runner.app
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4.6.0
         with:
           name: ios-ipa
-          path: build/ios/ipa/*.ipa
+          path: build/ios/*.ipa
