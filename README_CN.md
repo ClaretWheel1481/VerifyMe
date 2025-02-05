@@ -36,14 +36,14 @@ VerifyMe by Linxing Huang
 ### iOS (运行于iPhone13 mini)
 <div class="half">
     <img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
-    <img src="./public/Screenshot_iOS_Dark.png" width=30%/>
+    <img src="./public/Screenshot_iOS_Dark.PNG" width=30%/>
 </div>
 
 ### 扫描、编辑/输入、设置页面
 <div class="half">
-    <img src="./public/Screenshot_Scan.png" width=30%/>
-    <img src="./public/Screenshot_Edit.png" width=30%/>
-    <img src="./public/Screenshot_Settings.png" width=30%/>
+    <img src="./public/Screenshot_Scan.PNG" width=30%/>
+    <img src="./public/Screenshot_Edit.PNG" width=30%/>
+    <img src="./public/Screenshot_Settings.PNG" width=30%/>
 </div>
 
 ## 许可证
