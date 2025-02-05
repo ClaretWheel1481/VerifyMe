@@ -21,22 +21,30 @@ VerifyMe by Linxing Huang
 - Material Design
 
 ## 截图
-### Android - Monet Color (Running on Xperia 5 II)
-<img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
-<img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+### Android - 启用Monet取色 (Running on Xperia 5 II)
+<div class="half">
+    <img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+</div>
 
-### Android - Non Monet Color (Running on Xperia 5 II)
-<img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
-<img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+### Android - 无Monet取色 (Running on Xperia 5 II)
+<div class="half">
+    <img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+</div>
 
-### iOS (Running on iPhone13 mini)
-<img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
-<img src="./public/Screenshot_iOS_Dark.png" width=30%/>
+### iOS (运行于iPhone13 mini)
+<div class="half">
+    <img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
+    <img src="./public/Screenshot_iOS_Dark.png" width=30%/>
+</div>
 
-### Scan、Edit/Input、Settings
-<img src="./public/Screenshot_Scan.png" width=30%/>
-<img src="./public/Screenshot_Edit.png" width=30%/>
-<img src="./public/Screenshot_Settings.png" width=30%/>
+### 扫描、编辑/输入、设置页面
+<div class="half">
+    <img src="./public/Screenshot_Scan.png" width=30%/>
+    <img src="./public/Screenshot_Edit.png" width=30%/>
+    <img src="./public/Screenshot_Settings.png" width=30%/>
+</div>
 
 ## 许可证
 [MIT](LICENSE) © Linxing Huang

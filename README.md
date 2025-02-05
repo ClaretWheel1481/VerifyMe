@@ -22,21 +22,29 @@ A simple, opensource Authenticator app.
 
 ## Screenshots
 ### Android - Monet Color (Running on Xperia 5 II)
-<img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
-<img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+<div class="half">
+    <img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+</div>
 
 ### Android - Non Monet Color (Running on Xperia 5 II)
-<img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
-<img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+<div class="half">
+    <img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+</div>
 
 ### iOS (Running on iPhone13 mini)
-<img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
-<img src="./public/Screenshot_iOS_Dark.png" width=30%/>
+<div class="half">
+    <img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
+    <img src="./public/Screenshot_iOS_Dark.png" width=30%/>
+</div>
 
 ### Scan、Edit/Input、Settings
-<img src="./public/Screenshot_Scan.png" width=30%/>
-<img src="./public/Screenshot_Edit.png" width=30%/>
-<img src="./public/Screenshot_Settings.png" width=30%/>
+<div class="half">
+    <img src="./public/Screenshot_Scan.png" width=30%/>
+    <img src="./public/Screenshot_Edit.png" width=30%/>
+    <img src="./public/Screenshot_Settings.png" width=30%/>
+</div>
 
 ## License
 [MIT](LICENSE) © Linxing Huang
