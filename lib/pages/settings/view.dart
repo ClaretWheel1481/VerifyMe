@@ -22,6 +22,7 @@ class SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     _themeMode = _box.read('themeMode') ?? 'system';
+    selectedMonet = _box.read('monetStatus') ?? true;
   }
 
   void _saveThemeMode(String themeMode) {
@@ -51,6 +52,7 @@ class SettingsState extends State<Settings> {
     final bool isEnabled = !Platform.isIOS;
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: const Text('Settings'),
       ),
@@ -90,24 +92,23 @@ class SettingsState extends State<Settings> {
               ],
             ),
             ListTile(
-              enabled: isEnabled,
-              leading: const Icon(Icons.color_lens),
-              title: const Text('Monet Color'),
-              subtitle: const Text(
-                'Effective after reboot',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
+                enabled: isEnabled,
+                leading: const Icon(Icons.color_lens),
+                title: const Text('Monet Color'),
+                subtitle: const Text(
+                  'Effective after reboot',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                  ),
                 ),
-              ),
-              onTap: () {
-                onMonet(!selectedMonet);
-              },
-              trailing: Checkbox(
-                value: selectedMonet,
-                onChanged: isEnabled ? onMonet : null,
-              ),
-            ),
+                onTap: () {
+                  onMonet(!selectedMonet);
+                },
+                trailing: Switch(
+                  value: selectedMonet,
+                  onChanged: isEnabled ? onMonet : null,
+                )),
             Obx(() => ListTile(
                   enabled: totpController.totpList.isNotEmpty,
                   leading: const Icon(Icons.upload),

@@ -24,10 +24,11 @@ class MyApp extends StatelessWidget {
     final bool monetStatus = box.read('monetStatus') ?? true;
 
     if (Platform.isIOS || !monetStatus) {
-      final lightColorScheme =
-          ColorScheme.fromSwatch(primarySwatch: Colors.blue);
-      final darkColorScheme = ColorScheme.fromSwatch(
-        primarySwatch: Colors.blue,
+      final lightColorScheme = ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+      );
+      final darkColorScheme = ColorScheme.fromSeed(
+        seedColor: Colors.blue,
         brightness: Brightness.dark,
       );
 

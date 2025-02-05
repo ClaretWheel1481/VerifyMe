@@ -12,7 +12,7 @@ class MainfloatButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onSecondary,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         shape: BoxShape.rectangle,
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         boxShadow: const [
@@ -30,7 +30,7 @@ class MainfloatButton extends StatelessWidget {
         offset: const Offset(0, -200),
         shadowColor: Colors.black38,
         elevation: 10,
-        color: Theme.of(context).colorScheme.onSecondary,
+        color: Theme.of(context).colorScheme.secondaryContainer,
         onSelected: (value) async {
           if (value == 1) {
             var result = await BarcodeScanner.scan();
@@ -62,18 +62,19 @@ class MainfloatButton extends StatelessWidget {
             value: 2,
             child: ListTile(
               leading: Icon(Icons.input),
-              title: Text('Manual Input'),
+              title: Text('Enter Manually'),
             ),
           ),
           const PopupMenuItem(
             value: 3,
             child: ListTile(
               leading: Icon(Icons.download),
-              title: Text('Import from Json'),
+              title: Text('Import Json'),
             ),
           ),
         ],
-        icon: Icon(Icons.add, color: Theme.of(context).colorScheme.secondary),
+        icon: Icon(Icons.add,
+            color: Theme.of(context).colorScheme.onSecondaryContainer),
       ),
     );
   }

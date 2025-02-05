@@ -14,8 +14,7 @@ Future<void> export() async {
   if (await _requestPermission()) {
     exportList();
   } else {
-    showNotification(
-        'Permission Denied', 'Storage permission is required to export');
+    showNotification('Storage permission is required to export');
   }
 }
 
@@ -36,9 +35,9 @@ Future<void> exportList() async {
     final file = File('${directory.path}/totp_list.json');
     final jsonString = jsonEncode(totpController.totpList);
     await file.writeAsString(jsonString);
-    showNotification('Success', 'Exported to ${file.path}');
+    showNotification('Exported to ${file.path}');
   } catch (e) {
-    showNotification('Error', 'Failed to export data: $e');
+    showNotification('Failed to export data: $e');
   }
 }
 
@@ -49,7 +48,7 @@ Future<Directory> _getDirectory() async {
   } else if (Platform.isIOS) {
     return await getApplicationDocumentsDirectory();
   }
-  showNotification('Error', 'Unsupported platform');
+  showNotification('Unsupported platform');
   throw UnsupportedError('Unsupported platform');
 }
 
@@ -70,11 +69,11 @@ Future<void> importList() async {
       );
       totpController.saveList();
       totpController.onInit();
-      showNotification('Success', 'Imported successfully');
+      showNotification('Imported successfully');
     } else {
-      showNotification('Cancelled', 'File selection cancelled');
+      showNotification('File selection cancelled');
     }
   } catch (e) {
-    showNotification('Error', 'Failed to import');
+    showNotification('Failed to import');
   }
 }

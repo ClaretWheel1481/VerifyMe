@@ -47,6 +47,7 @@ class EditFormState extends State<EditForm> {
         child: Column(
           children: [
             DropdownButtonFormField<String>(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
               value: selectedMode,
               items: modes.map((String value) {
                 return DropdownMenuItem<String>(
@@ -54,7 +55,6 @@ class EditFormState extends State<EditForm> {
                   child: Text(value),
                 );
               }).toList(),
-              dropdownColor: Theme.of(context).colorScheme.onSecondary,
               onChanged: (newValue) {
                 selectedMode = newValue!;
               },
@@ -90,6 +90,7 @@ class EditFormState extends State<EditForm> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     value: selectedAlgorithm,
                     items: algorithms.map((String value) {
                       return DropdownMenuItem<String>(
@@ -139,7 +140,7 @@ class EditFormState extends State<EditForm> {
                 backgroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.primary),
                 foregroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.onSecondary),
+                    Theme.of(context).colorScheme.onPrimary),
               ),
               child: const Text('Save'),
             ),

@@ -97,7 +97,9 @@ class _MainAppState extends State<MainApp> {
                                 vertical: 8.0, horizontal: 14.0),
                             padding: const EdgeInsets.only(top: 2.0),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.onSecondary,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
                               borderRadius: BorderRadius.circular(15.0),
                               boxShadow: const [
                                 BoxShadow(
@@ -126,6 +128,9 @@ class _MainAppState extends State<MainApp> {
                                           children: [
                                             CircularProgressIndicator(
                                               value: controller.progress.value,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .onPrimaryContainer,
                                             ),
                                             Text(
                                               '${controller.remainingSeconds.value}',
@@ -133,7 +138,7 @@ class _MainAppState extends State<MainApp> {
                                                 fontSize: 14,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .primary,
+                                                    .onPrimaryContainer,
                                               ),
                                             ),
                                           ],
@@ -152,8 +157,9 @@ class _MainAppState extends State<MainApp> {
                                   style: TextStyle(
                                     fontSize: 28,
                                     fontWeight: FontWeight.bold,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
                                   ),
                                 ),
                                 trailing: Row(
