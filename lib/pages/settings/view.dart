@@ -92,9 +92,9 @@ class SettingsState extends State<Settings> {
             ListTile(
               enabled: isEnabled,
               leading: const Icon(Icons.color_lens),
-              title: const Text('Monet取色'),
+              title: const Text('Monet Color'),
               subtitle: const Text(
-                '重启后生效',
+                'Effective after reboot',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 12.0,
