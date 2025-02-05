@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get_storage/get_storage.dart';
@@ -19,6 +21,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GetStorage box = GetStorage();
     final String themeMode = box.read('themeMode') ?? 'system';
+    final bool monetStatus = box.read('monetStatus') ?? true;
+
+    if (Platform.isIOS || monetStatus) {
+      final lightColorScheme =
+          ColorScheme.fromSwatch(primarySwatch: Colors.blue);
+      final darkColorScheme = ColorScheme.fromSwatch(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+      );
+
+      return GetMaterialApp(
+        localizationsDelegates: [
+          FlutterI18nDelegate(
+              translationLoader: FileTranslationLoader(
+                  useCountryCode: true, basePath: 'assets/locales'),
+              missingTranslationHandler: (key, locale) {
+                print(
+                    "--- Missing Key: $key, languageCode: ${locale!.languageCode}");
+              }),
+        ],
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        theme: ThemeData(colorScheme: lightColorScheme),
+        darkTheme: ThemeData(colorScheme: darkColorScheme),
+        themeMode: themeMode == 'system'
+            ? ThemeMode.system
+            : themeMode == 'light'
+                ? ThemeMode.light
+                : ThemeMode.dark,
+        home: const MainApp(title: "VerifyMe"),
+      );
+    }
 
     return DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

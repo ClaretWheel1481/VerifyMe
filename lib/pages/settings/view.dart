@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,6 +16,7 @@ class Settings extends StatefulWidget {
 class SettingsState extends State<Settings> {
   final GetStorage _box = GetStorage();
   String _themeMode = 'system';
+  bool selectedMonet = true;
 
   @override
   void initState() {
@@ -35,8 +38,18 @@ class SettingsState extends State<Settings> {
     );
   }
 
+  void onMonet(bool? value) {
+    if (value == null) return;
+    setState(() {
+      selectedMonet = value;
+    });
+    _box.write('monetStatus', value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isEnabled = !Platform.isIOS;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -75,6 +88,25 @@ class SettingsState extends State<Settings> {
                   selected: _themeMode == 'dark',
                 ),
               ],
+            ),
+            ListTile(
+              enabled: isEnabled,
+              leading: const Icon(Icons.color_lens),
+              title: const Text('Monet取色'),
+              subtitle: const Text(
+                '重启后生效',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12.0,
+                ),
+              ),
+              onTap: () {
+                onMonet(!selectedMonet);
+              },
+              trailing: Checkbox(
+                value: selectedMonet,
+                onChanged: isEnabled ? onMonet : null,
+              ),
             ),
             Obx(() => ListTile(
                   enabled: totpController.totpList.isNotEmpty,

@@ -38,7 +38,7 @@ Future<void> exportList() async {
     await file.writeAsString(jsonString);
     showNotification('Success', 'Exported to ${file.path}');
   } catch (e) {
-    showNotification('Error', 'Failed to export data');
+    showNotification('Error', 'Failed to export data: $e');
   }
 }
 
@@ -47,13 +47,7 @@ Future<Directory> _getDirectory() async {
   if (Platform.isAndroid) {
     return Directory('/storage/emulated/0/Download');
   } else if (Platform.isIOS) {
-    final directory = await getDownloadsDirectory();
-    if (directory != null) {
-      return directory;
-    } else {
-      showNotification('Error', 'Could not find the Downloads directory');
-      throw UnsupportedError('Could not find the Downloads directory');
-    }
+    return await getApplicationDocumentsDirectory();
   }
   showNotification('Error', 'Unsupported platform');
   throw UnsupportedError('Unsupported platform');
