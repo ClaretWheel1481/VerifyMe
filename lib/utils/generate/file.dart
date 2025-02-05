@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'controller.dart';
-import 'package:path_provider/path_provider.dart';
 
 final GenerateController totpController = Get.find();
 
@@ -47,7 +47,13 @@ Future<Directory> _getDirectory() async {
   if (Platform.isAndroid) {
     return Directory('/storage/emulated/0/Download');
   } else if (Platform.isIOS) {
-    return await getApplicationDocumentsDirectory();
+    final directory = await getDownloadsDirectory();
+    if (directory != null) {
+      return directory;
+    } else {
+      showNotification('Error', 'Could not find the Downloads directory');
+      throw UnsupportedError('Could not find the Downloads directory');
+    }
   }
   showNotification('Error', 'Unsupported platform');
   throw UnsupportedError('Unsupported platform');
