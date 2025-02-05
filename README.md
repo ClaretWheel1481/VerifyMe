@@ -13,10 +13,11 @@ A simple, opensource Authenticator app.
 <br>
 
 ## Features
-- QR code scanning
+- QR Code Scanning
+- i18n Support
 - Private Protection
 - Click Quick Copy
-- Backup and restore in json
+- Backup and Restore in JSON
 - Monet Color
 - Android 12+ Material Design
 

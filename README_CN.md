@@ -14,10 +14,11 @@ VerifyMe by Linxing Huang
 
 ## 特性
 - 二维码扫描输入
+- 多语言支持
 - 隐私保护
 - 单击快速复制
 - 通过Json文件备份和恢复
-- Monet取色
+- 莫奈取色
 - Material Design
 
 ## 截图
