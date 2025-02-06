@@ -60,9 +60,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean Xcode Derived Data
-        run: rm -rf ~/Library/Developer/Xcode/DerivedData
-
       - name: Reinstall CocoaPods Dependencies
         run: |
           cd ios
@@ -72,6 +69,7 @@ jobs:
         run: |
           flutter build ios --release --no-codesign
           ln -sf ./build/ios/iphoneos Payload
+          lipo -info build/ios/iphoneos/Runner.app/Runner
           zip -r9 app.ipa Payload/runner.app
 
       - name: Rename IPA
