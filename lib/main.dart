@@ -20,16 +20,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GetStorage box = GetStorage();
+
     final String themeMode = box.read('themeMode') ?? 'system';
     final bool monetStatus = box.read('monetStatus') ?? true;
     final String languageCode = box.read('languageCode') ?? 'en';
+    final Color colorSeed = Color(box.read('colorSeed') ?? 0x6750A4);
 
     if (Platform.isIOS || !monetStatus) {
       final lightColorScheme = ColorScheme.fromSeed(
-        seedColor: Colors.blue,
+        seedColor: colorSeed,
       );
       final darkColorScheme = ColorScheme.fromSeed(
-        seedColor: Colors.blue,
+        seedColor: colorSeed,
         brightness: Brightness.dark,
       );
 

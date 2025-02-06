@@ -8,7 +8,7 @@
     "export_data": "导出数据",
     "about": "关于",
     "monet_color": "莫奈取色",
-    "effective_after_reboot": "重启后生效",
+    "effective_after_reboot": "重启应用后生效",
     "code_has_been_copied": "验证码已复制到剪贴板",
     "scan_qr_code": "扫描二维码",
     "enter_manually": "手动输入",
@@ -37,6 +37,7 @@
     "unsupported_platform": "不支持的系统",
     "import_successfully": "导入成功",
     "file_selection_cancelled": "文件选择被用户取消",
-    "failed_to_import": "导入失败"
+    "failed_to_import": "导入失败",
+    "custom_color": "自定义颜色"
   }
   

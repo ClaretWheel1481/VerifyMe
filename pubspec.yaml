@@ -23,6 +23,7 @@ dependencies:
   permission_handler:
   file_picker:
   flutter_i18n:
+  flutter_colorpicker: 
   
 dev_dependencies:
   flutter_test:

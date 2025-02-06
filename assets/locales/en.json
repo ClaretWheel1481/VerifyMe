@@ -8,7 +8,7 @@
     "export_data": "Export Data",
     "about": "About",
     "monet_color": "Monet Color",
-    "effective_after_reboot": "Effective after reboot",
+    "effective_after_reboot": "Effective after reboot app",
     "code_has_been_copied": "Code has been copied to clipboard",
     "scan_qr_code": "Scan QR code",
     "enter_manually": "Enter manually",
@@ -37,6 +37,7 @@
     "unsupported_platform": "Unsupported platform",
     "import_successfully": "Import successfully",
     "file_selection_cancelled": "File selection cancelled",
-    "failed_to_import": "Failed to import"
+    "failed_to_import": "Failed to import",
+    "custom_color": "Custom Color"
   }
   

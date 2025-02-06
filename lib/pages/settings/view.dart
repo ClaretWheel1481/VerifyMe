@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,12 +26,18 @@ class SettingsState extends State<Settings> {
   bool selectedMonet = true;
   String _languageCode = 'en';
 
+  Color pickerColor = Color(0xff443a49);
+  Color currentColor = Color(0xff443a49);
+
   @override
   void initState() {
     super.initState();
     _themeMode = _box.read('themeMode') ?? 'system';
-    selectedMonet = _box.read('monetStatus') ?? true;
     _languageCode = _box.read('languageCode') ?? 'en';
+    currentColor = Color(_box.read('colorSeed') ?? 0xff443a49);
+    Platform.isIOS
+        ? selectedMonet = false
+        : selectedMonet = _box.read('monetStatus') ?? true;
 
     Future.delayed(Duration.zero, () async {
       await FlutterI18n.refresh(context, Locale(_languageCode));
@@ -69,6 +76,7 @@ class SettingsState extends State<Settings> {
       selectedMonet = value;
     });
     _box.write('monetStatus', value);
+    FlutterI18n.translate(context, "effective_after_reboot");
   }
 
   // 导出数据
@@ -114,6 +122,11 @@ class SettingsState extends State<Settings> {
       return await Permission.storage.request().isGranted;
     }
     return false;
+  }
+
+  // 更换颜色
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
   }
 
   @override
@@ -196,6 +209,55 @@ class SettingsState extends State<Settings> {
                   value: selectedMonet,
                   onChanged: isEnabled ? onMonet : null,
                 )),
+            ListTile(
+              enabled: !selectedMonet,
+              leading: const Icon(Icons.color_lens),
+              title: Text(FlutterI18n.translate(context, "custom_color")),
+              subtitle: Text(
+                FlutterI18n.translate(context, "effective_after_reboot"),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 12.0,
+                ),
+              ),
+              onTap: () {
+                pickerColor = currentColor;
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                            FlutterI18n.translate(context, "custom_color")),
+                        content: SingleChildScrollView(
+                          child: ColorPicker(
+                            pickerColor: pickerColor,
+                            onColorChanged: changeColor,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                                  Theme.of(context).colorScheme.primary),
+                              foregroundColor: WidgetStatePropertyAll(
+                                  Theme.of(context).colorScheme.onPrimary),
+                            ),
+                            child: Text(
+                              FlutterI18n.translate(context, "ok"),
+                            ),
+                            onPressed: () {
+                              setState(() => currentColor = pickerColor);
+                              _box.write('colorSeed', currentColor.value);
+                              Get.back();
+                              showNotification(FlutterI18n.translate(
+                                  context, "effective_after_reboot"));
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            ),
             Obx(() => ListTile(
                   enabled: totpController.totpList.isNotEmpty,
                   leading: const Icon(Icons.upload),
