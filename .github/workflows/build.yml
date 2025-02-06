@@ -60,16 +60,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Reinstall CocoaPods Dependencies
-        run: |
-          cd ios
-          pod install --repo-update
-
       - name: Build iOS (No Code Signing)
         run: |
           flutter build ios --release --no-codesign
           ln -sf ./build/ios/iphoneos Payload
-          lipo -info build/ios/iphoneos/Runner.app/Runner
+          rm -rf build/ios/iphoneos/Runner.app/Frameworks/libswift*.dylib
           ls -lh build/ios/iphoneos/Runner.app/Frameworks/
           zip -r9 app.ipa Payload/runner.app
 
