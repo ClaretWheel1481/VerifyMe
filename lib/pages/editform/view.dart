@@ -100,6 +100,7 @@ class EditFormState extends State<EditForm> {
               onChanged: (newValue) {
                 selectedMode = newValue!;
               },
+              dropdownColor: Theme.of(context).colorScheme.onSecondary,
               decoration: InputDecoration(
                   labelText: FlutterI18n.translate(context, "mode"),
                   border: OutlineInputBorder()),
