@@ -60,6 +60,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Clean Xcode Derived Data
+        run: rm -rf ~/Library/Developer/Xcode/DerivedData
+
+      - name: Reinstall CocoaPods Dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+
       - name: Build iOS (No Code Signing)
         run: |
           flutter build ios --release --no-codesign
