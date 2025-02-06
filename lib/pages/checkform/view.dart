@@ -14,10 +14,10 @@ class CheckFormPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _languageCode = _box.read('languageCode') ?? 'en';
+    String languageCode = _box.read('languageCode') ?? 'en';
 
     Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, Locale(_languageCode));
+      await FlutterI18n.refresh(context, Locale(languageCode));
     });
 
     final uri = Uri.parse(resultUrl);

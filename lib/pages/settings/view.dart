@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -221,41 +220,10 @@ class SettingsState extends State<Settings> {
                 ),
               ),
               onTap: () {
-                pickerColor = currentColor;
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                            FlutterI18n.translate(context, "custom_color")),
-                        content: SingleChildScrollView(
-                          child: ColorPicker(
-                            pickerColor: pickerColor,
-                            onColorChanged: changeColor,
-                          ),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStatePropertyAll(
-                                  Theme.of(context).colorScheme.primary),
-                              foregroundColor: WidgetStatePropertyAll(
-                                  Theme.of(context).colorScheme.onPrimary),
-                            ),
-                            child: Text(
-                              FlutterI18n.translate(context, "ok"),
-                            ),
-                            onPressed: () {
-                              setState(() => currentColor = pickerColor);
-                              _box.write('colorSeed', currentColor.value);
-                              Get.back();
-                              showNotification(FlutterI18n.translate(
-                                  context, "effective_after_reboot"));
-                            },
-                          ),
-                        ],
-                      );
-                    });
+                showColorPickerDialog(context, currentColor, (Color color) {
+                  setState(() => currentColor = color);
+                  _box.write('colorSeed', currentColor.value);
+                });
               },
             ),
             Obx(() => ListTile(

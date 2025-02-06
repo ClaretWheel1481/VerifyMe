@@ -40,6 +40,25 @@ class EditFormState extends State<EditForm> {
     });
   }
 
+  // 错误弹窗
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(FlutterI18n.translate(context, "error")),
+        content: Text(FlutterI18n.translate(context, "failed_to_add")),
+        actions: <Widget>[
+          TextButton(
+            child: Text(FlutterI18n.translate(context, "ok")),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController accountNameController =
@@ -174,24 +193,6 @@ class EditFormState extends State<EditForm> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _showErrorDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(FlutterI18n.translate(context, "error")),
-        content: Text(FlutterI18n.translate(context, "failed_to_add")),
-        actions: <Widget>[
-          TextButton(
-            child: Text(FlutterI18n.translate(context, "ok")),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-        ],
       ),
     );
   }
