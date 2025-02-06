@@ -70,6 +70,7 @@ jobs:
           flutter build ios --release --no-codesign
           ln -sf ./build/ios/iphoneos Payload
           lipo -info build/ios/iphoneos/Runner.app/Runner
+          ls -lh build/ios/iphoneos/Runner.app/Frameworks/
           zip -r9 app.ipa Payload/runner.app
 
       - name: Rename IPA
