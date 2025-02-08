@@ -128,142 +128,144 @@ class SettingsState extends State<Settings> {
     setState(() => pickerColor = color);
   }
 
+  // 动态构建语言选项
+  List<Widget> _buildLanguageList() {
+    final languages = [
+      {'code': 'de', 'name': 'Deutsch'},
+      {'code': 'en', 'name': 'English'},
+      {'code': 'es', 'name': 'Español'},
+      {'code': 'fr', 'name': 'Français'},
+      {'code': 'it', 'name': 'Italiano'},
+      {'code': 'ja', 'name': '日本語'},
+      {'code': 'zh_CN', 'name': '中文 (简体)'},
+      {'code': 'zh_TW', 'name': '中文 (繁体)'},
+    ];
+
+    // 生成列表
+    return languages.map((language) {
+      return ListTile(
+        title: Text(language['name']!),
+        onTap: () => _changeLanguage(language['code']!),
+        selected: _languageCode == language['code'],
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool isEnabled = !Platform.isIOS;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-          title: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(FlutterI18n.translate(context, "settings")),
-      )),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ExpansionTile(
-              leading: const Icon(Icons.language),
-              title: Text(FlutterI18n.translate(context, "language")),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: AppBar(
+            title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(FlutterI18n.translate(context, "settings")),
+        )),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                  title: const Text('English'),
-                  onTap: () => _changeLanguage('en'),
-                  selected: _languageCode == 'en',
+                ExpansionTile(
+                  leading: const Icon(Icons.language),
+                  title: Text(FlutterI18n.translate(context, "language")),
+                  children: [
+                    ..._buildLanguageList(),
+                  ],
                 ),
-                ListTile(
-                  title: const Text('Español'),
-                  onTap: () => _changeLanguage('es'),
-                  selected: _languageCode == 'es',
-                ),
-                ListTile(
-                  title: const Text('Français'),
-                  onTap: () => _changeLanguage('fr'),
-                  selected: _languageCode == 'fr',
-                ),
-                ListTile(
-                  title: const Text('Italiano'),
-                  onTap: () => _changeLanguage('it'),
-                  selected: _languageCode == 'it',
-                ),
-                ListTile(
-                  title: const Text('中文 (简体)'),
-                  onTap: () => _changeLanguage('zh_CN'),
-                  selected: _languageCode == 'zh_CN',
-                ),
-              ],
-            ),
-            ExpansionTile(
-              leading: const Icon(Icons.light_mode),
-              title: Text(FlutterI18n.translate(context, "theme")),
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.brightness_auto),
-                  title: Text(FlutterI18n.translate(context, "follow_system")),
-                  onTap: () {
-                    _saveThemeMode('system');
-                  },
-                  selected: _themeMode == 'system',
-                ),
-                ListTile(
+                ExpansionTile(
                   leading: const Icon(Icons.light_mode),
-                  title: Text(FlutterI18n.translate(context, "light")),
-                  onTap: () {
-                    _saveThemeMode('light');
-                  },
-                  selected: _themeMode == 'light',
+                  title: Text(FlutterI18n.translate(context, "theme")),
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.brightness_auto),
+                      title:
+                          Text(FlutterI18n.translate(context, "follow_system")),
+                      onTap: () {
+                        _saveThemeMode('system');
+                      },
+                      selected: _themeMode == 'system',
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.light_mode),
+                      title: Text(FlutterI18n.translate(context, "light")),
+                      onTap: () {
+                        _saveThemeMode('light');
+                      },
+                      selected: _themeMode == 'light',
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.dark_mode),
+                      title: Text(FlutterI18n.translate(context, "dark")),
+                      onTap: () {
+                        _saveThemeMode('dark');
+                      },
+                      selected: _themeMode == 'dark',
+                    ),
+                  ],
                 ),
                 ListTile(
-                  leading: const Icon(Icons.dark_mode),
-                  title: Text(FlutterI18n.translate(context, "dark")),
+                    enabled: isEnabled,
+                    leading: const Icon(Icons.color_lens),
+                    title: Text(FlutterI18n.translate(context, "monet_color")),
+                    subtitle: Text(
+                      FlutterI18n.translate(context, "effective_after_reboot"),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    onTap: () {
+                      onMonet(!selectedMonet);
+                    },
+                    trailing: Switch(
+                      value: selectedMonet,
+                      onChanged: isEnabled ? onMonet : null,
+                    )),
+                ListTile(
+                  enabled: !selectedMonet,
+                  leading: const Icon(Icons.color_lens),
+                  title: Text(FlutterI18n.translate(context, "custom_color")),
+                  subtitle: Text(
+                    FlutterI18n.translate(context, "effective_after_reboot"),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12.0,
+                    ),
+                  ),
                   onTap: () {
-                    _saveThemeMode('dark');
+                    showColorPickerDialog(context, currentColor, (Color color) {
+                      setState(() => currentColor = color);
+                      _box.write('colorSeed', currentColor.value);
+                    });
                   },
-                  selected: _themeMode == 'dark',
+                ),
+                Obx(() => ListTile(
+                      enabled: totpController.totpList.isNotEmpty,
+                      leading: const Icon(Icons.upload),
+                      title:
+                          Text(FlutterI18n.translate(context, "export_data")),
+                      onTap: () {
+                        export();
+                      },
+                    )),
+                ListTile(
+                  leading: const Icon(Icons.info),
+                  title: Text(FlutterI18n.translate(context, "about")),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return buildAboutDialog();
+                      },
+                    );
+                  },
                 ),
               ],
             ),
-            ListTile(
-                enabled: isEnabled,
-                leading: const Icon(Icons.color_lens),
-                title: Text(FlutterI18n.translate(context, "monet_color")),
-                subtitle: Text(
-                  FlutterI18n.translate(context, "effective_after_reboot"),
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12.0,
-                  ),
-                ),
-                onTap: () {
-                  onMonet(!selectedMonet);
-                },
-                trailing: Switch(
-                  value: selectedMonet,
-                  onChanged: isEnabled ? onMonet : null,
-                )),
-            ListTile(
-              enabled: !selectedMonet,
-              leading: const Icon(Icons.color_lens),
-              title: Text(FlutterI18n.translate(context, "custom_color")),
-              subtitle: Text(
-                FlutterI18n.translate(context, "effective_after_reboot"),
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
-                ),
-              ),
-              onTap: () {
-                showColorPickerDialog(context, currentColor, (Color color) {
-                  setState(() => currentColor = color);
-                  _box.write('colorSeed', currentColor.value);
-                });
-              },
-            ),
-            Obx(() => ListTile(
-                  enabled: totpController.totpList.isNotEmpty,
-                  leading: const Icon(Icons.upload),
-                  title: Text(FlutterI18n.translate(context, "export_data")),
-                  onTap: () {
-                    export();
-                  },
-                )),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: Text(FlutterI18n.translate(context, "about")),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return buildAboutDialog();
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
