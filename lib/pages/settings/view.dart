@@ -154,6 +154,21 @@ class SettingsState extends State<Settings> {
                   selected: _languageCode == 'en',
                 ),
                 ListTile(
+                  title: const Text('Español'),
+                  onTap: () => _changeLanguage('es'),
+                  selected: _languageCode == 'es',
+                ),
+                ListTile(
+                  title: const Text('Français'),
+                  onTap: () => _changeLanguage('fr'),
+                  selected: _languageCode == 'fr',
+                ),
+                ListTile(
+                  title: const Text('Italiano'),
+                  onTap: () => _changeLanguage('it'),
+                  selected: _languageCode == 'it',
+                ),
+                ListTile(
                   title: const Text('中文 (简体)'),
                   onTap: () => _changeLanguage('zh_CN'),
                   selected: _languageCode == 'zh_CN',
