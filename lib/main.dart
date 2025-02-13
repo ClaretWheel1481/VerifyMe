@@ -57,7 +57,15 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        darkTheme: ThemeData(colorScheme: darkColorScheme),
+        darkTheme: ThemeData(
+          colorScheme: darkColorScheme,
+          pageTransitionsTheme: PageTransitionsTheme(
+            builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+              TargetPlatform.values,
+              value: (_) => const FadeForwardsPageTransitionsBuilder(),
+            ),
+          ),
+        ),
         themeMode: themeMode == 'system'
             ? ThemeMode.system
             : themeMode == 'light'
@@ -93,8 +101,26 @@ class MyApp extends StatelessWidget {
                   }),
             ],
             scaffoldMessengerKey: scaffoldMessengerKey,
-            theme: ThemeData(colorScheme: lightColorScheme),
-            darkTheme: ThemeData(colorScheme: darkColorScheme),
+            theme: ThemeData(
+              colorScheme: lightColorScheme,
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders:
+                    Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+                  TargetPlatform.values,
+                  value: (_) => const FadeForwardsPageTransitionsBuilder(),
+                ),
+              ),
+            ),
+            darkTheme: ThemeData(
+              colorScheme: darkColorScheme,
+              pageTransitionsTheme: PageTransitionsTheme(
+                builders:
+                    Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
+                  TargetPlatform.values,
+                  value: (_) => const FadeForwardsPageTransitionsBuilder(),
+                ),
+              ),
+            ),
             themeMode: themeMode == 'system'
                 ? ThemeMode.system
                 : themeMode == 'light'
