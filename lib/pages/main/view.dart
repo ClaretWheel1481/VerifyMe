@@ -147,7 +147,7 @@ class _MainAppState extends State<MainApp> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: Colors.grey,
+                                color: Colors.grey.withAlpha(80),
                                 width: 1.0,
                               ),
                             ),
@@ -233,7 +233,7 @@ class _MainAppState extends State<MainApp> {
                                     title: Text(
                                       accountName,
                                       style: const TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
