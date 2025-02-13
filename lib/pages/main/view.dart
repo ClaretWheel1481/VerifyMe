@@ -147,7 +147,7 @@ class _MainAppState extends State<MainApp> {
                           decoration: BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: Colors.grey.withAlpha(80),
+                                color: Colors.grey.withAlpha(60),
                                 width: 1.0,
                               ),
                             ),
@@ -315,7 +315,13 @@ class _MainAppState extends State<MainApp> {
                   if (value == 1) {
                     var result = await BarcodeScanner.scan();
                     if (result.rawContent.isNotEmpty && mounted) {
-                      Get.to(() => CheckFormPage(resultUrl: result.rawContent));
+                      // Get.to(() => CheckFormPage(resultUrl: result.rawContent));
+                      Navigator.of(context).push(
+                        MaterialPageRoute<CheckFormPage>(
+                          builder: (BuildContext context) =>
+                              CheckFormPage(resultUrl: result.rawContent),
+                        ),
+                      );
                     }
                   } else if (value == 2) {
                     if (mounted) {
