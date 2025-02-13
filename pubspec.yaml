@@ -26,6 +26,7 @@ dependencies:
   file_picker:
   flutter_i18n:
   flutter_colorpicker: 
+  flutter_slidable: 
   
 dev_dependencies:
   flutter_test:

@@ -38,5 +38,6 @@
   "import_successfully": "Import erfolgreich",
   "file_selection_cancelled": "Dateiauswahl abgebrochen",
   "failed_to_import": "Import fehlgeschlagen",
-  "custom_color": "Benutzerdefinierte Farbe"
+  "custom_color": "Benutzerdefinierte Farbe",
+  "added": "Hinzugefügt"
 }

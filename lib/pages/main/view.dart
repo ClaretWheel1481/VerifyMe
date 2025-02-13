@@ -5,6 +5,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/pages/checkform/view.dart';
@@ -98,7 +99,7 @@ class _MainAppState extends State<MainApp> {
               slivers: <Widget>[
                 SliverAppBar(
                   centerTitle: false,
-                  expandedHeight: 200.0,
+                  expandedHeight: 180.0,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
                     titlePadding: const EdgeInsets.only(left: 20, bottom: 15),
@@ -112,7 +113,12 @@ class _MainAppState extends State<MainApp> {
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
-                        Get.to(() => const Settings());
+                        // Get.to(() => const Settings());
+                        Navigator.of(context).push(
+                          MaterialPageRoute<Settings>(
+                            builder: (BuildContext context) => Settings(),
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -136,110 +142,129 @@ class _MainAppState extends State<MainApp> {
                             : controller.generate(
                                 secret, algorithm, length, mode,
                                 counter: counter);
+
                         return Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 14.0),
-                            padding: const EdgeInsets.only(top: 2.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              borderRadius: BorderRadius.circular(15.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 4.0,
-                                  offset: Offset(0, 2),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey,
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Slidable(
+                            key: ValueKey(index),
+                            endActionPane: ActionPane(
+                              motion: const DrawerMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {
+                                    // Get.to(() => EditForm(
+                                    //       accountName: accountName,
+                                    //       secret: secret,
+                                    //       algorithm: algorithm,
+                                    //       length: length.toString(),
+                                    //       mode: mode,
+                                    //       isEdit: true,
+                                    //     ));
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute<EditForm>(
+                                        builder: (BuildContext context) =>
+                                            EditForm(
+                                          accountName: accountName,
+                                          secret: secret,
+                                          algorithm: algorithm,
+                                          length: length.toString(),
+                                          mode: mode,
+                                          isEdit: true,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  foregroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                  icon: Icons.edit,
+                                  label: FlutterI18n.translate(context, "edit"),
+                                ),
+                                SlidableAction(
+                                  onPressed: (context) =>
+                                      _showDeleteDialog(context, index),
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .errorContainer,
+                                  foregroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .onErrorContainer,
+                                  icon: Icons.delete,
+                                  label:
+                                      FlutterI18n.translate(context, "delete"),
                                 ),
                               ],
                             ),
-                            child: GestureDetector(
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(text: code));
-                                showNotification(FlutterI18n.translate(
-                                    context, "code_has_been_copied"));
-                              },
-                              child: ListTile(
-                                leading: mode == "TOTP"
-                                    ? Obx(() {
-                                        return Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            CircularProgressIndicator(
+                            child: InkWell(
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(text: code));
+                                  showNotification(
+                                    FlutterI18n.translate(
+                                        context, "code_has_been_copied"),
+                                  );
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(5),
+                                  child: ListTile(
+                                    leading: mode == "TOTP"
+                                        ? Obx(() {
+                                            return CircularProgressIndicator(
+                                              year2023: false,
                                               value: controller.progress.value,
                                               color: Theme.of(context)
                                                   .colorScheme
                                                   .onPrimaryContainer,
-                                            ),
-                                            Text(
-                                              '${controller.remainingSeconds.value}',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .onPrimaryContainer,
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      })
-                                    : Container(
-                                        margin: EdgeInsets.all(6),
-                                        child: const Icon(Icons.lock),
+                                            );
+                                          })
+                                        : Container(
+                                            margin: const EdgeInsets.all(12.2),
+                                            child: const Icon(Icons.lock),
+                                          ),
+                                    title: Text(
+                                      accountName,
+                                      style: const TextStyle(
+                                        fontSize: 20,
                                       ),
-                                title: Text(
-                                  accountName,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                subtitle: Text(
-                                  code,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryContainer,
-                                  ),
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (mode == "HOTP")
-                                      IconButton(
-                                        icon: const Icon(Icons.add),
-                                        onPressed: () {
-                                          controller.totpList[index]
-                                              ['counter']++;
-                                          controller.saveList();
-                                          controller.refreshList();
-                                        },
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    subtitle: Text(
+                                      code,
+                                      style: TextStyle(
+                                        fontSize: 34,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimaryContainer,
                                       ),
-                                    IconButton(
-                                      icon: const Icon(Icons.edit),
-                                      onPressed: () {
-                                        Get.to(() => EditForm(
-                                              accountName: accountName,
-                                              secret: secret,
-                                              algorithm: algorithm,
-                                              length: length.toString(),
-                                              mode: mode,
-                                              isEdit: true,
-                                            ));
-                                      },
                                     ),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () =>
-                                          _showDeleteDialog(context, index),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ));
+                                    trailing: mode == "HOTP"
+                                        ? IconButton(
+                                            icon: const Icon(Icons.add),
+                                            onPressed: () {
+                                              controller.totpList[index]
+                                                  ['counter']++;
+                                              controller.saveList();
+                                              controller.refreshList();
+                                              showNotification(
+                                                  FlutterI18n.translate(
+                                                      context, "added"));
+                                            },
+                                          )
+                                        : null,
+                                  ),
+                                )),
+                          ),
+                        );
                       },
                       childCount: controller.totpList.length,
                     ),
@@ -294,14 +319,26 @@ class _MainAppState extends State<MainApp> {
                     }
                   } else if (value == 2) {
                     if (mounted) {
-                      Get.to(() => const EditForm(
+                      // Get.to(() => const EditForm(
+                      //       accountName: "",
+                      //       secret: "",
+                      //       algorithm: "SHA-1",
+                      //       length: "6",
+                      //       mode: "TOTP",
+                      //       isEdit: false,
+                      //     ));
+                      Navigator.of(context).push(
+                        MaterialPageRoute<EditForm>(
+                          builder: (BuildContext context) => EditForm(
                             accountName: "",
                             secret: "",
                             algorithm: "SHA-1",
                             length: "6",
                             mode: "TOTP",
                             isEdit: false,
-                          ));
+                          ),
+                        ),
+                      );
                     }
                   } else if (value == 3) {
                     importList();

@@ -38,5 +38,6 @@
   "import_successfully": "インポート成功",
   "file_selection_cancelled": "ファイル選択がユーザーによりキャンセルされました",
   "failed_to_import": "インポートに失敗しました",
-  "custom_color": "カスタムカラー"
+  "custom_color": "カスタムカラー",
+  "added": "追加"
 }

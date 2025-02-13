@@ -38,5 +38,6 @@
   "import_successfully": "Importazione riuscita",
   "file_selection_cancelled": "Selezione file annullata",
   "failed_to_import": "Errore durante l'importazione",
-  "custom_color": "Colore personalizzato"
+  "custom_color": "Colore personalizzato",
+  "added": "Aggiunto"
 }

@@ -38,5 +38,6 @@
   "import_successfully": "导入成功",
   "file_selection_cancelled": "文件选择被用户取消",
   "failed_to_import": "导入失败",
-  "custom_color": "自定义颜色"
+  "custom_color": "自定义颜色",
+  "added": "已添加"
 }
