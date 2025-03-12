@@ -49,22 +49,9 @@ class MyApp extends StatelessWidget {
         scaffoldMessengerKey: scaffoldMessengerKey,
         theme: ThemeData(
           colorScheme: lightColorScheme,
-          // TODO: 实验性功能，符合最新Material Design的过渡动画
-          pageTransitionsTheme: PageTransitionsTheme(
-            builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-              TargetPlatform.values,
-              value: (_) => const FadeForwardsPageTransitionsBuilder(),
-            ),
-          ),
         ),
         darkTheme: ThemeData(
           colorScheme: darkColorScheme,
-          pageTransitionsTheme: PageTransitionsTheme(
-            builders: Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-              TargetPlatform.values,
-              value: (_) => const FadeForwardsPageTransitionsBuilder(),
-            ),
-          ),
         ),
         themeMode: themeMode == 'system'
             ? ThemeMode.system

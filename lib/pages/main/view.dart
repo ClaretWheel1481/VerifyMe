@@ -113,12 +113,7 @@ class _MainAppState extends State<MainApp> {
                     IconButton(
                       icon: const Icon(Icons.settings),
                       onPressed: () {
-                        // Get.to(() => const Settings());
-                        Navigator.of(context).push(
-                          MaterialPageRoute<Settings>(
-                            builder: (BuildContext context) => Settings(),
-                          ),
-                        );
+                        Get.to(() => const Settings());
                       },
                     ),
                   ],
@@ -159,27 +154,14 @@ class _MainAppState extends State<MainApp> {
                               children: [
                                 SlidableAction(
                                   onPressed: (context) {
-                                    // Get.to(() => EditForm(
-                                    //       accountName: accountName,
-                                    //       secret: secret,
-                                    //       algorithm: algorithm,
-                                    //       length: length.toString(),
-                                    //       mode: mode,
-                                    //       isEdit: true,
-                                    //     ));
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute<EditForm>(
-                                        builder: (BuildContext context) =>
-                                            EditForm(
+                                    Get.to(() => EditForm(
                                           accountName: accountName,
                                           secret: secret,
                                           algorithm: algorithm,
                                           length: length.toString(),
                                           mode: mode,
                                           isEdit: true,
-                                        ),
-                                      ),
-                                    );
+                                        ));
                                   },
                                   backgroundColor: Theme.of(context)
                                       .colorScheme
@@ -315,36 +297,18 @@ class _MainAppState extends State<MainApp> {
                   if (value == 1) {
                     var result = await BarcodeScanner.scan();
                     if (result.rawContent.isNotEmpty && mounted) {
-                      // Get.to(() => CheckFormPage(resultUrl: result.rawContent));
-                      Navigator.of(context).push(
-                        MaterialPageRoute<CheckFormPage>(
-                          builder: (BuildContext context) =>
-                              CheckFormPage(resultUrl: result.rawContent),
-                        ),
-                      );
+                      Get.to(() => CheckFormPage(resultUrl: result.rawContent));
                     }
                   } else if (value == 2) {
                     if (mounted) {
-                      // Get.to(() => const EditForm(
-                      //       accountName: "",
-                      //       secret: "",
-                      //       algorithm: "SHA-1",
-                      //       length: "6",
-                      //       mode: "TOTP",
-                      //       isEdit: false,
-                      //     ));
-                      Navigator.of(context).push(
-                        MaterialPageRoute<EditForm>(
-                          builder: (BuildContext context) => EditForm(
+                      Get.to(() => const EditForm(
                             accountName: "",
                             secret: "",
                             algorithm: "SHA-1",
                             length: "6",
                             mode: "TOTP",
                             isEdit: false,
-                          ),
-                        ),
-                      );
+                          ));
                     }
                   } else if (value == 3) {
                     importList();
