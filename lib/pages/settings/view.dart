@@ -136,6 +136,7 @@ class SettingsState extends State<Settings> {
       {'code': 'es', 'name': 'Español'},
       {'code': 'fr', 'name': 'Français'},
       {'code': 'it', 'name': 'Italiano'},
+      {'code': 'ru', 'name': 'Русский'},
       {'code': 'ja', 'name': '日本語'},
       {'code': 'zh_CN', 'name': '中文 (简体)'},
       {'code': 'zh_TW', 'name': '中文 (繁体)'},
