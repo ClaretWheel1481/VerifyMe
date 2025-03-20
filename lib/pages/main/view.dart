@@ -215,7 +215,7 @@ class _MainAppState extends State<MainApp> {
                                     title: Text(
                                       accountName,
                                       style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 18,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),

@@ -5,14 +5,8 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
 
 void showNotification(String content) {
   final snackBar = SnackBar(
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(content),
-      ],
-    ),
-    duration: const Duration(milliseconds: 3500),
+    content: Text(content),
+    duration: const Duration(milliseconds: 3000),
     behavior: SnackBarBehavior.floating,
   );
 

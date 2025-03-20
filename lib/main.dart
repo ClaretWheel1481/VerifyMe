@@ -90,23 +90,9 @@ class MyApp extends StatelessWidget {
             scaffoldMessengerKey: scaffoldMessengerKey,
             theme: ThemeData(
               colorScheme: lightColorScheme,
-              pageTransitionsTheme: PageTransitionsTheme(
-                builders:
-                    Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-                  TargetPlatform.values,
-                  value: (_) => const FadeForwardsPageTransitionsBuilder(),
-                ),
-              ),
             ),
             darkTheme: ThemeData(
               colorScheme: darkColorScheme,
-              pageTransitionsTheme: PageTransitionsTheme(
-                builders:
-                    Map<TargetPlatform, PageTransitionsBuilder>.fromIterable(
-                  TargetPlatform.values,
-                  value: (_) => const FadeForwardsPageTransitionsBuilder(),
-                ),
-              ),
             ),
             themeMode: themeMode == 'system'
                 ? ThemeMode.system

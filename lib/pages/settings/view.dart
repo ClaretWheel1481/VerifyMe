@@ -37,10 +37,12 @@ class SettingsState extends State<Settings> {
     Platform.isIOS
         ? selectedMonet = false
         : selectedMonet = _box.read('monetStatus') ?? true;
+  }
 
-    Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, Locale(_languageCode));
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FlutterI18n.refresh(context, Locale(_languageCode));
   }
 
   // 修改语言
@@ -239,7 +241,7 @@ class SettingsState extends State<Settings> {
                   onTap: () {
                     showColorPickerDialog(context, currentColor, (Color color) {
                       setState(() => currentColor = color);
-                      _box.write('colorSeed', currentColor.value);
+                      _box.write('colorSeed', currentColor.toARGB32());
                     });
                   },
                 ),

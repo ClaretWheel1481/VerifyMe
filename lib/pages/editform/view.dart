@@ -35,9 +35,13 @@ class EditFormState extends State<EditForm> {
 
     // 翻译页面
     _languageCode = _box.read('languageCode') ?? 'en';
-    Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, Locale(_languageCode));
-    });
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    await FlutterI18n.refresh(context, Locale(_languageCode));
+    if (mounted) setState(() {});
   }
 
   // 错误弹窗
