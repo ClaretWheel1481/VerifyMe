@@ -8,6 +8,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/utils/generate/controller.dart';
@@ -39,9 +40,6 @@ class _MainAppState extends State<MainApp> {
 
     // 翻译页面
     _languageCode = _box.read('languageCode') ?? 'en';
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _i18nLoaded();
-    });
 
     // 检测App是否最小化
     SystemChannels.lifecycle.setMessageHandler((msg) async {
@@ -57,6 +55,12 @@ class _MainAppState extends State<MainApp> {
       }
       return null;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _i18nLoaded();
   }
 
   Future<void> _i18nLoaded() async {

@@ -23,7 +23,7 @@ dependencies:
     git:
       url: https://github.com/mono0926/barcode_scan2
   permission_handler:
-  file_picker:
+  file_picker: ^9.2.1
   flutter_i18n:
   flutter_colorpicker: 
   flutter_slidable: 
