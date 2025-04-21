@@ -21,7 +21,7 @@ dependencies:
   cupertino_icons: 
   barcode_scan2:
     git:
-      url: https://github.com/mdddj/barcode_scan2
+      url: https://github.com/mono0926/barcode_scan2
   permission_handler:
   file_picker:
   flutter_i18n:

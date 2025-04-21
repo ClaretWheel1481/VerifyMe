@@ -31,7 +31,7 @@ class _MainAppState extends State<MainApp> {
   final FocusNode _focusNode = FocusNode();
   final _isBlurred = false.obs;
 
-  String _languageCode = 'en';
+  late String _languageCode;
 
   @override
   void initState() {
@@ -39,8 +39,8 @@ class _MainAppState extends State<MainApp> {
 
     // 翻译页面
     _languageCode = _box.read('languageCode') ?? 'en';
-    Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, Locale(_languageCode));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _i18nLoaded();
     });
 
     // 检测App是否最小化
@@ -57,6 +57,11 @@ class _MainAppState extends State<MainApp> {
       }
       return null;
     });
+  }
+
+  Future<void> _i18nLoaded() async {
+    await FlutterI18n.refresh(context, Locale(_languageCode));
+    if (mounted) setState(() {});
   }
 
   // 导入List

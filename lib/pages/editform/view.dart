@@ -27,7 +27,7 @@ class EditForm extends StatefulWidget {
 class EditFormState extends State<EditForm> {
   final GetStorage _box = GetStorage();
   final GenerateController gController = Get.put(GenerateController());
-  String _languageCode = 'en';
+  late String _languageCode;
 
   @override
   void initState() {
@@ -35,11 +35,12 @@ class EditFormState extends State<EditForm> {
 
     // 翻译页面
     _languageCode = _box.read('languageCode') ?? 'en';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _i18nLoaded();
+    });
   }
 
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
+  Future<void> _i18nLoaded() async {
     await FlutterI18n.refresh(context, Locale(_languageCode));
     if (mounted) setState(() {});
   }

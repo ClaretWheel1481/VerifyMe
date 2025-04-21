@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.claret.verifyme"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "28.0.13004108"
+    ndkVersion = "28.1.13356709"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

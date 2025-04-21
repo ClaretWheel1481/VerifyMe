@@ -23,7 +23,7 @@ class SettingsState extends State<Settings> {
   final GetStorage _box = GetStorage();
   String _themeMode = 'system';
   bool selectedMonet = true;
-  String _languageCode = 'en';
+  late String _languageCode;
 
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
@@ -37,21 +37,26 @@ class SettingsState extends State<Settings> {
     Platform.isIOS
         ? selectedMonet = false
         : selectedMonet = _box.read('monetStatus') ?? true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _i18nLoaded();
+    });
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    FlutterI18n.refresh(context, Locale(_languageCode));
+  Future<void> _i18nLoaded() async {
+    await FlutterI18n.refresh(context, Locale(_languageCode));
+    if (mounted) setState(() {});
   }
 
   // 修改语言
   void _changeLanguage(String languageCode) async {
+    final newLocale = Locale(languageCode);
+    if (mounted) {
+      await FlutterI18n.refresh(context, newLocale);
+    }
     setState(() {
       _languageCode = languageCode;
     });
-    Locale newLocale = Locale(languageCode);
-    await FlutterI18n.refresh(context, newLocale);
     _box.write('languageCode', languageCode);
   }
 
