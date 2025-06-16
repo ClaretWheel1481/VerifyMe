@@ -1,4 +1,5 @@
 {
+  "@@locale": "de",
   "settings": "Einstellungen",
   "theme": "Design",
   "follow_system": "System folgen",
@@ -33,7 +34,7 @@
   "issuer": "Anbieter",
   "no_storage_permission": "Keine Speicherberechtigung. Bitte App-Berechtigungen prüfen",
   "export_to": "Exportiert nach",
-  "failed_to_port_data": "Fehler beim Datenexport",
+  "failed_to_export_data": "Fehler beim Datenexport",
   "unsupported_platform": "Nicht unterstütztes System",
   "import_successfully": "Import erfolgreich",
   "file_selection_cancelled": "Dateiauswahl abgebrochen",

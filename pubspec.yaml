@@ -24,7 +24,9 @@ dependencies:
       url: https://github.com/mono0926/barcode_scan2
   permission_handler:
   file_picker: ^9.2.1
-  flutter_i18n:
+  flutter_localizations: 
+    sdk: flutter
+  intl: 
   flutter_colorpicker: 
   flutter_slidable: 
   
@@ -39,5 +41,4 @@ flutter:
 
   uses-material-design: true
 
-  assets:
-    - assets/locales/
+  generate: true

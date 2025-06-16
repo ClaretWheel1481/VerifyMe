@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:verifyme/constants/app.dart';
+import 'package:verifyme/l10n/generated/localizations.dart';
 import 'package:verifyme/utils/notify.dart';
 
 AboutDialog buildAboutDialog() {
@@ -22,7 +22,7 @@ void showColorPickerDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(FlutterI18n.translate(context, "custom_color")),
+        title: Text(AppLocalizations.of(context).custom_color),
         content: SingleChildScrollView(
           child: ColorPicker(
             pickerColor: pickerColor,
@@ -31,7 +31,7 @@ void showColorPickerDialog(
         ),
         actions: <Widget>[
           TextButton(
-            child: Text(FlutterI18n.translate(context, "cancel")),
+            child: Text(AppLocalizations.of(context).cancel),
             onPressed: () {
               Get.back();
             },
@@ -43,12 +43,12 @@ void showColorPickerDialog(
               foregroundColor: WidgetStatePropertyAll(
                   Theme.of(context).colorScheme.onPrimary),
             ),
-            child: Text(FlutterI18n.translate(context, "ok")),
+            child: Text(AppLocalizations.of(context).ok),
             onPressed: () {
               onColorSelected(pickerColor);
               Get.back();
               showNotification(
-                  FlutterI18n.translate(context, "effective_after_reboot"));
+                  AppLocalizations.of(context).effective_after_reboot);
             },
           ),
         ],

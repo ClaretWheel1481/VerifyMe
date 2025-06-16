@@ -1,41 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import '../../utils/generate/controller.dart';
+import 'package:verifyme/l10n/generated/localizations.dart';
 
-class CheckFormPage extends StatelessWidget {
+class CheckFormPage extends StatefulWidget {
   final String resultUrl;
+  const CheckFormPage({super.key, required this.resultUrl});
+
+  @override
+  State<CheckFormPage> createState() => _CheckFormPageState();
+}
+
+class _CheckFormPageState extends State<CheckFormPage> {
   final GenerateController gController = Get.put(GenerateController());
   final TextEditingController lengthController =
       TextEditingController(text: '6');
-  CheckFormPage({super.key, required this.resultUrl});
-  final GetStorage _box = GetStorage();
+
+  String selectedAlgorithm = 'SHA-1';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    lengthController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String languageCode = _box.read('languageCode') ?? 'en';
-
-    Future.delayed(Duration.zero, () async {
-      await FlutterI18n.refresh(context, Locale(languageCode));
-    });
-
-    final uri = Uri.parse(resultUrl);
+    final loc = AppLocalizations.of(context);
+    final uri = Uri.parse(widget.resultUrl);
     final secret = uri.queryParameters['secret'] ?? '';
     final issuer = uri.queryParameters['issuer'] ?? '';
-    final accountName = uri.pathSegments.last;
+    final accountName =
+        uri.pathSegments.isNotEmpty ? uri.pathSegments.last : '';
 
-    final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(resultUrl);
+    final totpMatch = RegExp(r'otpauth://(\w+)/').firstMatch(widget.resultUrl);
     final mode = totpMatch != null ? totpMatch.group(1) : '';
 
-    TextEditingController controller = TextEditingController(text: resultUrl);
-    String selectedAlgorithm = 'SHA-1';
+    final TextEditingController controller =
+        TextEditingController(text: widget.resultUrl);
+
     return Scaffold(
       appBar: AppBar(
-          title: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(FlutterI18n.translate(context, "confirm")),
-      )),
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(loc.confirm),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -44,15 +59,22 @@ class CheckFormPage extends StatelessWidget {
               controller: controller,
               readOnly: true,
               decoration: InputDecoration(
-                labelText: FlutterI18n.translate(context, "result"),
+                labelText: loc.result,
               ),
             ),
             const SizedBox(height: 25),
-            Text('${FlutterI18n.translate(context, "mode")}: $mode'),
-            Text('${FlutterI18n.translate(context, "issuer")}: $issuer'),
-            Text('${FlutterI18n.translate(context, "account")}: $accountName'),
-            Text(
-                '${FlutterI18n.translate(context, "secret")}: ${secret.toUpperCase()}'),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${loc.mode}: ${mode ?? ''}'),
+                  Text('${loc.issuer}: $issuer'),
+                  Text('${loc.account}: $accountName'),
+                  Text('${loc.secret}: ${secret.toUpperCase()}'),
+                ],
+              ),
+            ),
             const SizedBox(height: 25),
             Align(
               alignment: Alignment.centerLeft,
@@ -60,8 +82,8 @@ class CheckFormPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    FlutterI18n.translate(context, "options"),
-                    style: TextStyle(
+                    loc.options,
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
                     ),
@@ -71,13 +93,16 @@ class CheckFormPage extends StatelessWidget {
                     value: selectedAlgorithm,
                     onChanged: (String? newValue) {
                       if (newValue != null) {
-                        selectedAlgorithm = newValue;
+                        setState(() {
+                          selectedAlgorithm = newValue;
+                        });
                       }
                     },
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, "algorithm"),
-                        border: OutlineInputBorder()),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                      labelText: loc.algorithm,
+                      border: const OutlineInputBorder(),
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                     dropdownColor: Theme.of(context).colorScheme.onSecondary,
                     items: <String>['SHA-1', 'SHA-256', 'SHA-512']
                         .map<DropdownMenuItem<String>>((String value) {
@@ -90,9 +115,11 @@ class CheckFormPage extends StatelessWidget {
                   const SizedBox(height: 25),
                   TextField(
                     controller: lengthController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, "length"),
-                        border: OutlineInputBorder()),
+                      labelText: loc.length,
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
                 ],
               ),
@@ -101,11 +128,12 @@ class CheckFormPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 gController.add(
-                    accountName,
-                    secret.toUpperCase(),
-                    selectedAlgorithm,
-                    lengthController.text,
-                    mode.toString().toUpperCase());
+                  accountName,
+                  secret.toUpperCase(),
+                  selectedAlgorithm,
+                  lengthController.text,
+                  mode?.toUpperCase() ?? '',
+                );
                 Get.back();
               },
               style: ButtonStyle(
@@ -114,8 +142,8 @@ class CheckFormPage extends StatelessWidget {
                 foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onSecondary),
               ),
-              child: Text(FlutterI18n.translate(context, "confirm")),
-            )
+              child: Text(loc.confirm),
+            ),
           ],
         ),
       ),

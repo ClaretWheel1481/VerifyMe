@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:verifyme/l10n/generated/localizations.dart';
 import 'package:verifyme/pages/main/view.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,16 @@ void main() async {
   runApp(const MyApp());
 }
 
+Locale parseLocale(String languageCode) {
+  if (languageCode.contains('_')) {
+    final parts = languageCode.split('_');
+    if (parts.length == 2) {
+      return Locale(parts[0], parts[1]);
+    }
+  }
+  return Locale(languageCode);
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -23,29 +32,32 @@ class MyApp extends StatelessWidget {
 
     final String themeMode = box.read('themeMode') ?? 'system';
     final bool monetStatus = box.read('monetStatus') ?? true;
-    final String languageCode = box.read('languageCode') ?? 'en';
-    final Color colorSeed = Color(box.read('colorSeed') ?? 0x6750A4);
+    final String languageCodeStored = box.read('languageCode') ?? 'en';
+    final Locale initialLocale = parseLocale(languageCodeStored);
+    final int colorValue = box.read('colorSeed') ?? 0x6750A4;
+    final Color colorSeed = Color(colorValue);
 
-    if (Platform.isIOS || !monetStatus) {
-      final lightColorScheme = ColorScheme.fromSeed(
-        seedColor: colorSeed,
-      );
-      final darkColorScheme = ColorScheme.fromSeed(
-        seedColor: colorSeed,
-        brightness: Brightness.dark,
-      );
-
+    Widget buildApp({
+      required ColorScheme lightColorScheme,
+      required ColorScheme darkColorScheme,
+    }) {
       return GetMaterialApp(
-        locale: Locale(languageCode),
+        locale: initialLocale,
         fallbackLocale: const Locale('en'),
-        localizationsDelegates: [
-          FlutterI18nDelegate(
-              translationLoader: FileTranslationLoader(
-                  useCountryCode: true, basePath: 'assets/locales'),
-              missingTranslationHandler: (key, locale) {
-                showNotification("i18n loading error");
-              }),
-        ],
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localeResolutionCallback: (locale, supportedLocales) {
+          if (locale != null) {
+            for (var supported in supportedLocales) {
+              if (supported.languageCode == locale.languageCode &&
+                  (supported.countryCode == null ||
+                      supported.countryCode == locale.countryCode)) {
+                return supported;
+              }
+            }
+          }
+          return const Locale('en');
+        },
         scaffoldMessengerKey: scaffoldMessengerKey,
         theme: ThemeData(
           colorScheme: lightColorScheme,
@@ -60,6 +72,18 @@ class MyApp extends StatelessWidget {
                 : ThemeMode.dark,
         home: const MainApp(title: "VerifyMe"),
       );
+    }
+
+    if (Platform.isIOS || !monetStatus) {
+      final lightColorScheme = ColorScheme.fromSeed(seedColor: colorSeed);
+      final darkColorScheme = ColorScheme.fromSeed(
+        seedColor: colorSeed,
+        brightness: Brightness.dark,
+      );
+      return buildApp(
+        lightColorScheme: lightColorScheme,
+        darkColorScheme: darkColorScheme,
+      );
     } else {
       return DynamicColorBuilder(
         builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
@@ -70,36 +94,16 @@ class MyApp extends StatelessWidget {
             lightColorScheme = lightDynamic.harmonized();
             darkColorScheme = darkDynamic.harmonized();
           } else {
-            lightColorScheme =
-                ColorScheme.fromSwatch(primarySwatch: Colors.lightBlue);
-            darkColorScheme = ColorScheme.fromSwatch(
-                primarySwatch: Colors.lightBlue, brightness: Brightness.dark);
+            lightColorScheme = ColorScheme.fromSeed(seedColor: colorSeed);
+            darkColorScheme = ColorScheme.fromSeed(
+              seedColor: colorSeed,
+              brightness: Brightness.dark,
+            );
           }
 
-          return GetMaterialApp(
-            locale: Locale(languageCode),
-            fallbackLocale: const Locale('en'),
-            localizationsDelegates: [
-              FlutterI18nDelegate(
-                  translationLoader: FileTranslationLoader(
-                      useCountryCode: true, basePath: 'assets/locales'),
-                  missingTranslationHandler: (key, locale) {
-                    showNotification("i18n loading error");
-                  }),
-            ],
-            scaffoldMessengerKey: scaffoldMessengerKey,
-            theme: ThemeData(
-              colorScheme: lightColorScheme,
-            ),
-            darkTheme: ThemeData(
-              colorScheme: darkColorScheme,
-            ),
-            themeMode: themeMode == 'system'
-                ? ThemeMode.system
-                : themeMode == 'light'
-                    ? ThemeMode.light
-                    : ThemeMode.dark,
-            home: const MainApp(title: "VerifyMe"),
+          return buildApp(
+            lightColorScheme: lightColorScheme,
+            darkColorScheme: darkColorScheme,
           );
         },
       );

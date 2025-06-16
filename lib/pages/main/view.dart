@@ -4,17 +4,15 @@ import 'dart:ui';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/utils/generate/controller.dart';
 import 'package:verifyme/pages/editform/view.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:verifyme/l10n/generated/localizations.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -26,22 +24,14 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  final GetStorage _box = GetStorage();
   final GenerateController controller = Get.put(GenerateController());
   final GenerateController totpController = Get.find();
   final FocusNode _focusNode = FocusNode();
   final _isBlurred = false.obs;
 
-  late String _languageCode;
-
   @override
   void initState() {
     super.initState();
-
-    // 翻译页面
-    _languageCode = _box.read('languageCode') ?? 'en';
-
-    // 检测App是否最小化
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.paused" ||
           msg == "AppLifecycleState.inactive") {
@@ -60,16 +50,11 @@ class _MainAppState extends State<MainApp> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _i18nLoaded();
   }
 
-  Future<void> _i18nLoaded() async {
-    await FlutterI18n.refresh(context, Locale(_languageCode));
-    if (mounted) setState(() {});
-  }
-
-  // 导入List
+  // 导入列表
   Future<void> importList() async {
+    final loc = AppLocalizations.of(context);
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -85,18 +70,19 @@ class _MainAppState extends State<MainApp> {
         );
         totpController.saveList();
         totpController.onInit();
-        showNotification(FlutterI18n.translate(context, "import_successfully"));
+        showNotification(loc.import_successfully);
       } else {
-        showNotification(
-            FlutterI18n.translate(context, "file_selection_cancelled"));
+        showNotification(loc.file_selection_cancelled);
       }
     } catch (e) {
-      showNotification(FlutterI18n.translate(context, "failed_to_import"));
+      showNotification(loc.failed_to_import);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -124,6 +110,7 @@ class _MainAppState extends State<MainApp> {
                       onPressed: () {
                         Get.to(() => const Settings());
                       },
+                      tooltip: loc.settings,
                     ),
                   ],
                 ),
@@ -179,7 +166,7 @@ class _MainAppState extends State<MainApp> {
                                       .colorScheme
                                       .onPrimaryContainer,
                                   icon: Icons.edit,
-                                  label: FlutterI18n.translate(context, "edit"),
+                                  label: loc.edit,
                                 ),
                                 SlidableAction(
                                   onPressed: (context) =>
@@ -191,18 +178,14 @@ class _MainAppState extends State<MainApp> {
                                       .colorScheme
                                       .onErrorContainer,
                                   icon: Icons.delete,
-                                  label:
-                                      FlutterI18n.translate(context, "delete"),
+                                  label: loc.delete,
                                 ),
                               ],
                             ),
                             child: InkWell(
                                 onTap: () {
                                   Clipboard.setData(ClipboardData(text: code));
-                                  showNotification(
-                                    FlutterI18n.translate(
-                                        context, "code_has_been_copied"),
-                                  );
+                                  showNotification(loc.code_has_been_copied);
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.all(5),
@@ -246,9 +229,7 @@ class _MainAppState extends State<MainApp> {
                                                   ['counter']++;
                                               controller.saveList();
                                               controller.refreshList();
-                                              showNotification(
-                                                  FlutterI18n.translate(
-                                                      context, "added"));
+                                              showNotification(loc.added);
                                             },
                                           )
                                         : null,
@@ -271,7 +252,7 @@ class _MainAppState extends State<MainApp> {
                         color: Theme.of(context)
                             .colorScheme
                             .onSecondary
-                            .withValues(alpha: 0.3),
+                            .withValues(alpha: 0.5),
                       ),
                     )
                   : const SizedBox.shrink();
@@ -295,7 +276,7 @@ class _MainAppState extends State<MainApp> {
                 ],
               ),
               child: PopupMenuButton<int>(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 padding: const EdgeInsets.all(18.0),
                 offset: const Offset(0, -200),
@@ -327,25 +308,22 @@ class _MainAppState extends State<MainApp> {
                   PopupMenuItem(
                     value: 1,
                     child: ListTile(
-                      leading: Icon(Icons.qr_code_scanner),
-                      title:
-                          Text(FlutterI18n.translate(context, "scan_qr_code")),
+                      leading: const Icon(Icons.qr_code_scanner),
+                      title: Text(loc.scan_qr_code),
                     ),
                   ),
                   PopupMenuItem(
                     value: 2,
                     child: ListTile(
-                      leading: Icon(Icons.input),
-                      title: Text(
-                          FlutterI18n.translate(context, "enter_manually")),
+                      leading: const Icon(Icons.input),
+                      title: Text(loc.enter_manually),
                     ),
                   ),
                   PopupMenuItem(
                     value: 3,
                     child: ListTile(
-                      leading: Icon(Icons.download),
-                      title:
-                          Text(FlutterI18n.translate(context, "import_json")),
+                      leading: const Icon(Icons.download),
+                      title: Text(loc.import_json),
                     ),
                   ),
                 ],
@@ -357,15 +335,16 @@ class _MainAppState extends State<MainApp> {
   }
 
   void _showDeleteDialog(BuildContext context, int index) {
+    final loc = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(FlutterI18n.translate(context, "confirm")),
-          content: Text(FlutterI18n.translate(context, "are_you_sure")),
+          title: Text(loc.confirm),
+          content: Text(loc.are_you_sure),
           actions: <Widget>[
             TextButton(
-              child: Text(FlutterI18n.translate(context, "cancel")),
+              child: Text(loc.cancel),
               onPressed: () {
                 Get.back();
               },
@@ -381,7 +360,7 @@ class _MainAppState extends State<MainApp> {
                 foregroundColor: WidgetStatePropertyAll(
                     Theme.of(context).colorScheme.onPrimary),
               ),
-              child: Text(FlutterI18n.translate(context, "delete")),
+              child: Text(loc.delete),
             ),
           ],
         );

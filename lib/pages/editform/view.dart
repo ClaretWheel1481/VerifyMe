@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:verifyme/utils/generate/controller.dart';
+import 'package:verifyme/l10n/generated/localizations.dart';
 
 class EditForm extends StatefulWidget {
-  const EditForm(
-      {super.key,
-      required this.accountName,
-      required this.secret,
-      required this.algorithm,
-      required this.length,
-      required this.mode,
-      required this.isEdit});
+  const EditForm({
+    super.key,
+    required this.accountName,
+    required this.secret,
+    required this.algorithm,
+    required this.length,
+    required this.mode,
+    required this.isEdit,
+  });
+
   final String accountName;
   final String secret;
   final String algorithm;
@@ -25,36 +26,47 @@ class EditForm extends StatefulWidget {
 }
 
 class EditFormState extends State<EditForm> {
-  final GetStorage _box = GetStorage();
   final GenerateController gController = Get.put(GenerateController());
-  late String _languageCode;
+
+  late TextEditingController accountNameController;
+  late TextEditingController secretController;
+  late TextEditingController lengthController;
+
+  late String selectedAlgorithm;
+  late String selectedMode;
+
+  final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
+  final List<String> modes = ['TOTP', 'HOTP'];
 
   @override
   void initState() {
     super.initState();
+    accountNameController = TextEditingController(text: widget.accountName);
+    secretController = TextEditingController(text: widget.secret);
+    lengthController = TextEditingController(text: widget.length);
 
-    // 翻译页面
-    _languageCode = _box.read('languageCode') ?? 'en';
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _i18nLoaded();
-    });
+    selectedAlgorithm = widget.algorithm;
+    selectedMode = widget.mode;
   }
 
-  Future<void> _i18nLoaded() async {
-    await FlutterI18n.refresh(context, Locale(_languageCode));
-    if (mounted) setState(() {});
+  @override
+  void dispose() {
+    accountNameController.dispose();
+    secretController.dispose();
+    lengthController.dispose();
+    super.dispose();
   }
 
-  // 错误弹窗
   void _showErrorDialog() {
+    final loc = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(FlutterI18n.translate(context, "error")),
-        content: Text(FlutterI18n.translate(context, "failed_to_add")),
+        title: Text(loc.error),
+        content: Text(loc.failed_to_add),
         actions: <Widget>[
           TextButton(
-            child: Text(FlutterI18n.translate(context, "ok")),
+            child: Text(loc.ok),
             onPressed: () {
               Get.back();
             },
@@ -66,35 +78,23 @@ class EditFormState extends State<EditForm> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController accountNameController =
-        TextEditingController(text: widget.accountName);
-    final TextEditingController secretController =
-        TextEditingController(text: widget.secret);
-    final List<String> algorithms = ['SHA-1', 'SHA-256', 'SHA-512'];
-    final List<String> modes = ["TOTP", "HOTP"];
-    String selectedAlgorithm = widget.algorithm;
-    String selectedMode = widget.mode;
-    final TextEditingController lengthController =
-        TextEditingController(text: widget.length);
+    final loc = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: widget.isEdit
-            ? Align(
-                alignment: Alignment.centerLeft,
-                child: Text(FlutterI18n.translate(context, "edit")),
-              )
-            : Align(
-                alignment: Alignment.centerLeft,
-                child: Text(FlutterI18n.translate(context, "input")),
-              ),
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            widget.isEdit ? loc.edit : loc.input,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             DropdownButtonFormField<String>(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               value: selectedMode,
               items: modes.map((String value) {
                 return DropdownMenuItem<String>(
@@ -103,33 +103,40 @@ class EditFormState extends State<EditForm> {
                 );
               }).toList(),
               onChanged: (newValue) {
-                selectedMode = newValue!;
+                if (newValue != null) {
+                  setState(() {
+                    selectedMode = newValue;
+                  });
+                }
               },
               dropdownColor: Theme.of(context).colorScheme.onSecondary,
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "mode"),
-                  border: OutlineInputBorder()),
+                labelText: loc.mode,
+                border: const OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 25),
             TextField(
               controller: accountNameController,
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "account"),
-                  border: OutlineInputBorder()),
+                labelText: loc.account,
+                border: const OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 25),
             TextField(
               controller: secretController,
               decoration: InputDecoration(
-                  labelText: FlutterI18n.translate(context, "secret"),
-                  border: OutlineInputBorder()),
+                labelText: loc.secret,
+                border: const OutlineInputBorder(),
+              ),
             ),
             const SizedBox(height: 25),
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                FlutterI18n.translate(context, "options"),
-                style: TextStyle(
+                loc.options,
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14,
                 ),
@@ -141,7 +148,7 @@ class EditFormState extends State<EditForm> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                     value: selectedAlgorithm,
                     items: algorithms.map((String value) {
                       return DropdownMenuItem<String>(
@@ -149,22 +156,29 @@ class EditFormState extends State<EditForm> {
                         child: Text(value),
                       );
                     }).toList(),
-                    dropdownColor: Theme.of(context).colorScheme.onSecondary,
                     onChanged: (newValue) {
-                      selectedAlgorithm = newValue!;
+                      if (newValue != null) {
+                        setState(() {
+                          selectedAlgorithm = newValue;
+                        });
+                      }
                     },
+                    dropdownColor: Theme.of(context).colorScheme.onSecondary,
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, "algorithm"),
-                        border: OutlineInputBorder()),
+                      labelText: loc.algorithm,
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextField(
                     controller: lengthController,
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        labelText: FlutterI18n.translate(context, "length"),
-                        border: OutlineInputBorder()),
+                      labelText: loc.length,
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
                 ),
               ],
@@ -172,17 +186,22 @@ class EditFormState extends State<EditForm> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                if (accountNameController.text.isEmpty ||
-                    secretController.text.isEmpty) {
+                final nameText = accountNameController.text.trim();
+                final secretText =
+                    secretController.text.replaceAll(" ", "").toUpperCase();
+                final lengthText = lengthController.text.trim();
+                if (nameText.isEmpty || secretText.isEmpty) {
                   _showErrorDialog();
                   return;
                 }
-                if (gController.add(
-                    accountNameController.text,
-                    secretController.text.replaceAll(" ", "").toUpperCase(),
-                    selectedAlgorithm,
-                    lengthController.text,
-                    selectedMode)) {
+                final success = gController.add(
+                  nameText,
+                  secretText,
+                  selectedAlgorithm,
+                  lengthText,
+                  selectedMode,
+                );
+                if (success) {
                   Get.back();
                 } else {
                   _showErrorDialog();
@@ -191,11 +210,13 @@ class EditFormState extends State<EditForm> {
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.primary),
+                  Theme.of(context).colorScheme.primary,
+                ),
                 foregroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.onPrimary),
+                  Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
-              child: Text(FlutterI18n.translate(context, "save")),
+              child: Text(loc.save),
             ),
           ],
         ),
