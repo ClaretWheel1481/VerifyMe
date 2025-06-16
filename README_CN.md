@@ -22,19 +22,19 @@ VerifyMe by Linxing Huang
 - Material Design
 
 ## 截图
-### Android - 启用Monet取色 (Running on Xperia 5 II)
+### Android - 启用Monet取色 (运行于Meizu 21 Pro)
 <div class="half">
-    <img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
-    <img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Light.jpg" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Dark.jpg" width=30%/>
 </div>
 
-### Android - 无Monet取色 (Running on Xperia 5 II)
+### Android - 无Monet取色 (运行于Meizu 21 Pro)
 <div class="half">
-    <img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
-    <img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Light.jpg" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Dark.jpg" width=30%/>
 </div>
 
-### iOS (运行于iPhone13 mini)
+### iOS (运行于iPhone13 mini) (过时)
 <div class="half">
     <img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
     <img src="./public/Screenshot_iOS_Dark.PNG" width=30%/>

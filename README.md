@@ -22,19 +22,19 @@ A simple, opensource Authenticator app.
 - Android 12+ Material Design
 
 ## Screenshots
-### Android - Monet Color (Running on Xperia 5 II)
+### Android - Monet Color (Running on Meizu 21 Pro)
 <div class="half">
-    <img src="./public/Screenshot_Android_Monet_Light.png" width=30%/>
-    <img src="./public/Screenshot_Android_Monet_Dark.png" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Light.jpg" width=30%/>
+    <img src="./public/Screenshot_Android_Monet_Dark.jpg" width=30%/>
 </div>
 
-### Android - Non Monet Color (Running on Xperia 5 II)
+### Android - Non Monet Color (Running on Meizu 21 Pro)
 <div class="half">
-    <img src="./public/Screenshot_Android_Non_Monet_Light.png" width=30%/>
-    <img src="./public/Screenshot_Android_Non_Monet_Dark.png" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Light.jpg" width=30%/>
+    <img src="./public/Screenshot_Android_Non_Monet_Dark.jpg" width=30%/>
 </div>
 
-### iOS (Running on iPhone13 mini)
+### iOS (Running on iPhone13 mini) (Outdated)
 <div class="half">
     <img src="./public/Screenshot_iOS_Light.PNG" width=30%/>
     <img src="./public/Screenshot_iOS_Dark.PNG" width=30%/>
