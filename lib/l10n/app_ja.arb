@@ -40,5 +40,22 @@
   "file_selection_cancelled": "ファイル選択がユーザーによりキャンセルされました",
   "failed_to_import": "インポートに失敗しました",
   "custom_color": "カスタムカラー",
-  "added": "追加"
+  "added": "追加",
+  "webdav_title": "WebDAV設定",
+  "webdav_address": "WebDAVアドレス",
+  "webdav_address_hint": "WebDAVサーバーのアドレスを入力してください",
+  "webdav_username": "ユーザー名",
+  "webdav_password": "パスワード",
+  "webdav_connect": "接続テスト",
+  "webdav_backup": "WebDAVにバックアップ",
+  "webdav_restore": "WebDAVから復元",
+  "webdav_connect_success": "接続成功",
+  "webdav_connect_fail": "接続失敗",
+  "webdav_no_data": "バックアップするデータがありません",
+  "webdav_backup_success": "バックアップ成功",
+  "webdav_backup_fail": "バックアップ失敗",
+  "webdav_restore_success": "復元成功",
+  "webdav_restore_fail": "復元失敗",
+  "webdav_input_address": "WebDAVアドレスを入力してください",
+  "webdav_reboot_tip": "アプリを再起動してください"
 }

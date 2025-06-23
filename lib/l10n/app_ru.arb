@@ -40,5 +40,22 @@
   "file_selection_cancelled": "Выбор файла отменён",
   "failed_to_import": "Ошибка импорта",
   "custom_color": "Пользовательский цвет",
-  "added": "Добавлено"
+  "added": "Добавлено",
+  "webdav_title": "Настройки WebDAV",
+  "webdav_address": "Адрес WebDAV",
+  "webdav_address_hint": "Введите адрес WebDAV сервера",
+  "webdav_username": "Имя пользователя",
+  "webdav_password": "Пароль",
+  "webdav_connect": "Тестировать подключение",
+  "webdav_backup": "Сохранить в WebDAV",
+  "webdav_restore": "Восстановить из WebDAV",
+  "webdav_connect_success": "Подключение успешно",
+  "webdav_connect_fail": "Ошибка подключения",
+  "webdav_no_data": "Нет данных для сохранения",
+  "webdav_backup_success": "Сохранение успешно",
+  "webdav_backup_fail": "Ошибка сохранения",
+  "webdav_restore_success": "Восстановление успешно",
+  "webdav_restore_fail": "Ошибка восстановления",
+  "webdav_input_address": "Введите адрес WebDAV",
+  "webdav_reboot_tip": "Перезапустите приложение"
 }

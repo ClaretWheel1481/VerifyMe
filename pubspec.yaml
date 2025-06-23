@@ -29,6 +29,7 @@ dependencies:
   intl: 
   flutter_colorpicker: 
   flutter_slidable: 
+  webdav_client: 
   
 dev_dependencies:
   flutter_test:

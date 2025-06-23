@@ -130,4 +130,55 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get added => 'Добавлено';
+
+  @override
+  String get webdav_title => 'Настройки WebDAV';
+
+  @override
+  String get webdav_address => 'Адрес WebDAV';
+
+  @override
+  String get webdav_address_hint => 'Введите адрес WebDAV сервера';
+
+  @override
+  String get webdav_username => 'Имя пользователя';
+
+  @override
+  String get webdav_password => 'Пароль';
+
+  @override
+  String get webdav_connect => 'Тестировать подключение';
+
+  @override
+  String get webdav_backup => 'Сохранить в WebDAV';
+
+  @override
+  String get webdav_restore => 'Восстановить из WebDAV';
+
+  @override
+  String get webdav_connect_success => 'Подключение успешно';
+
+  @override
+  String get webdav_connect_fail => 'Ошибка подключения';
+
+  @override
+  String get webdav_no_data => 'Нет данных для сохранения';
+
+  @override
+  String get webdav_backup_success => 'Сохранение успешно';
+
+  @override
+  String get webdav_backup_fail => 'Ошибка сохранения';
+
+  @override
+  String get webdav_restore_success => 'Восстановление успешно';
+
+  @override
+  String get webdav_restore_fail => 'Ошибка восстановления';
+
+  @override
+  String get webdav_input_address => 'Введите адрес WebDAV';
+
+  @override
+  String get webdav_reboot_tip => 'Перезапустите приложение';
 }

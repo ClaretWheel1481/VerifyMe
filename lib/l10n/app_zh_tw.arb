@@ -40,5 +40,22 @@
   "file_selection_cancelled": "檔案選擇已被用戶取消",
   "failed_to_import": "導入失敗",
   "custom_color": "自訂顏色",
-  "added": "已新增"
+  "added": "已新增",
+  "webdav_title": "WebDAV設定",
+  "webdav_address": "WebDAV地址",
+  "webdav_address_hint": "請輸入WebDAV伺服器地址",
+  "webdav_username": "用戶名",
+  "webdav_password": "密碼",
+  "webdav_connect": "連接測試",
+  "webdav_backup": "備份到WebDAV",
+  "webdav_restore": "從WebDAV恢復",
+  "webdav_connect_success": "連接成功",
+  "webdav_connect_fail": "連接失敗",
+  "webdav_no_data": "沒有可備份的資料",
+  "webdav_backup_success": "備份成功",
+  "webdav_backup_fail": "備份失敗",
+  "webdav_restore_success": "恢復成功",
+  "webdav_restore_fail": "恢復失敗",
+  "webdav_input_address": "請輸入WebDAV地址",
+  "webdav_reboot_tip": "請重啟App"
 }

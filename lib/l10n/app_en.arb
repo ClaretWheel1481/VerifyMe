@@ -40,5 +40,22 @@
   "file_selection_cancelled": "File selection cancelled",
   "failed_to_import": "Failed to import",
   "custom_color": "Custom Color",
-  "added": "Added"
+  "added": "Added",
+  "webdav_title": "WebDAV Settings",
+  "webdav_address": "WebDAV Address",
+  "webdav_address_hint": "Please enter the WebDAV server address",
+  "webdav_username": "Username",
+  "webdav_password": "Password",
+  "webdav_connect": "Test Connection",
+  "webdav_backup": "Backup to WebDAV",
+  "webdav_restore": "Restore from WebDAV",
+  "webdav_connect_success": "Connection successful",
+  "webdav_connect_fail": "Connection failed",
+  "webdav_no_data": "No data to backup",
+  "webdav_backup_success": "Backup successful",
+  "webdav_backup_fail": "Backup failed",
+  "webdav_restore_success": "Restore successful",
+  "webdav_restore_fail": "Restore failed",
+  "webdav_input_address": "Please enter the WebDAV address",
+  "webdav_reboot_tip": "Restart the app"
 }

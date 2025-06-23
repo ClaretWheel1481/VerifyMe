@@ -28,9 +28,15 @@ class GenerateController extends GetxController {
   }
 
   bool add(String accountName, String secret, String algorithm, String length,
-      String mode) {
+      String mode,
+      {String? oldSecret}) {
+    int index = -1;
+    if (oldSecret != null) {
+      index = totpList.indexWhere((element) => element['secret'] == oldSecret);
+    } else {
+      index = totpList.indexWhere((element) => element['secret'] == secret);
+    }
     if (_isValidBase32(secret)) {
-      int index = totpList.indexWhere((element) => element['secret'] == secret);
       if (index != -1) {
         totpList[index] = {
           'accountName': accountName,

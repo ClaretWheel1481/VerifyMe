@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:verifyme/l10n/generated/localizations.dart';
+import 'package:verifyme/pages/settings/webdav_settings.dart';
 import 'package:verifyme/pages/settings/widgets.dart';
 import 'package:verifyme/utils/generate/controller.dart';
 import 'package:verifyme/utils/notify.dart';
@@ -249,6 +250,13 @@ class SettingsState extends State<Settings> {
                     setState(() => currentColor = color);
                     _box.write('colorSeed', currentColor.toARGB32());
                   });
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.cloud_upload),
+                title: Text(loc.webdav_title),
+                onTap: () {
+                  Get.to(() => const WebDavSettingsPage());
                 },
               ),
               Obx(() => ListTile(

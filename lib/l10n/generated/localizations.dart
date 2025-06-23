@@ -353,6 +353,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added'**
   String get added;
+
+  /// No description provided for @webdav_title.
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV Settings'**
+  String get webdav_title;
+
+  /// No description provided for @webdav_address.
+  ///
+  /// In en, this message translates to:
+  /// **'WebDAV Address'**
+  String get webdav_address;
+
+  /// No description provided for @webdav_address_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the WebDAV server address'**
+  String get webdav_address_hint;
+
+  /// No description provided for @webdav_username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get webdav_username;
+
+  /// No description provided for @webdav_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get webdav_password;
+
+  /// No description provided for @webdav_connect.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Connection'**
+  String get webdav_connect;
+
+  /// No description provided for @webdav_backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup to WebDAV'**
+  String get webdav_backup;
+
+  /// No description provided for @webdav_restore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from WebDAV'**
+  String get webdav_restore;
+
+  /// No description provided for @webdav_connect_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection successful'**
+  String get webdav_connect_success;
+
+  /// No description provided for @webdav_connect_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection failed'**
+  String get webdav_connect_fail;
+
+  /// No description provided for @webdav_no_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No data to backup'**
+  String get webdav_no_data;
+
+  /// No description provided for @webdav_backup_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup successful'**
+  String get webdav_backup_success;
+
+  /// No description provided for @webdav_backup_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup failed'**
+  String get webdav_backup_fail;
+
+  /// No description provided for @webdav_restore_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore successful'**
+  String get webdav_restore_success;
+
+  /// No description provided for @webdav_restore_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore failed'**
+  String get webdav_restore_fail;
+
+  /// No description provided for @webdav_input_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the WebDAV address'**
+  String get webdav_input_address;
+
+  /// No description provided for @webdav_reboot_tip.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart the app'**
+  String get webdav_reboot_tip;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -130,4 +130,55 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get added => 'Aggiunto';
+
+  @override
+  String get webdav_title => 'Impostazioni WebDAV';
+
+  @override
+  String get webdav_address => 'Indirizzo WebDAV';
+
+  @override
+  String get webdav_address_hint => 'Inserisci l\'indirizzo del server WebDAV';
+
+  @override
+  String get webdav_username => 'Nome utente';
+
+  @override
+  String get webdav_password => 'Password';
+
+  @override
+  String get webdav_connect => 'Test connessione';
+
+  @override
+  String get webdav_backup => 'Backup su WebDAV';
+
+  @override
+  String get webdav_restore => 'Ripristina da WebDAV';
+
+  @override
+  String get webdav_connect_success => 'Connessione riuscita';
+
+  @override
+  String get webdav_connect_fail => 'Errore di connessione';
+
+  @override
+  String get webdav_no_data => 'Nessun dato da backup';
+
+  @override
+  String get webdav_backup_success => 'Backup riuscito';
+
+  @override
+  String get webdav_backup_fail => 'Errore di backup';
+
+  @override
+  String get webdav_restore_success => 'Ripristino riuscito';
+
+  @override
+  String get webdav_restore_fail => 'Errore di ripristino';
+
+  @override
+  String get webdav_input_address => 'Inserisci l\'indirizzo WebDAV';
+
+  @override
+  String get webdav_reboot_tip => 'Riavvia l\'app';
 }

@@ -40,5 +40,22 @@
   "file_selection_cancelled": "Sélection de fichier annulée",
   "failed_to_import": "Échec de l'importation",
   "custom_color": "Couleur personnalisée",
-  "added": "Ajouté"
+  "added": "Ajouté",
+  "webdav_title": "Paramètres WebDAV",
+  "webdav_address": "Adresse WebDAV",
+  "webdav_address_hint": "Veuillez entrer l'adresse du serveur WebDAV",
+  "webdav_username": "Nom d'utilisateur",
+  "webdav_password": "Mot de passe",
+  "webdav_connect": "Tester la connexion",
+  "webdav_backup": "Sauvegarder sur WebDAV",
+  "webdav_restore": "Restaurer depuis WebDAV",
+  "webdav_connect_success": "Connexion réussie",
+  "webdav_connect_fail": "Échec de la connexion",
+  "webdav_no_data": "Aucune donnée à sauvegarder",
+  "webdav_backup_success": "Sauvegarde réussie",
+  "webdav_backup_fail": "Échec de la sauvegarde",
+  "webdav_restore_success": "Restauration réussie",
+  "webdav_restore_fail": "Échec de la restauration",
+  "webdav_input_address": "Veuillez entrer l'adresse WebDAV",
+  "webdav_reboot_tip": "Redémarrer l'application"
 }

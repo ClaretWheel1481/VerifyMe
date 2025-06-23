@@ -200,6 +200,7 @@ class EditFormState extends State<EditForm> {
                   selectedAlgorithm,
                   lengthText,
                   selectedMode,
+                  oldSecret: widget.isEdit ? widget.secret : null,
                 );
                 if (success) {
                   Get.back();

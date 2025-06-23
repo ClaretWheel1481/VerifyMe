@@ -130,6 +130,57 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get added => '已添加';
+
+  @override
+  String get webdav_title => 'WebDAV设置';
+
+  @override
+  String get webdav_address => 'WebDAV地址';
+
+  @override
+  String get webdav_address_hint => '请输入WebDAV服务器地址';
+
+  @override
+  String get webdav_username => '用户名';
+
+  @override
+  String get webdav_password => '密码';
+
+  @override
+  String get webdav_connect => '连接测试';
+
+  @override
+  String get webdav_backup => '备份到WebDAV';
+
+  @override
+  String get webdav_restore => '从WebDAV恢复';
+
+  @override
+  String get webdav_connect_success => '连接成功';
+
+  @override
+  String get webdav_connect_fail => '连接失败';
+
+  @override
+  String get webdav_no_data => '没有可备份的数据';
+
+  @override
+  String get webdav_backup_success => '备份成功';
+
+  @override
+  String get webdav_backup_fail => '备份失败';
+
+  @override
+  String get webdav_restore_success => '恢复成功';
+
+  @override
+  String get webdav_restore_fail => '恢复失败';
+
+  @override
+  String get webdav_input_address => '请输入WebDAV地址';
+
+  @override
+  String get webdav_reboot_tip => '请重启App';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -258,4 +309,55 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get added => '已新增';
+
+  @override
+  String get webdav_title => 'WebDAV設定';
+
+  @override
+  String get webdav_address => 'WebDAV地址';
+
+  @override
+  String get webdav_address_hint => '請輸入WebDAV伺服器地址';
+
+  @override
+  String get webdav_username => '用戶名';
+
+  @override
+  String get webdav_password => '密碼';
+
+  @override
+  String get webdav_connect => '連接測試';
+
+  @override
+  String get webdav_backup => '備份到WebDAV';
+
+  @override
+  String get webdav_restore => '從WebDAV恢復';
+
+  @override
+  String get webdav_connect_success => '連接成功';
+
+  @override
+  String get webdav_connect_fail => '連接失敗';
+
+  @override
+  String get webdav_no_data => '沒有可備份的資料';
+
+  @override
+  String get webdav_backup_success => '備份成功';
+
+  @override
+  String get webdav_backup_fail => '備份失敗';
+
+  @override
+  String get webdav_restore_success => '恢復成功';
+
+  @override
+  String get webdav_restore_fail => '恢復失敗';
+
+  @override
+  String get webdav_input_address => '請輸入WebDAV地址';
+
+  @override
+  String get webdav_reboot_tip => '請重啟App';
 }
