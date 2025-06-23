@@ -17,7 +17,7 @@ A simple, opensource Authenticator app.
 - i18n Support
 - Private Protection
 - Click Quick Copy
-- Backup and Restore in JSON
+- Backup and Restore in Local JSON file or WebDAV
 - Monet Color
 - Android 12+ Material Design
 

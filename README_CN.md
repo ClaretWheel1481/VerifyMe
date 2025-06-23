@@ -17,7 +17,7 @@ VerifyMe by Linxing Huang
 - 多语言支持
 - 隐私保护
 - 单击快速复制
-- 通过Json文件备份和恢复
+- 通过本地Json文件导入导出、WebDAV备份和恢复
 - 莫奈取色
 - Material Design
 
