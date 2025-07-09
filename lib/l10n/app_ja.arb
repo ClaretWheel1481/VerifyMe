@@ -39,7 +39,7 @@
   "import_successfully": "インポート成功",
   "file_selection_cancelled": "ファイル選択がユーザーによりキャンセルされました",
   "failed_to_import": "インポートに失敗しました",
-  "custom_color": "カスタムカラー",
+  "custom_color": "カスタムテーマカラー",
   "added": "追加",
   "webdav_title": "WebDAV設定",
   "webdav_address": "WebDAVアドレス",

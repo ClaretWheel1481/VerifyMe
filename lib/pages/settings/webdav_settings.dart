@@ -6,7 +6,7 @@ import 'package:verifyme/utils/notify.dart';
 import 'package:verifyme/l10n/generated/localizations.dart';
 
 class WebDavSettingsPage extends StatefulWidget {
-  const WebDavSettingsPage({Key? key}) : super(key: key);
+  const WebDavSettingsPage({super.key});
 
   @override
   State<WebDavSettingsPage> createState() => _WebDavSettingsPageState();

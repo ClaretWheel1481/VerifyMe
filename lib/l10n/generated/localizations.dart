@@ -345,7 +345,7 @@ abstract class AppLocalizations {
   /// No description provided for @custom_color.
   ///
   /// In en, this message translates to:
-  /// **'Custom Color'**
+  /// **'Custom Theme Color'**
   String get custom_color;
 
   /// No description provided for @added.

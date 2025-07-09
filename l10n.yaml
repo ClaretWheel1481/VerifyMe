@@ -5,3 +5,4 @@ output-dir: lib/l10n/generated
 synthetic-package: false
 nullable-getter: false
 format: false
+untranslated-messages-file: lib/l10n/untranslated.json

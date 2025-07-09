@@ -7,8 +7,8 @@ import 'package:verifyme/utils/notify.dart';
 
 AboutDialog buildAboutDialog() {
   return const AboutDialog(
-    applicationVersion: appVersion,
-    applicationName: 'VerifyMe',
+    applicationVersion: AppConstants.appVersion,
+    applicationName: AppConstants.appName,
     applicationLegalese: "Copyright© 2025 Lance Huang",
   );
 }

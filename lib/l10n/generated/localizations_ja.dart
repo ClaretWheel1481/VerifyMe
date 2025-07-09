@@ -126,7 +126,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get failed_to_import => 'インポートに失敗しました';
 
   @override
-  String get custom_color => 'カスタムカラー';
+  String get custom_color => 'カスタムテーマカラー';
 
   @override
   String get added => '追加';

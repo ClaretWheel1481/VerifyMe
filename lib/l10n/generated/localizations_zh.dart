@@ -126,7 +126,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get failed_to_import => '导入失败';
 
   @override
-  String get custom_color => '自定义颜色';
+  String get custom_color => '自定义主题颜色';
 
   @override
   String get added => '已添加';
@@ -305,7 +305,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get failed_to_import => '導入失敗';
 
   @override
-  String get custom_color => '自訂顏色';
+  String get custom_color => '自訂主題顏色';
 
   @override
   String get added => '已新增';

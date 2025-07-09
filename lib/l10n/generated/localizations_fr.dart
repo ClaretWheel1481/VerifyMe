@@ -126,7 +126,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get failed_to_import => 'Échec de l\'importation';
 
   @override
-  String get custom_color => 'Couleur personnalisée';
+  String get custom_color => 'Couleur de thème personnalisée';
 
   @override
   String get added => 'Ajouté';

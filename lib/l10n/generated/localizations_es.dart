@@ -126,7 +126,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get failed_to_import => 'Error al importar';
 
   @override
-  String get custom_color => 'Color personalizado';
+  String get custom_color => 'Color de tema personalizado';
 
   @override
   String get added => 'Agregado';

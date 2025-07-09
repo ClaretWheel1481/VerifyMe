@@ -9,15 +9,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.13.0"
-  barcode_scan2:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "7b40c9fb8f196de335ad18a149956d9ef02d03bb"
-      url: "https://github.com/mono0926/barcode_scan2"
-    source: git
-    version: "4.5.1"
   base32:
     dependency: "direct main"
     description:
@@ -138,14 +129,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "9.2.3"
-  fixnum:
-    dependency: transitive
-    description:
-      name: fixnum
-      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -230,6 +213,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.20.2"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: "53385261521cc4a0c4658fd0ad07a7d14591cf8fc33abbceae306ddb974888dc"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.7.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -294,6 +285,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.16.0"
+  mobile_scanner:
+    dependency: "direct main"
+    description:
+      name: mobile_scanner
+      sha256: "1b60b8f9d4ce0cb0e7d7bc223c955d083a0737bee66fa1fcfe5de48225e0d5b3"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.5.7"
   otp:
     dependency: "direct main"
     description:
@@ -430,14 +429,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.8"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.1.0"
   sky_engine:
     dependency: transitive
     description: flutter

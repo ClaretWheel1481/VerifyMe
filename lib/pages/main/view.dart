@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:verifyme/constants/app.dart';
 import 'package:verifyme/pages/checkform/view.dart';
 import 'package:verifyme/pages/settings/view.dart';
 import 'package:verifyme/utils/generate/controller.dart';
@@ -13,6 +13,8 @@ import 'package:verifyme/pages/editform/view.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:verifyme/l10n/generated/localizations.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:verifyme/pages/main/scan_qr_page.dart';
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key, required this.title});
@@ -26,12 +28,24 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   final GenerateController controller = Get.put(GenerateController());
   final GenerateController totpController = Get.find();
-  final FocusNode _focusNode = FocusNode();
   final _isBlurred = false.obs;
+  int _selectedIndex = 0;
+
+  static late final List<Widget> _pages;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _pages = <Widget>[
+      _MainContent(title: widget.title),
+      const Settings(),
+    ];
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.paused" ||
           msg == "AppLifecycleState.inactive") {
@@ -52,8 +66,50 @@ class _MainAppState extends State<MainApp> {
     super.didChangeDependencies();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: _isBlurred.value
+          ? null
+          : NavigationBar(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: _onItemTapped,
+              destinations: [
+                NavigationDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: widget.title,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings_outlined),
+                  selectedIcon: Icon(Icons.settings),
+                  label: AppLocalizations.of(context).settings,
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class _MainContent extends StatefulWidget {
+  final String title;
+  const _MainContent({this.title = AppConstants.appName});
+
+  @override
+  State<_MainContent> createState() => _MainContentState();
+}
+
+class _MainContentState extends State<_MainContent> {
+  final GenerateController controller = Get.find();
+  final GenerateController totpController = Get.find();
+  final FocusNode _focusNode = FocusNode();
+  final _isBlurred = false.obs;
+
   // 导入列表
-  Future<void> importList() async {
+  Future<void> importList(BuildContext context) async {
     final loc = AppLocalizations.of(context);
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -82,8 +138,8 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(_focusNode);
@@ -104,15 +160,6 @@ class _MainAppState extends State<MainApp> {
                       child: Text(widget.title),
                     ),
                   ),
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        Get.to(() => const Settings());
-                      },
-                      tooltip: loc.settings,
-                    ),
-                  ],
                 ),
                 Obx(
                   () => SliverList(
@@ -285,12 +332,19 @@ class _MainAppState extends State<MainApp> {
                 color: Theme.of(context).colorScheme.secondaryContainer,
                 onSelected: (value) async {
                   if (value == 1) {
-                    var result = await BarcodeScanner.scan();
-                    if (result.rawContent.isNotEmpty && mounted) {
-                      Get.to(() => CheckFormPage(resultUrl: result.rawContent));
+                    final qrCode = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ScanQrPage(),
+                      ),
+                    );
+                    if (qrCode != null &&
+                        qrCode is String &&
+                        qrCode.isNotEmpty &&
+                        context.mounted) {
+                      Get.to(() => CheckFormPage(resultUrl: qrCode));
                     }
                   } else if (value == 2) {
-                    if (mounted) {
+                    if (context.mounted) {
                       Get.to(() => const EditForm(
                             accountName: "",
                             secret: "",
@@ -301,7 +355,7 @@ class _MainAppState extends State<MainApp> {
                           ));
                     }
                   } else if (value == 3) {
-                    importList();
+                    importList(context);
                   }
                 },
                 itemBuilder: (context) => [

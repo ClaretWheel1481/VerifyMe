@@ -19,9 +19,7 @@ dependencies:
   otp:
   base32:
   cupertino_icons: 
-  barcode_scan2:
-    git:
-      url: https://github.com/mono0926/barcode_scan2
+  mobile_scanner: 
   permission_handler:
   file_picker: ^9.2.1
   flutter_localizations: 

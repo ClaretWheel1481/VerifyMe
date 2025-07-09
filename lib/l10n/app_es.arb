@@ -39,7 +39,7 @@
   "import_successfully": "Importación exitosa",
   "file_selection_cancelled": "Selección de archivo cancelada",
   "failed_to_import": "Error al importar",
-  "custom_color": "Color personalizado",
+  "custom_color": "Color de tema personalizado",
   "added": "Agregado",
   "webdav_title": "Configuración WebDAV",
   "webdav_address": "Dirección WebDAV",
