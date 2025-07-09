@@ -13,7 +13,6 @@ import 'package:verifyme/pages/editform/view.dart';
 import 'package:verifyme/utils/notify.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:verifyme/l10n/generated/localizations.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:verifyme/pages/main/scan_qr_page.dart';
 
 class MainApp extends StatefulWidget {
