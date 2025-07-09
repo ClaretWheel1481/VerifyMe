@@ -48,13 +48,9 @@ class _MainAppState extends State<MainApp> {
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.paused" ||
           msg == "AppLifecycleState.inactive") {
-        setState(() {
-          _isBlurred.value = true;
-        });
+        _isBlurred.value = true;
       } else if (msg == "AppLifecycleState.resumed") {
-        setState(() {
-          _isBlurred.value = false;
-        });
+        _isBlurred.value = false;
       }
       return null;
     });
@@ -67,28 +63,40 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: _isBlurred.value
-          ? null
-          : NavigationBar(
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: _onItemTapped,
-              destinations: [
-                NavigationDestination(
-                  icon: Icon(Icons.home_outlined),
-                  selectedIcon: Icon(Icons.home),
-                  label: widget.title,
+    return Stack(
+      children: [
+        Scaffold(
+          body: _pages[_selectedIndex],
+          bottomNavigationBar: NavigationBar(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: _onItemTapped,
+            destinations: [
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                selectedIcon: Icon(Icons.home),
+                label: widget.title,
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.settings_outlined),
+                selectedIcon: Icon(Icons.settings),
+                label: AppLocalizations.of(context).settings,
+              ),
+            ],
+          ),
+        ),
+        Obx(() => _isBlurred.value
+            ? Positioned.fill(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
+                  child: Container(
+                    color: Colors.black.withValues(alpha: 0.2),
+                  ),
                 ),
-                NavigationDestination(
-                  icon: Icon(Icons.settings_outlined),
-                  selectedIcon: Icon(Icons.settings),
-                  label: AppLocalizations.of(context).settings,
-                ),
-              ],
-            ),
+              )
+            : const SizedBox.shrink()),
+      ],
     );
   }
 }
@@ -105,7 +113,6 @@ class _MainContentState extends State<_MainContent> {
   final GenerateController controller = Get.find();
   final GenerateController totpController = Get.find();
   final FocusNode _focusNode = FocusNode();
-  final _isBlurred = false.obs;
 
   // 导入列表
   Future<void> importList(BuildContext context) async {
@@ -290,100 +297,86 @@ class _MainContentState extends State<_MainContent> {
                 ),
               ],
             ),
-            Obx(() {
-              return _isBlurred.value
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                      child: Container(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSecondary
-                            .withValues(alpha: 0.5),
-                      ),
-                    )
-                  : const SizedBox.shrink();
-            }),
+            // 移除 _isBlurred 的 Obx 模糊层
           ],
         ),
       ),
-      floatingActionButton: _isBlurred.value
-          ? null
-          : Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondaryContainer,
-                shape: BoxShape.rectangle,
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: PopupMenuButton<int>(
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                padding: const EdgeInsets.all(18.0),
-                offset: const Offset(0, -200),
-                shadowColor: Colors.black38,
-                elevation: 10,
-                color: Theme.of(context).colorScheme.secondaryContainer,
-                onSelected: (value) async {
-                  if (value == 1) {
-                    final qrCode = await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const ScanQrPage(),
-                      ),
-                    );
-                    if (qrCode != null &&
-                        qrCode is String &&
-                        qrCode.isNotEmpty &&
-                        context.mounted) {
-                      Get.to(() => CheckFormPage(resultUrl: qrCode));
-                    }
-                  } else if (value == 2) {
-                    if (context.mounted) {
-                      Get.to(() => const EditForm(
-                            accountName: "",
-                            secret: "",
-                            algorithm: "SHA-1",
-                            length: "6",
-                            mode: "TOTP",
-                            isEdit: false,
-                          ));
-                    }
-                  } else if (value == 3) {
-                    importList(context);
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 1,
-                    child: ListTile(
-                      leading: const Icon(Icons.qr_code_scanner),
-                      title: Text(loc.scan_qr_code),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: ListTile(
-                      leading: const Icon(Icons.input),
-                      title: Text(loc.enter_manually),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 3,
-                    child: ListTile(
-                      leading: const Icon(Icons.download),
-                      title: Text(loc.import_json),
-                    ),
-                  ),
-                ],
-                icon: Icon(Icons.add,
-                    color: Theme.of(context).colorScheme.onSecondaryContainer),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black38,
+              blurRadius: 4.0,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: PopupMenuButton<int>(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          padding: const EdgeInsets.all(18.0),
+          offset: const Offset(0, -200),
+          shadowColor: Colors.black38,
+          elevation: 10,
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          onSelected: (value) async {
+            if (value == 1) {
+              final qrCode = await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ScanQrPage(),
+                ),
+              );
+              if (qrCode != null &&
+                  qrCode is String &&
+                  qrCode.isNotEmpty &&
+                  context.mounted) {
+                Get.to(() => CheckFormPage(resultUrl: qrCode));
+              }
+            } else if (value == 2) {
+              if (context.mounted) {
+                Get.to(() => const EditForm(
+                      accountName: "",
+                      secret: "",
+                      algorithm: "SHA-1",
+                      length: "6",
+                      mode: "TOTP",
+                      isEdit: false,
+                    ));
+              }
+            } else if (value == 3) {
+              importList(context);
+            }
+          },
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: 1,
+              child: ListTile(
+                leading: const Icon(Icons.qr_code_scanner),
+                title: Text(loc.scan_qr_code),
               ),
             ),
+            PopupMenuItem(
+              value: 2,
+              child: ListTile(
+                leading: const Icon(Icons.input),
+                title: Text(loc.enter_manually),
+              ),
+            ),
+            PopupMenuItem(
+              value: 3,
+              child: ListTile(
+                leading: const Icon(Icons.download),
+                title: Text(loc.import_json),
+              ),
+            ),
+          ],
+          icon: Icon(Icons.add,
+              color: Theme.of(context).colorScheme.onSecondaryContainer),
+        ),
+      ),
     );
   }
 

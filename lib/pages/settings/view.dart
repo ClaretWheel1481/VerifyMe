@@ -141,15 +141,12 @@ class SettingsState extends State<Settings> {
     final bool isEnabled = !Platform.isIOS;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
-      appBar: AppBar(
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(loc.settings),
-        ),
-      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          const SizedBox(height: kToolbarHeight),
+          Text(loc.settings, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 16),
           ThemeModeSelectorWidget(
             themeMode: _themeMode,
             dynamicColorEnabled: selectedMonet,
@@ -176,9 +173,9 @@ class SettingsState extends State<Settings> {
                 onTap: () => onMonet(!selectedMonet),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(Icons.color_lens,
                           color: Theme.of(context).colorScheme.primary),
@@ -224,16 +221,16 @@ class SettingsState extends State<Settings> {
                     : () {
                         showColorPickerDialog(context, currentColor, (color) {
                           setState(() => currentColor = color);
-                          _box.write('colorSeed', currentColor.toARGB32);
+                          _box.write('colorSeed', currentColor.toARGB32());
                         });
                       },
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.color_lens,
+                      Icon(Icons.color_lens_outlined,
                           color: selectedMonet
                               ? Colors.grey
                               : Theme.of(context).colorScheme.primary),
