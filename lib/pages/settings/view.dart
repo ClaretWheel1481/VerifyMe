@@ -140,12 +140,13 @@ class SettingsState extends State<Settings> {
     final loc = AppLocalizations.of(context);
     final bool isEnabled = !Platform.isIOS;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(loc.settings),
+      ),
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const SizedBox(height: kToolbarHeight),
-          Text(loc.settings, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 16),
           ThemeModeSelectorWidget(
             themeMode: _themeMode,
