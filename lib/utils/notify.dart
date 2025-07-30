@@ -4,6 +4,7 @@ final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
     GlobalKey<ScaffoldMessengerState>();
 
 void showNotification(String content) {
+  scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
   final snackBar = SnackBar(
     content: Text(content),
     duration: const Duration(milliseconds: 3000),

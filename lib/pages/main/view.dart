@@ -158,7 +158,7 @@ class _MainContentState extends State<_MainContent> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(height: 20),
+                  child: SizedBox(height: 30),
                 ),
               ],
             ),

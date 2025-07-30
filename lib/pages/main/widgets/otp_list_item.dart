@@ -35,7 +35,7 @@ class OtpListItem extends StatelessWidget {
             counter: counter);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(24),
@@ -53,7 +53,7 @@ class OtpListItem extends StatelessWidget {
             showNotification(loc.code_has_been_copied);
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             child: Row(
               children: [
                 mode == "TOTP"
@@ -71,7 +71,7 @@ class OtpListItem extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class OtpListItem extends StatelessWidget {
                             .textTheme
                             .titleMedium
                             ?.copyWith(
-                              fontSize: 18,
+                              fontSize: 16,
                               color: Theme.of(context).colorScheme.onSurface,
                               fontWeight: FontWeight.w500,
                             ),
@@ -157,7 +157,7 @@ class OtpListItem extends StatelessWidget {
                                   Icons.edit,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
-                                const SizedBox(width: 8),
+                                const SizedBox(width: 6),
                                 Text(
                                   loc.edit,
                                   style: Theme.of(context)
