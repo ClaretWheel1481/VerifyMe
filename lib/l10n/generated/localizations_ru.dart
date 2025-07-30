@@ -181,4 +181,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get webdav_reboot_tip => 'Перезапустите приложение';
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get import_warning => 'Эта операция приведет к перезаписи текущих данных и поддерживается только для файлов, экспортированных из VerifyMe. Продолжить?';
 }

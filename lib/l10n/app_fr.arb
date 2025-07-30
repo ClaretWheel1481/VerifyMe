@@ -57,5 +57,7 @@
   "webdav_restore_success": "Restauration réussie",
   "webdav_restore_fail": "Échec de la restauration",
   "webdav_input_address": "Veuillez entrer l'adresse WebDAV",
-  "webdav_reboot_tip": "Redémarrer l'application"
+  "webdav_reboot_tip": "Redémarrer l'application",
+  "add": "Ajouter",
+  "import_warning": "Cette opération écrasera les données actuelles et ne prend en charge que les fichiers exportés par VerifyMe. Voulez-vous continuer ?"
 }

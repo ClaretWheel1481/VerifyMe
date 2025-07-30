@@ -57,5 +57,7 @@
   "webdav_restore_success": "恢复成功",
   "webdav_restore_fail": "恢复失败",
   "webdav_input_address": "请输入WebDAV地址",
-  "webdav_reboot_tip": "请重启App"
+  "webdav_reboot_tip": "请重启App",
+  "add": "添加",
+  "import_warning": "此操作会覆盖当前数据，且仅支持VerifyMe导出的文件，是否继续？"
 }

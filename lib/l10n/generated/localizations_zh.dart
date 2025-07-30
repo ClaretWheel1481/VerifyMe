@@ -181,6 +181,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get webdav_reboot_tip => '请重启App';
+
+  @override
+  String get add => '添加';
+
+  @override
+  String get import_warning => '此操作会覆盖当前数据，且仅支持VerifyMe导出的文件，是否继续？';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -360,4 +366,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get webdav_reboot_tip => '請重啟App';
+
+  @override
+  String get add => '新增';
+
+  @override
+  String get import_warning => '此操作會覆蓋當前數據，且只支持VerifyMe導出的文件，是否繼續？';
 }

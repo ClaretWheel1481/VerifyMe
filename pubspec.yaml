@@ -21,12 +21,11 @@ dependencies:
   cupertino_icons: 
   mobile_scanner: 
   permission_handler:
-  file_picker: ^9.2.1
+  file_picker: 
   flutter_localizations: 
     sdk: flutter
   intl: 
   flutter_colorpicker: 
-  flutter_slidable: 
   webdav_client: 
   
 dev_dependencies:

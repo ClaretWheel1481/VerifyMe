@@ -181,4 +181,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get webdav_reboot_tip => 'App neu starten';
+
+  @override
+  String get add => 'Hinzufügen';
+
+  @override
+  String get import_warning => 'Dieser Vorgang überschreibt die aktuellen Daten und unterstützt nur von VerifyMe exportierte Dateien. Möchten Sie fortfahren?';
 }

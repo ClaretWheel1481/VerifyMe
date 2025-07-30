@@ -455,6 +455,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restart the app'**
   String get webdav_reboot_tip;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @import_warning.
+  ///
+  /// In en, this message translates to:
+  /// **'This operation will overwrite the current data and only supports files exported by VerifyMe. Do you want to continue?'**
+  String get import_warning;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

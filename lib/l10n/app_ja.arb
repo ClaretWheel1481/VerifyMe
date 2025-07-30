@@ -57,5 +57,7 @@
   "webdav_restore_success": "復元成功",
   "webdav_restore_fail": "復元失敗",
   "webdav_input_address": "WebDAVアドレスを入力してください",
-  "webdav_reboot_tip": "アプリを再起動してください"
+  "webdav_reboot_tip": "アプリを再起動してください",
+  "add": "追加",
+  "import_warning": "この操作は現在のデータを上書きします。また、VerifyMeでエクスポートされたファイルのみが対象です。続行しますか？"
 }

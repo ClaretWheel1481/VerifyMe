@@ -21,6 +21,7 @@ class _WebDavSettingsPageState extends State<WebDavSettingsPage> {
   late TextEditingController _passController;
 
   bool _loading = false;
+  bool _isFormValid = false;
 
   @override
   void initState() {
@@ -44,9 +45,10 @@ class _WebDavSettingsPageState extends State<WebDavSettingsPage> {
     super.dispose();
   }
 
-  bool _isFormValid = false;
   void _onFormChanged() {
-    final valid = _urlController.text.trim().isNotEmpty;
+    final valid = _urlController.text.trim().isNotEmpty &&
+        _userController.text.trim().isNotEmpty &&
+        _passController.text.trim().isNotEmpty;
     if (valid != _isFormValid) {
       setState(() {
         _isFormValid = valid;
