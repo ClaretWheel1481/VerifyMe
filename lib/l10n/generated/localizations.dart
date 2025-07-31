@@ -183,13 +183,13 @@ abstract class AppLocalizations {
   /// No description provided for @enter_manually.
   ///
   /// In en, this message translates to:
-  /// **'Enter manually'**
+  /// **'Add manually'**
   String get enter_manually;
 
   /// No description provided for @import_json.
   ///
   /// In en, this message translates to:
-  /// **'Import JSON'**
+  /// **'Import from JSON'**
   String get import_json;
 
   /// No description provided for @confirm.

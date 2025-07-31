@@ -45,10 +45,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get scan_qr_code => 'Scanner le QR code';
 
   @override
-  String get enter_manually => 'Saisir manuellement';
+  String get enter_manually => 'Ajouter manuellement';
 
   @override
-  String get import_json => 'Importer JSON';
+  String get import_json => 'Importer depuis JSON';
 
   @override
   String get confirm => 'Confirmer';

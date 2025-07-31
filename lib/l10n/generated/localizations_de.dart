@@ -45,7 +45,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get scan_qr_code => 'QR-Code scannen';
 
   @override
-  String get enter_manually => 'Manuelle Eingabe';
+  String get enter_manually => 'Manuell hinzufügen';
 
   @override
   String get import_json => 'Aus JSON importieren';

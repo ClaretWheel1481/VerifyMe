@@ -12,7 +12,7 @@
   "effective_after_reboot": "Nach Neustart aktiv",
   "code_has_been_copied": "Bestätigungscode in Zwischenablage kopiert",
   "scan_qr_code": "QR-Code scannen",
-  "enter_manually": "Manuelle Eingabe",
+  "enter_manually": "Manuell hinzufügen",
   "import_json": "Aus JSON importieren",
   "confirm": "Bestätigen",
   "are_you_sure": "Daten wirklich löschen? Dies kann nicht rückgängig gemacht werden.",

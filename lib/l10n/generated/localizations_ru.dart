@@ -48,7 +48,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get enter_manually => 'Ввести вручную';
 
   @override
-  String get import_json => 'Импортировать JSON';
+  String get import_json => 'Импорт из JSON';
 
   @override
   String get confirm => 'Подтвердить';

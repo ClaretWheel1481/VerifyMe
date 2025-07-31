@@ -34,7 +34,8 @@ class GenerateController extends GetxController {
     if (oldSecret != null) {
       index = totpList.indexWhere((element) => element['secret'] == oldSecret);
     } else {
-      index = totpList.indexWhere((element) => element['secret'] == secret);
+      index = totpList.indexWhere(
+          (element) => element['secret'] == secret && element['mode'] == mode);
     }
     if (_isValidBase32(secret)) {
       if (index != -1) {
