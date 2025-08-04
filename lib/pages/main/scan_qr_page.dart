@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:verifyme/l10n/generated/localizations.dart';
+import 'package:verifyme/pages/checkform/view.dart';
 
 class ScanQrPage extends StatelessWidget {
   const ScanQrPage({super.key});
@@ -36,7 +38,7 @@ class ScanQrPage extends StatelessWidget {
                     onDetect: (BarcodeCapture capture) {
                       final barcode = capture.barcodes.first;
                       if (barcode.rawValue != null) {
-                        Navigator.of(context).pop(barcode.rawValue);
+                        Get.off(CheckFormPage(resultUrl: barcode.rawValue!));
                       }
                     },
                   ),
