@@ -1,5 +1,5 @@
 name: verifyme
-description: "A simple TOTP Authenticator app."
+description: "An authenticator app."
 
 publish_to: 'none'
 
